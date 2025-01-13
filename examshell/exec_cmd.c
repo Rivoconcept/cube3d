@@ -2,6 +2,46 @@
 
 #include "examshell.h"
 
+void	*ft_memset(void *s, int c, size_t n)
+{
+	unsigned int		i;
+	unsigned char		*p;
+
+	p = s;
+	i = 0;
+	while (n != 0)
+	{
+		p[i] = c;
+		i++;
+		n--;
+	}
+	return (s);
+}
+
+void	cleanup_and_exit(t_params *params, int status)
+{
+	if (params)
+	{
+		if (params->myenvp)
+			free_list_env(params->myenvp);
+		if (params->myexport)
+			free_list_export(params->myexport);
+		if (params->envp)
+			free_array(params->envp);
+		if (params->pid_tab)
+			free(params->pid_tab);
+		if (params->parsed)
+		{
+			free_array(params->parsed);
+			params->parsed = NULL;
+		}
+		if (params->command)
+			free_list_cmd(params->command);
+		free(params);
+	}
+	exit(status);
+}
+
 void	exec_cmd(t_params *params)
 {
 	int		fd[2];
@@ -17,24 +57,33 @@ void	exec_cmd(t_params *params)
 		cleanup_and_exit(params, EXIT_FAILURE);
 	}
 	ft_memset(params->pid_tab, 0, sizeof(pid_t) * ft_get_pid_nbr(params));
-	if (call_exec_builtins(params))
+	if (current && current->cmd && current->cmd[0] && current->cmd[0][0] != '\0'
+		&& isbuiltins(current->cmd[0]) && current->next == NULL)
 	{
+		exec_builtins(params, current);
+		current = current->next;
 		free(params->pid_tab);
-		return;
+		return (1);
 	}
 	current = params->command;
 	tab = 0;
 	while (current != NULL)
 	{
-		if (ft_check_continue(params, &current))
-			continue;
-		check_pipe_error(current, fd, params);
 		params->pid_tab[tab] = fork();
-		check_fork_error(params, current, tab, fd);
+		if (params->pid_tab[tab] == -1)
+		{
+			perror("fork");
+			if (params->prev_pipe_read != -1)
+				close(params->prev_pipe_read);
+			if (current->next)
+			{
+				close(fd[0]);
+				close(fd[1]);
+			}
+			cleanup_and_exit(params, EXIT_FAILURE);
+		}
 		if (params->pid_tab[tab] == 0)
 		{
-			close(params->fd_in);
-			close(params->fd_out);
 			if (params->prev_pipe_read != -1)
 			{
 				dup2(params->prev_pipe_read, STDIN_FILENO);
@@ -46,13 +95,11 @@ void	exec_cmd(t_params *params)
 				close(fd[1]);
 				close(fd[0]);
 			}
-			signal(SIGQUIT, SIG_DFL);
 			input_r(current, params->rank_cmd, params, 1);
 			output(current, params);
 			if (isbuiltins(current->cmd[0]))
 				run_builtins(current->cmd, params);
-			else if (!check_cmd_not_found(params, current->cmd[0]))
-				execve(current->cmd[0], current->cmd, params->envp);
+			execve(current->cmd[0], current->cmd, params->envp);
 			cleanup_and_exit(params, params->last_exit_code);
 		}
 		else
