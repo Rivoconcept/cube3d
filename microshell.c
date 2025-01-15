@@ -47,35 +47,12 @@ void copy_cmd(char **cmd, char **argv, int *i)
     cmd[j] = NULL;
 }
 
-int exec_cmd(char **cmd, char **envp, int prev_pipe_read, int *fd, int token_pipe)
-{
-    if (prev_pipe_read != -1)
-    {
-        dup2(prev_pipe_read, STDIN_FILENO);
-        close(prev_pipe_read);
-    }
-    if (token_pipe)
-    {
-        dup2(fd[1], STDOUT_FILENO);
-        close(fd[1]);
-        close(fd[0]);
-    }
-    if (execve(cmd[0], cmd, envp) == -1)
-    {
-        werror("error: cannot execute ");
-        werror(cmd[0]);
-        werror("\n");
-        exit(1);
-    }
-    return 0;
-}
-
 int main(int argc, char **argv, char **envp)
 {
     if (argc < 2)
     {
         werror("error: fatal\n");
-        return 1;
+        return (1);
     }
     int i = 1;
     int status = 0;
@@ -111,7 +88,24 @@ int main(int argc, char **argv, char **envp)
         }
         if (pid == 0)
         {
-            exec_cmd(cmd, envp, prev_pipe_read, fd, token_pipe);
+             if (prev_pipe_read != -1)
+            {
+                dup2(prev_pipe_read, STDIN_FILENO);
+                close(prev_pipe_read);
+            }
+            if (token_pipe)
+            {
+                dup2(fd[1], STDOUT_FILENO);
+                close(fd[1]);
+                close(fd[0]);
+            }
+            if (execve(cmd[0], cmd, envp) == -1)
+            {
+                werror("error: cannot execute ");
+                werror(cmd[0]);
+                werror("\n");
+                exit(1);
+            }
         }
         else
         {
