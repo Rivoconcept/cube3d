@@ -1,140 +1,135 @@
 #include <unistd.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/wait.h>
 #include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include <sys/wait.h>
 
-void err(char *str)
+void werror(char *error)
 {
-    while (*str)
-        write(2, str++, 1);
+    write(2, error, strlen(error));
 }
 
-int cd(char **argv, int i)
+int ft_get_pid_nbr(char **argv)
 {
-    if (i != 2)
+    int nbr = 0;
+    int i = 0;
+
+    while (argv[i] != NULL)
     {
-        err("error: cd: bad arguments\n");
+        if (strcmp(argv[i], "|") != 0 && strcmp(argv[i], ";") != 0)
+            nbr++;
+        i++;
+    }
+    return nbr;
+}
+
+int cd(char **argv)
+{
+    if (!argv[1] || argv[2])
+    {
+        werror("error: cd: bad arguments\n");
         return 1;
     }
     if (chdir(argv[1]) < 0)
     {
-        err("error: cd: cannot change directory to ");
-        err(argv[1]);
-        err("\n");
+        werror("error: cd: cannot change directory to ");
+        werror(argv[1]);
+        werror("\n");
         return 1;
     }
     return 0;
 }
 
-void set_pipe(int has_pipe, int *fd, int end)
+void copy_cmd(char **cmd, char **argv, int *i)
 {
-    if (has_pipe)
+    int j = 0;
+    while (argv[*i] && strcmp(argv[*i], "|") != 0 && strcmp(argv[*i], ";") != 0)
     {
-        if (dup2(fd[end], end) == -1)
-        {
-            err("error: dup2 failed\n");
-            exit(1);
-        }
-        if (close(fd[0]) == -1 || close(fd[1]) == -1)
-        {
-            err("error: close failed\n");
-            exit(1);
-        }
+        cmd[j++] = argv[*i];
+        (*i)++;
     }
+    cmd[j] = NULL;
 }
 
-void free_array(char **cmd)
+int exec_cmd(char **cmd, char **envp, int prev_pipe_read, int *fd, int has_pipe)
 {
-    int i = 0;
-    if (!cmd)
-        return;
-    while (cmd[i] != NULL)
+    if (prev_pipe_read != -1)
     {
-        free(cmd[i]);
-        cmd[i] = NULL;
-        i++;
+        dup2(prev_pipe_read, STDIN_FILENO);
+        close(prev_pipe_read);
     }
-    free(cmd);
-}
-
-int exec(char **argv, int i, char **envp)
-{
-    int has_pipe = 0;
-    int fd[2];
-    int pid;
-    int status;
-
-    if (argv[i] != NULL && strcmp(argv[i], "|") == 0)
-        has_pipe = 1;
-
-    if (!has_pipe && strcmp(*argv, "cd") == 0)
-        return cd(argv, i);
-
-    if (has_pipe && pipe(fd) == -1)
-    {
-        err("error: pipe failed\n");
-        exit(1);
-    }
-
-    if ((pid = fork()) == -1)
-    {
-        err("error: fork failed\n");
-        exit(1);
-    }
-
-    if (pid == 0)
-    {
-        if (has_pipe)
-            set_pipe(has_pipe, fd, 1);
-        execve(*argv, argv, envp);
-        err("error: cannot execute ");
-        err(*argv);
-        err("\n");
-        exit(127);
-    }
-
-    waitpid(pid, &status, 0);
     if (has_pipe)
-        set_pipe(has_pipe, fd, 0);
-
-    return WIFEXITED(status) && WEXITSTATUS(status);
+    {
+        dup2(fd[1], STDOUT_FILENO);
+        close(fd[1]);
+        close(fd[0]);
+    }
+    if (execve(cmd[0], cmd, envp) == -1)
+    {
+        werror("error: cannot execute ");
+        werror(cmd[0]);
+        werror("\n");
+        exit(1);
+    }
+    return 0;
 }
 
 int main(int argc, char **argv, char **envp)
 {
-    (void)argc;
-    int i = 0;
-    int status = 0;
-
+    if (argc < 2)
+    {
+        werror("error: fatal\n");
+        return 1;
+    }
+    int i = 1, status = 0, prev_pipe_read = -1, fd[2];
+    char *cmd[256];
+    pid_t pid;
     while (argv[i])
     {
-        int cmd_len = 0;
-        while (argv[i + cmd_len] && strcmp(argv[i + cmd_len], "|") != 0 && strcmp(argv[i + cmd_len], ";") != 0)
-            cmd_len++;
-
-        if (cmd_len == 0)
-        {
+        while (argv[i] && (strcmp(argv[i], "|") == 0 || strcmp(argv[i], ";") == 0))
             i++;
+        if (argv[i] == NULL)
+            break;
+        copy_cmd(cmd, argv, &i);
+        if (strcmp(cmd[0], "cd") == 0)
+        {
+            if (cd(cmd))
+                status = 1;
             continue;
         }
-
-        char **cmd = malloc((cmd_len + 1) * sizeof(char *));
-        if (!cmd)
+        int has_pipe = (argv[i] && strcmp(argv[i], "|") == 0);
+        if (has_pipe && pipe(fd) == -1)
         {
-            err("error: fatal\n");
-            exit(EXIT_FAILURE);
+            werror("error: fatal\n");
+            return 1;
         }
+        pid = fork();
+        if (pid == -1)
+        {
+            werror("error: fatal\n");
+            return 1;
+        }
+        if (pid == 0)
+        {
+            exec_cmd(cmd, envp, prev_pipe_read, fd, has_pipe);
+        }
+        else
+        {
+            if (prev_pipe_read != -1)
+                close(prev_pipe_read);
+            if (has_pipe)
+            {
+                close(fd[1]);
+                prev_pipe_read = fd[0];
+            }
+            else
+                prev_pipe_read = -1;
 
-        for (int j = 0; j < cmd_len; j++)
-            cmd[j] = strdup(argv[i + j]);
-        cmd[cmd_len] = NULL;
-
-        status = exec(cmd, cmd_len, envp);
-        free_array(cmd);
-
-        i += cmd_len;
-        if (argv[i] && (strcmp(argv[i], "|") == 0 || strcmp(argv[i], ";") == 0))
+            waitpid(pid, &status, 0);
+            if (WIFEXITED(status))
+                status = WEXITSTATUS(status);
+        }
+        if (argv[i] && strcmp(argv[i], "|") == 0)
             i++;
     }
     return status;

@@ -7,28 +7,41 @@ void werror(char *error)
     write(2, error, strlen(error));
 }
 
-int get_nbr_pipe(char **argv)
+int	ft_get_pid_nbr(char **argv)
 {
-    int i = 0;
-    int j = 0;
-    while (argv[i] != NULL)
-    {
-        if (strcmp(argv[i], "|") == 0)
-            j++;
-        i++;
-    }
-    return j;
+	int		nbr;
+    int     i;
+
+	nbr = 0;
+    i = 0;
+	while (argv[i] != NULL)
+	{
+		if (argv[i] && (strcmp(argv[i], "|") == 0 || strcmp(argv[i], ";") == 0))
+		{
+			i++;
+			continue ;
+		}
+		i++;
+		nbr++;
+	}
+	return (nbr);
 }
 
-int get_cmd_length(char **argv, int i)
+int cd(char **argv, int i)
 {
-    int len = 0;
-    while (argv[i] != NULL && strcmp(argv[i], "|") != 0 && strcmp(argv[i], ";") != 0)
+    if (i != 2)
     {
-        len++;
-        i++;
+        werror("error: cd: bad arguments\n");
+        return 1;
     }
-    return len;
+    if (chdir(argv[1]) < 0)
+    {
+        werror("error: cd: cannot change directory to ");
+        werror(argv[1]);
+        werror("\n");
+        return 1;
+    }
+    return 0;
 }
 
 void copy_cmd(char **cmd, char **argv, int *i)
@@ -43,128 +56,137 @@ void copy_cmd(char **cmd, char **argv, int *i)
     cmd[j] = NULL;
 }
 
-int cd(char **argv)
+int	main(int argc, char **argv, char **envp)
 {
-    if (!argv[1] || argv[2])
+	if (argc == 1)
     {
-        werror("error: cd: bad arguments\n");
+        werror("error: fatal\n");
         return 1;
     }
-    if (chdir(argv[1]) < 0)
-    {
-        werror("error: cd: cannot change directory to ");
-        werror(argv[1]);
-        werror("\n");
-        return 1;
-    }
-    return 0;
-}
-int is_builtin(char *cmd)
-{
-    return (strcmp(cmd, "cd") == 0);
-}
+    int	status;
+    pid_t *pid_tab;
+	status = 0;
+    int i = 1;
 
-int exec_builtin(char **argv)
-{
-    if (strcmp(argv[0], "cd") == 0)
-        return cd(argv);
-    return 0;
-}
+	pid_tab = malloc(sizeof(pid_t) * ft_get_pid_nbr(argv));
+	if (!pid_tab)
+	{
+		werror("error: fatal\n");
+		exit(1);
+	}
+	memset(pid_tab, 0, sizeof(pid_t) * ft_get_pid_nbr(argv));
+    if (argv[1] && argv[1][0] != '\0'
+		&& !strcmp(argv[1], "cd") && argv[3] == NULL)
+	{
+		status = cd(argv, i);
+        free(pid_tab);
+        return (status);
+	}
+	else
+	{
+        int     i;
+        int		fd[2];
+        int		tab;
+        int     prev_pipe_read;
+        char *cmd[256];
 
-int main(int argc, char **argv, char **envp)
-{
-    int i = 0;
-    int fd[2];
-    int prev_fd = -1;
-    pid_t pid;
-
-    if (argc < 2)
-        return 0;
-
-    while (argv[i] != NULL)
-    {
-        while (argv[i] && (strcmp(argv[i], "|") == 0 || strcmp(argv[i], ";") == 0))
-            i++;
-        if (!argv[i])
-            break;
-        int cmd_len = 0;
-        while (argv[i + cmd_len] && strcmp(argv[i + cmd_len], "|") != 0 && strcmp(argv[i + cmd_len], ";") != 0)
-            cmd_len++;
-        char **cmd = malloc((cmd_len + 1) * sizeof(char *));
-        if (!cmd)
+        i = 0;
+        tab = 0;
+        while (argv[i] != NULL)
         {
-            werror("error: fatal\n");
-            exit(EXIT_FAILURE);
-        }
-        for (int j = 0; j < cmd_len; j++)
-            cmd[j] = argv[i + j];
-        cmd[cmd_len] = NULL;
-        if (is_builtin(cmd[0]))
-        {
-            if (exec_builtin(cmd))
-                werror("error: fatal\n");
-            free(cmd);
-            i += cmd_len;
-            continue;
-        }
-        if (argv[i + cmd_len] && strcmp(argv[i + cmd_len], "|") == 0)
-        {
-            if (pipe(fd) == -1)
+            while (argv[i] != NULL && (strcmp(argv[i], "|") == 0 || strcmp(argv[i], ";") == 0))
+                i++;
+            if (argv[i] != NULL)
             {
-                werror("error: fatal\n");
-                free(cmd);
-                exit(EXIT_FAILURE);
+                copy_cmd(cmd, argv, &i);
+                if (cmd[0] && !strcmp(cmd[0], "|"))
+                {
+                    if (pipe(fd) == -1)
+                    {
+                        werror("error: fatal\n");
+                        if (prev_pipe_read != -1)
+                            close(prev_pipe_read);
+                        free(pid_tab);
+                        exit(EXIT_FAILURE);
+                    }
+                }
+                pid_tab[tab] = fork();
+                if (pid_tab[tab] == -1)
+                {
+                    werror("error: fatal\n");
+                    if (prev_pipe_read != -1)
+                        close(prev_pipe_read);
+                    if (argv[i])
+                    {
+                        close(fd[0]);
+                        close(fd[1]);
+                    }
+                    free(pid_tab);
+                    exit(EXIT_FAILURE);
+                }
+                if (pid_tab[tab] == 0)
+                {
+                    if (prev_pipe_read != -1)
+                    {
+                        dup2(prev_pipe_read, STDIN_FILENO);
+                        close(prev_pipe_read);
+                    }
+                    if (argv[i] && !strcmp(argv[i], "|"))
+                    {
+                        dup2(fd[1], STDOUT_FILENO);
+                        close(fd[1]);
+                        close(fd[0]);
+                    }
+                    if (!strcmp(cmd[0], "cd"))
+                    {
+                        free(pid_tab);
+                        exit(EXIT_FAILURE);
+                    }
+                    if (execve(cmd[0], cmd, envp) == -1)
+                    {
+                        werror("error: fatal\n");
+                        free(pid_tab);
+                        exit(EXIT_FAILURE);
+                    }
+                }
+                else
+                {
+                    if (prev_pipe_read != -1)
+                        close(prev_pipe_read);
+                    if (argv[i] && !strcmp(argv[i], "|"))
+                    {
+                        close(fd[1]);
+                        prev_pipe_read = fd[0];
+                    }
+                    else
+                    {
+                        prev_pipe_read = -1;
+                    }
+                }
+                tab++;
+                i++;
+                if (argv[i] && !strcmp(argv[i], "|"))
+                    i++;
             }
-        }
-        else
-        {
-            fd[0] = -1;
-            fd[1] = -1;
-        }
-        pid = fork();
-        if (pid == -1)
-        {
-            werror("error: fatal\n");
-            free(cmd);
-            exit(EXIT_FAILURE);
-        }
-
-        if (pid == 0)
-        {
-            if (prev_fd != -1)
+            //wait_pid
+            tab = 0;
+            while (argv[i] != NULL)
             {
-                dup2(prev_fd, STDIN_FILENO);
-                close(prev_fd);
+                if (argv[i] && (!strcmp(argv[i], "|") || !strcmp(argv[i], ";")))
+                {
+                    i++;
+                    continue ;
+                }
+                waitpid(pid_tab[tab], &status, 0);
+                if (WIFEXITED(status) || WIFSIGNALED(status))
+                return (WIFEXITED(status) && WEXITSTATUS(status));
+                i++;
+                tab++;
             }
-            if (fd[1] != -1)
-            {
-                dup2(fd[1], STDOUT_FILENO);
-                close(fd[0]);
-                close(fd[1]);
-            }
-            execve(cmd[0], cmd, envp);
-            werror("error: cannot execute executable_that_failed\n");
-            free(cmd);
-            exit(EXIT_FAILURE);
+            while (argv[i] != NULL && (strcmp(argv[i], "|") == 0 || strcmp(argv[i], ";") == 0))
+                i++;
         }
-        else
-        {
-            if (prev_fd != -1)
-                close(prev_fd);
-            if (fd[1] != -1)
-            {
-                close(fd[1]);
-                prev_fd = fd[0];
-            }
-            else
-            {
-                prev_fd = -1;
-            }
-            waitpid(pid, NULL, 0);
-        }
-
-        free(cmd);
-        i += cmd_len;
-    }
-    return 0;
+	}
+	free(pid_tab);
+    return (WIFEXITED(status) && WEXITSTATUS(status));
 }

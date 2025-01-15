@@ -1,3 +1,9 @@
+#include <unistd.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/wait.h>
+#include <stdlib.h>
+
 void err(char *str)
 {
 	while (*str)
@@ -44,7 +50,39 @@ int	exec(char **argv, int i, char **envp)
 	return WIFEXITED(status) && WEXITSTATUS(status);
 }
 
+
 int main(int argc, char **argv, char **envp)
+{
+    (void)argc; // Ignorer argc, car il n'est pas nécessaire
+    int status = 0;
+
+    while (*argv) // Tant qu'il reste des arguments à traiter
+    {
+        // Passer les séparateurs initiaux éventuels
+        while (*argv && (strcmp(*argv, "|") == 0 || strcmp(*argv, ";") == 0))
+            argv++;
+
+        // Trouver la longueur de la commande actuelle
+        int cmd_len = 0;
+        while (argv[cmd_len] && strcmp(argv[cmd_len], "|") != 0 && strcmp(argv[cmd_len], ";") != 0)
+            cmd_len++;
+
+        // Si une commande valide est trouvée
+        if (cmd_len > 0)
+        {
+            status = exec(argv, cmd_len, envp); // Exécuter la commande
+            argv += cmd_len; // Avancer le pointeur au séparateur ou à la fin
+        }
+
+        // Passer un éventuel séparateur (| ou ;)
+        if (*argv && (strcmp(*argv, "|") == 0 || strcmp(*argv, ";") == 0))
+            argv++;
+    }
+
+    return status;
+}
+
+/*int main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	int i = 0, status = 0;
@@ -59,165 +97,60 @@ int main(int argc, char **argv, char **envp)
 			status = exec(argv, i, envp);
 	}
 	return status;
-}
-
-/***************************************************************** */
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/wait.h>
-#include <stdio.h>
-
-void werror(char *error)
-{
-    write(2, error, strlen(error));
-}
-
-int cd(char **argv)
-{
-    if (!argv[1] || argv[2])
-    {
-        werror("error: cd: bad arguments\n");
-        return 1;
-    }
-    if (chdir(argv[1]) < 0)
-    {
-        werror("error: cd: cannot change directory to ");
-        werror(argv[1]);
-        werror("\n");
-        return 1;
-    }
-    return 0;
-}
-
-int is_builtin(char *cmd)
-{
-    return (strcmp(cmd, "cd") == 0);
-}
-
-int exec_builtin(char **argv)
-{
-    if (strcmp(argv[0], "cd") == 0)
-        return cd(argv);
-    return 0;
-}
+}*/
+/*
 
 int main(int argc, char **argv, char **envp)
 {
-    int i = 1;
-    int fd[2];
-    int prev_fd = -1;
-    pid_t pid;
+    (void)argc; // Ignorer argc, car il n'est pas nécessaire
+    int status = 0;
 
-    if (argc < 2)
-        return 0;
-
-    while (argv[i] != NULL)
+    while (*argv) // Tant qu'il reste des arguments à traiter
     {
-        // Ignorer les séparateurs "|", ";"
-        while (argv[i] && (strcmp(argv[i], "|") == 0 || strcmp(argv[i], ";") == 0))
-            i++;
-        if (!argv[i])
-            break;
+        // Passer les séparateurs initiaux éventuels
+        while (*argv && (strcmp(*argv, "|") == 0 || strcmp(*argv, ";") == 0))
+            argv++;
 
-        // Récupérer la commande et ses arguments
+        // Trouver la longueur de la commande actuelle
         int cmd_len = 0;
-        while (argv[i + cmd_len] && strcmp(argv[i + cmd_len], "|") != 0 && strcmp(argv[i + cmd_len], ";") != 0)
+        while (argv[cmd_len] && strcmp(argv[cmd_len], "|") != 0 && strcmp(argv[cmd_len], ";") != 0)
             cmd_len++;
-        char **cmd = malloc((cmd_len + 1) * sizeof(char *));
-        if (!cmd)
-        {
-            werror("error: fatal\n");
-            exit(EXIT_FAILURE);
-        }
-        for (int j = 0; j < cmd_len; j++)
-            cmd[j] = argv[i + j];
-        cmd[cmd_len] = NULL;
 
-        // Exécuter les commandes intégrées
-        if (is_builtin(cmd[0]))
+        // Si une commande valide est trouvée
+        if (cmd_len > 0)
         {
-            if (exec_builtin(cmd))
-            {
-                free(cmd);
-                return 1;
-            }
-            free(cmd);
-            i += cmd_len;
-            continue;
+            status = exec(argv, cmd_len, envp); // Exécuter la commande
+            argv += cmd_len; // Avancer le pointeur au séparateur ou à la fin
         }
 
-        // Gestion du pipe
-        if (argv[i + cmd_len] && strcmp(argv[i + cmd_len], "|") == 0)
-        {
-            if (pipe(fd) == -1)
-            {
-                werror("error: fatal\n");
-                free(cmd);
-                exit(EXIT_FAILURE);
-            }
-        }
-        else
-        {
-            fd[0] = -1;
-            fd[1] = -1;
-        }
-
-        // Fork et exécution
-        pid = fork();
-        if (pid == -1)
-        {
-            werror("error: fatal\n");
-            free(cmd);
-            exit(EXIT_FAILURE);
-        }
-
-        if (pid == 0) // Processus enfant
-        {
-            if (prev_fd != -1)
-            {
-                if (dup2(prev_fd, STDIN_FILENO) == -1)
-                {
-                    werror("error: fatal\n");
-                    exit(EXIT_FAILURE);
-                }
-                close(prev_fd);
-            }
-            if (fd[1] != -1)
-            {
-                if (dup2(fd[1], STDOUT_FILENO) == -1)
-                {
-                    werror("error: fatal\n");
-                    exit(EXIT_FAILURE);
-                }
-                close(fd[0]);
-                close(fd[1]);
-            }
-            execve(cmd[0], cmd, envp);
-            werror("error: cannot execute ");
-            werror(cmd[0]);
-            werror("\n");
-            free(cmd);
-            exit(EXIT_FAILURE);
-        }
-        else // Processus parent
-        {
-            if (prev_fd != -1)
-                close(prev_fd);
-            if (fd[1] != -1)
-            {
-                close(fd[1]);
-                prev_fd = fd[0];
-            }
-            else
-            {
-                prev_fd = -1;
-            }
-            waitpid(pid, NULL, 0);
-        }
-
-        free(cmd);
-        i += cmd_len;
+        // Passer un éventuel séparateur (| ou ;)
+        if (*argv && (strcmp(*argv, "|") == 0 || strcmp(*argv, ";") == 0))
+            argv++;
     }
-    return 0;
+
+    return status;
 }
+int main(int argc, char **argv, char **envp)
+{
+    (void)argc;
+    int status = 0;
+
+    while (*argv)
+    {
+        while (*argv && (strcmp(*argv, "|") == 0 || strcmp(*argv, ";") == 0))
+            argv++;
+        int cmd_len = 0;
+        while (argv[cmd_len] && strcmp(argv[cmd_len], "|") != 0 && strcmp(argv[cmd_len], ";") != 0)
+            cmd_len++;
+        if (cmd_len > 0)
+        {
+            status = exec(argv, cmd_len, envp);
+            argv += cmd_len;
+        }
+        if (*argv && (strcmp(*argv, "|") == 0 || strcmp(*argv, ";") == 0))
+            argv++;
+    }
+
+    return status;
+}
+*/

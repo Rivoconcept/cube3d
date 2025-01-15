@@ -1,33 +1,5 @@
 #include "examshell.h"
 
-int main(int argc, char **argv, char **envp)
-{
-    int fd[2];
-    int status;
-    int done = 0;
-    pid_t cpid;
-
-    cpid = fork();
-    if (cpid == 0)
-    {
-        close(fd[0]);
-        dup2(fd[1], STDOUT_FILENO);
-        execve(argv[0], argv, envp);
-    }
-    cpid = fork();
-    if (cpid == 0)
-    {
-        close(fd[1]);
-        dup2(fd[0], STDIN_FILENO);
-        execve(argv[0], argv, envp);
-    }
-    close(fd[0]);
-    close(fd[1]);
-    waitpid(-1, &status, 0);
-    waitpid(-1, &status, 0);
-}
-
-
 void	ft_handle_child(t_params *params)
 {
 	int		fd[2];
