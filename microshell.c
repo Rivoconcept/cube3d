@@ -4,23 +4,19 @@
 #include <stdio.h>
 #include <sys/wait.h>
 
-void werror(char *error)
+int ft_strlen(char *str)
 {
-    write(2, error, strlen(error));
+    int i;
+
+    i = 0;
+    while (str[i] != '\0')
+        i++;
+    return (i);
 }
 
-int ft_get_pid_nbr(char **argv)
+void werror(char *error)
 {
-    int nbr = 0;
-    int i = 0;
-
-    while (argv[i] != NULL)
-    {
-        if (strcmp(argv[i], "|") != 0 && strcmp(argv[i], ";") != 0)
-            nbr++;
-        i++;
-    }
-    return nbr;
+    write(2, error, ft_strlen(error));
 }
 
 int cd(char **argv)
@@ -35,9 +31,9 @@ int cd(char **argv)
         werror("error: cd: cannot change directory to ");
         werror(argv[1]);
         werror("\n");
-        return 1;
+        return (1);
     }
-    return 0;
+    return (0);
 }
 
 void copy_cmd(char **cmd, char **argv, int *i)
@@ -51,14 +47,14 @@ void copy_cmd(char **cmd, char **argv, int *i)
     cmd[j] = NULL;
 }
 
-int exec_cmd(char **cmd, char **envp, int prev_pipe_read, int *fd, int has_pipe)
+int exec_cmd(char **cmd, char **envp, int prev_pipe_read, int *fd, int token_pipe)
 {
     if (prev_pipe_read != -1)
     {
         dup2(prev_pipe_read, STDIN_FILENO);
         close(prev_pipe_read);
     }
-    if (has_pipe)
+    if (token_pipe)
     {
         dup2(fd[1], STDOUT_FILENO);
         close(fd[1]);
@@ -81,7 +77,11 @@ int main(int argc, char **argv, char **envp)
         werror("error: fatal\n");
         return 1;
     }
-    int i = 1, status = 0, prev_pipe_read = -1, fd[2];
+    int i = 1;
+    int status = 0;
+    int prev_pipe_read = -1;
+    int token_pipe;
+    int fd[2];
     char *cmd[256];
     pid_t pid;
     while (argv[i])
@@ -97,8 +97,8 @@ int main(int argc, char **argv, char **envp)
                 status = 1;
             continue;
         }
-        int has_pipe = (argv[i] && strcmp(argv[i], "|") == 0);
-        if (has_pipe && pipe(fd) == -1)
+        token_pipe = (argv[i] && strcmp(argv[i], "|") == 0);
+        if (token_pipe && pipe(fd) == -1)
         {
             werror("error: fatal\n");
             return 1;
@@ -111,13 +111,13 @@ int main(int argc, char **argv, char **envp)
         }
         if (pid == 0)
         {
-            exec_cmd(cmd, envp, prev_pipe_read, fd, has_pipe);
+            exec_cmd(cmd, envp, prev_pipe_read, fd, token_pipe);
         }
         else
         {
             if (prev_pipe_read != -1)
                 close(prev_pipe_read);
-            if (has_pipe)
+            if (token_pipe)
             {
                 close(fd[1]);
                 prev_pipe_read = fd[0];

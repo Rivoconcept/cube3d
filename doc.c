@@ -1,5 +1,6 @@
 https://www.flipcode.com/archives/The_Art_of_Demomaking-Issue_11_Particle_Systems.shtml
-
+https://www.youtube.com/watch?v=0Dbp_VrrL3Q
+https://www.youtube.com/watch?v=6b6kE4jC2UY
 
 
 void werror(char *error)
