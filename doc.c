@@ -1,193 +1,51 @@
-https://www.flipcode.com/archives/The_Art_of_Demomaking-Issue_11_Particle_Systems.shtml
-https://www.youtube.com/watch?v=0Dbp_VrrL3Q
-https://www.youtube.com/watch?v=6b6kE4jC2UY
+https://docs.unity3d.com/ScriptReference/Object.Destroy.html
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <conio.h>  // Pour _kbhit et _getch (sur Windows), sinon utilisez une autre méthode selon votre OS
 
-void werror(char *error)
-{
-    write(2, error, strlen(error));
+#define DEG_TO_RAD (M_PI / 180.0)
+
+float rotationSpeed = 45.0f;  // Vitesse de rotation en degrés par seconde
+float currentEulerAngles[3] = {0.0f, 0.0f, 0.0f};  // X, Y, Z
+float x = 0.0f, y = 0.0f, z = 0.0f;  // États des axes X, Y, Z
+
+void updateRotation(float deltaTime) {
+    // Modification de la rotation en fonction des entrées
+    currentEulerAngles[0] += x * deltaTime * rotationSpeed;
+    currentEulerAngles[1] += y * deltaTime * rotationSpeed;
+    currentEulerAngles[2] += z * deltaTime * rotationSpeed;
+
+    // Affichage des valeurs de rotation
+    printf("Rotation X: %.2f Y: %.2f Z: %.2f\n", currentEulerAngles[0], currentEulerAngles[1], currentEulerAngles[2]);
 }
 
-int	ft_get_pid_nbr(char **argv)
-{
-	int		nbr;
-    int     i;
+void handleInput() {
+    if (_kbhit()) {  // Vérifie si une touche est pressée (spécifique à Windows, voir une alternative pour Linux)
+        char key = _getch();  // Récupère la touche pressée
 
-	nbr = 0;
-    i = 0;
-	while (argv[i] != NULL)
-	{
-		if (argv[i] && (strcmp(argv[i], "|") == 0 || strcmp(argv[i], ";") == 0))
-		{
-			i++;
-			continue ;
-		}
-		i++;
-		nbr++;
-	}
-	return (nbr);
-}
-
-int cd(char **argv, int i)
-{
-    if (i != 2)
-    {
-        werror("error: cd: bad arguments\n");
-        return 1;
+        // Inverser les valeurs de x, y, z selon les touches pressées
+        if (key == 'x' || key == 'X') {
+            x = 1.0f - x;
+        } else if (key == 'y' || key == 'Y') {
+            y = 1.0f - y;
+        } else if (key == 'z' || key == 'Z') {
+            z = 1.0f - z;
+        }
     }
-    if (chdir(argv[1]) < 0)
-    {
-        werror("error: cd: cannot change directory to ");
-        werror(argv[1]);
-        werror("\n");
-        return 1;
+}
+
+int main() {
+    // Simuler un deltaTime, en pratique, cela dépendra du temps réel écoulé entre les frames
+    float deltaTime = 0.016f;  // Exemple avec 60 FPS, donc deltaTime = 1 / 60
+
+    while (1) {
+        handleInput();  // Vérifie les entrées clavier
+        updateRotation(deltaTime);  // Met à jour la rotation
+
+        // Attendre un peu pour simuler un FPS stable (ajuster selon besoin)
+        _sleep(16);  // 16ms, pour environ 60 FPS
     }
     return 0;
-}
-
-void copy_cmd(char **cmd, char **argv, int *i)
-{
-    int j = 0;
-    while (argv[*i] != NULL && strcmp(argv[*i], "|") != 0 && strcmp(argv[*i], ";") != 0)
-    {
-        cmd[j] = argv[*i];
-        j++;
-        (*i)++;
-    }
-    cmd[j] = NULL;
-}
-
-int	main(int argc, char **argv, char **envp)
-{
-	if (argc == 1)
-    {
-        werror("error: fatal\n");
-        return 1;
-    }
-    int	status;
-    pid_t *pid_tab;
-	status = 0;
-    int i = 1;
-
-	pid_tab = malloc(sizeof(pid_t) * ft_get_pid_nbr(argv));
-	if (!pid_tab)
-	{
-		werror("error: fatal\n");
-		exit(1);
-	}
-	memset(pid_tab, 0, sizeof(pid_t) * ft_get_pid_nbr(argv));
-    if (argv[1] && argv[1][0] != '\0'
-		&& !strcmp(argv[1], "cd") && argv[3] == NULL)
-	{
-		status = cd(argv, i);
-        free(pid_tab);
-        return (status);
-	}
-	else
-	{
-        int     i;
-        int		fd[2];
-        int		tab;
-        int     prev_pipe_read;
-        char *cmd[256];
-
-        i = 0;
-        tab = 0;
-        while (argv[i] != NULL)
-        {
-            while (argv[i] != NULL && (strcmp(argv[i], "|") == 0 || strcmp(argv[i], ";") == 0))
-                i++;
-            if (argv[i] != NULL)
-            {
-                copy_cmd(cmd, argv, &i);
-                if (cmd[0] && !strcmp(cmd[0], "|"))
-                {
-                    if (pipe(fd) == -1)
-                    {
-                        werror("error: fatal\n");
-                        if (prev_pipe_read != -1)
-                            close(prev_pipe_read);
-                        free(pid_tab);
-                        exit(EXIT_FAILURE);
-                    }
-                }
-                pid_tab[tab] = fork();
-                if (pid_tab[tab] == -1)
-                {
-                    werror("error: fatal\n");
-                    if (prev_pipe_read != -1)
-                        close(prev_pipe_read);
-                    if (argv[i])
-                    {
-                        close(fd[0]);
-                        close(fd[1]);
-                    }
-                    free(pid_tab);
-                    exit(EXIT_FAILURE);
-                }
-                if (pid_tab[tab] == 0)
-                {
-                    if (prev_pipe_read != -1)
-                    {
-                        dup2(prev_pipe_read, STDIN_FILENO);
-                        close(prev_pipe_read);
-                    }
-                    if (argv[i] && !strcmp(argv[i], "|"))
-                    {
-                        dup2(fd[1], STDOUT_FILENO);
-                        close(fd[1]);
-                        close(fd[0]);
-                    }
-                    if (!strcmp(cmd[0], "cd"))
-                    {
-                        free(pid_tab);
-                        exit(EXIT_FAILURE);
-                    }
-                    if (execve(cmd[0], cmd, envp) == -1)
-                    {
-                        werror("error: fatal\n");
-                        free(pid_tab);
-                        exit(EXIT_FAILURE);
-                    }
-                }
-                else
-                {
-                    if (prev_pipe_read != -1)
-                        close(prev_pipe_read);
-                    if (argv[i] && !strcmp(argv[i], "|"))
-                    {
-                        close(fd[1]);
-                        prev_pipe_read = fd[0];
-                    }
-                    else
-                    {
-                        prev_pipe_read = -1;
-                    }
-                }
-                tab++;
-                i++;
-                if (argv[i] && !strcmp(argv[i], "|"))
-                    i++;
-            }
-            //wait_pid
-            tab = 0;
-            while (argv[i] != NULL)
-            {
-                if (argv[i] && (!strcmp(argv[i], "|") || !strcmp(argv[i], ";")))
-                {
-                    i++;
-                    continue ;
-                }
-                waitpid(pid_tab[tab], &status, 0);
-                if (WIFEXITED(status) || WIFSIGNALED(status))
-                return (WIFEXITED(status) && WEXITSTATUS(status));
-                i++;
-                tab++;
-            }
-            while (argv[i] != NULL && (strcmp(argv[i], "|") == 0 || strcmp(argv[i], ";") == 0))
-                i++;
-        }
-	}
-	free(pid_tab);
-    return (WIFEXITED(status) && WEXITSTATUS(status));
 }
