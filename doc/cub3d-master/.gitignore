@@ -1,0 +1,22 @@
+# Project exclude paths
+/cmake-build-debug/
+/minilibx_opengl_20191021/
+/minilibx_mms_20200219/
+/minilibx_opengl/
+/minilibx_mms/
+/en.subject.pdf
+/*.o
+/*.cub*
+/cub3d
+/GNL/*.o
+/parser/*.o
+/parser_bonus/*.o
+/libft/
+/libmlx.dylib
+/render/*.o
+/render_bonus/*.o
+parser.idea
+.idea/*
+/screenshot.txt
+/screenshot.bmp
+*zip
