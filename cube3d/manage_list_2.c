@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:37:35 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/20 17:47:28 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/21 19:22:36 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,28 @@ int	count_element_list(t_line *head)
 	return (count);
 }
 
+void update_col(int count, int *col)
+{
+	if (*col < count)
+	{
+		*col = count;
+	}
+}
+
 int	count_element_list_mapcol(t_map *head)
 {
+	int		col;
 	int		count;
 	t_map	*current_map;
 	t_line	*current_line;
 
+	col = 0;
 	count = 0;
 	current_line = NULL;
 	current_map = head;
 	while (current_map != NULL)
 	{
+		count = 0;
 		current_line = current_map->line_value.line;
 		while (current_line != NULL)
 		{
@@ -49,10 +60,11 @@ int	count_element_list_mapcol(t_map *head)
 			count++;
 			current_line = current_line->next;
 		}
+		if (col < count)
+			col = count;
 		current_map = current_map->next;
-		break ;
 	}
-	return (count);
+	return (col);
 }
 
 int	count_element_list_mapline(t_map *head)

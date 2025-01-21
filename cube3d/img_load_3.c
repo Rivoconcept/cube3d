@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:55:54 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/20 17:58:11 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/21 18:29:02 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	load_img_ground(t_params *params)
 	}
 }
 
-void	load_img_flower_one(t_params *params)
+void	load_wall_img(t_params *params)
 {
 	int		img_width;
 	int		img_height;
@@ -72,17 +72,3 @@ void	load_img_flower_one(t_params *params)
 	}
 }
 
-void	load_img_flower_two(t_params *params)
-{
-	int	img_width;
-	int	img_height;
-
-	params->img.flower_two = mlx_xpm_file_to_image(params->mlx_connexion, \
-	"./image/flower_two.xpm", &img_width, &img_height);
-	if (params->img.flower_two == NULL)
-	{
-		printf("Failed to load image : flower_two.xpm\n");
-		cleanup(params);
-		exit(EXIT_FAILURE);
-	}
-}

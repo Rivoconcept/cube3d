@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 13:55:48 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/21 07:56:27 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/21 18:29:50 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -147,8 +147,7 @@ void					load_img_wall_down_center(t_params *params);
 void					load_img_wall_down_right(t_params *params);
 void					load_img_player(t_params *params);
 void					load_img_collectible(t_params *params);
-void					load_img_flower_one(t_params *params);
-void					load_img_flower_two(t_params *params);
+void					load_wall_img(t_params *params);
 void					load_img_ground(t_params *params);
 void					load_img_exit_close(t_params *params);
 void					load_img_exit_open(t_params *params);

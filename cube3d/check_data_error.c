@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 11:08:42 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/20 18:00:54 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/21 18:53:09 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	check_intrus_data(t_map *map)
 		{
 			data = current_line->cell_value.value;
 			if (data != 80 && data != 69 && data != 67 && data != 48 \
-				&& data != 49 && data != 10 && data != 0)
+				&& data != 49 && data != 10 && data != 0 && data != 32)
 				return (1);
 			current_line = current_line->next;
 		}
