@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 11:08:07 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/21 16:44:03 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/22 16:38:17 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	operation_up(t_map *map, t_position *pos, \
 	while (1)
 	{
 		pos->value.y = current_map->line_value.index - u;
-		if (find_value(map, pos) != 49 && find_value(map, pos) != 'P')
+		if (find_value(map, pos) != 49 && pos->value.y != 0 \
+			&& find_value(map, pos) != 'P')
 			change_value(map, pos, 'P');
 		else
 			break ;
@@ -42,7 +43,8 @@ void	operation_down(t_map *map, t_position *pos, \
 	while (1)
 	{
 		pos->value.y = current_map->line_value.index + u;
-		if (find_value(map, pos) != 49 && find_value(map, pos) != 'P')
+		if (pos->value.y != count_element_list_mapline(map) \
+			&& find_value(map, pos) != 'P' && find_value(map, pos) != 49)
 			change_value(map, pos, 'P');
 		else
 			break ;
@@ -61,7 +63,8 @@ void	operation_left(t_map *map, t_position *pos, \
 	while (1)
 	{
 		pos->value.x = current_line->cell_value.index - u;
-		if (find_value(map, pos) != 49 && find_value(map, pos) != 'P')
+		if (find_value(map, pos) != 49 && pos->value.x != 0 \
+			&& find_value(map, pos) != 'P')
 			change_value(map, pos, 'P');
 		else
 			break ;
@@ -80,7 +83,8 @@ void	operation_right(t_map *map, t_position *pos, \
 	while (1)
 	{
 		pos->value.x = current_line->cell_value.index + u;
-		if (find_value(map, pos) != 49 && find_value(map, pos) != 'P')
+		if (find_value(map, pos) != 49 && pos->value.x != '\n' \
+			&& find_value(map, pos) != 'P')
 			change_value(map, pos, 'P');
 		else
 			break ;

@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 18:35:06 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/20 17:57:50 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/22 16:40:00 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,10 @@ void	put_ground(t_params *params, t_map *map, t_line *line)
 	int			height;
 	int			width;
 
-	height = count_element_list_mapline(params->map) - 1;
+	height = count_element_list_mapline(params->map);
 	width = count_element_list_mapcol(params->map);
-	if (map->line_value.index > 0 && line->cell_value.value == '0' \
-		&& map->line_value.index <= height && line->cell_value.index > 0 \
-		&& line->cell_value.index < width - 1)
+	if (line->cell_value.value == '0' && map->line_value.index <= height \
+		&& line->cell_value.index < width)
 	{
 		params->x = line->cell_value.index;
 		params->y = map->line_value.index;
