@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 13:55:48 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/21 18:29:50 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/22 17:50:03 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <stdbool.h>
 # include <string.h>
 # include <sys/types.h>
 # include <sys/wait.h>

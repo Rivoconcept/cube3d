@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 11:08:42 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/21 18:53:09 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/22 18:28:08 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	check_extension(char *str)
 		size--;
 	}
 	temp[i] = '\0';
-	if (ft_strncmp(temp, "reb.", 4) == 0 && temp[i - 1] != '/')
+	if (ft_strncmp(temp, "buc.", 4) == 0 && temp[i - 1] != '/')
 		return (1);
 	return (0);
 }

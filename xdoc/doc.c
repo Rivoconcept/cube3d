@@ -4,6 +4,8 @@ https://www.youtube.com/watch?v=gYRrGTC7GtA&list=PLCWsH9Tj9oWyDM4W43VMj5yo2PdyYM
 https://www.youtube.com/watch?v=xZe0ZYPzxkg
 https://www.youtube.com/watch?v=ebzlMOw79Yw
 https://www.youtube.com/watch?v=2beZWqv_gGA
+https://www.youtube.com/watch?v=g8p7nAbDz6Y
+https://www.youtube.com/watch?v=G9i78WoBBIU
 
 #include <stdio.h>
 #include <stdlib.h>
