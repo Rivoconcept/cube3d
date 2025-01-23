@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:37:35 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/20 17:47:24 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/23 16:36:43 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,12 @@ t_params	*create_list_param(void)
 	new_params->mlx_connexion = NULL;
 	new_params->win_open = NULL;
 	new_params->pos = NULL;
+	new_params->no = NULL;
+	new_params->so = NULL;
+	new_params->we = NULL;
+	new_params->ea = NULL;
+	new_params->f = NULL;
+	new_params->c = NULL;
 	new_params->x = 0;
 	new_params->y = 0;
 	new_params->win_width = 0;

@@ -1,4 +1,4 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
@@ -6,16 +6,16 @@
 #    By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/22 08:39:35 by rhanitra          #+#    #+#              #
-#    Updated: 2025/01/23 08:04:36 by rhanitra         ###   ########.fr        #
+#    Updated: 2025/01/23 17:34:16 by rhanitra         ###   ########.fr        #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
 CUB3D = main.c init_game.c manage_list_1.c manage_list_2.c movement_2.c \
 		manage_list_3.c check_data_error.c check_wall_error.c cleanup_1.c \
 		cleanup_2.c check_flood_fill.c check_error.c search_function.c \
 		img_load_1.c img_load_2.c img_load_3.c img_load_4.c img_put_1.c \
 		img_put_2.c img_put_3.c img_put_4.c img_put_5.c put_images.c \
-		movement_1.c check_error_wall_1.c check_error_wall_2.c
+		movement_1.c check_error_wall_1.c check_error_wall_2.c ft_utils.c
  
 DIR_CUB3D = ./cube3d/
 SRC_CUB3D= $(addprefix $(DIR_CUB3D),$(CUB3D))

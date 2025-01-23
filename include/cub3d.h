@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 13:55:48 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/23 13:35:33 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/23 19:19:53 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -97,6 +97,12 @@ typedef struct s_params
 	t_position			*pos;
 	void				*mlx_connexion;
 	void				*win_open;
+	char				*no;
+	char				*so;
+	char				*we;
+	char				*ea;
+	char				*f;
+	char				*c;
 	int					x;
 	int					y;
 	int					win_width;
@@ -187,4 +193,9 @@ int is_wall_right(t_position *pos, t_map *map);
 int is_wall_up(t_position *pos, t_map *map);
 int is_wall_down(t_position *pos, t_map *map);
 
+int	ft_is_space(char c);
+int	find_char(char *str, char c);
+int	is_only_space(char *str);
+int check_error_config(t_params *params);
+int is_all_config_set(t_params *params);
 #endif
