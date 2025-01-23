@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 13:55:48 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/22 17:50:03 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/23 13:35:33 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -180,5 +180,11 @@ void					clean_img_3(t_params *params);
 void					clean_img_4(t_params *params);
 void					clean_img_5(t_params *params);
 void					cleanup(t_params *params);
+
+
+int is_wall_left(t_position *pos, t_map *map);
+int is_wall_right(t_position *pos, t_map *map);
+int is_wall_up(t_position *pos, t_map *map);
+int is_wall_down(t_position *pos, t_map *map);
 
 #endif
