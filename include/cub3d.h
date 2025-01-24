@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 13:55:48 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/24 11:00:24 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/24 18:26:35 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -195,7 +195,14 @@ int is_wall_down(t_position *pos, t_map *map);
 
 int	ft_is_space(char c);
 int	find_char(char *str, char c);
-int	is_only_space(char *str);
+int	is_line_map(char *str);
 int check_error_config(t_params *params);
 int is_all_config_set(t_params *params);
+
+
+
+/***************************************** */
+void    print_map(t_params *params);
+void 	print_config(t_params *params);
+void    print_line(t_line *line);
 #endif

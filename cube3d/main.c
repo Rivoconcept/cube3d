@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 10:30:13 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/24 15:56:13 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/24 19:07:57 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
@@ -44,8 +44,10 @@ void	check_map(char *argv, t_params *params)
 		perror("Impossible d'initialiser la carte !");
 		exit(EXIT_FAILURE);
 	}
-	if (count_data_game(map, 'P') > 1 || count_data_game(map, 'E') > 1 \
-		|| check_error_wall(map) || check_intrus_data(map) || check_init_road(map))
+	/*if (count_data_game(map, 'P') > 1 || count_data_game(map, 'E') > 1 \
+		|| check_error_wall(map) || check_intrus_data(map) || check_init_road(map)
+		|| check_error_config(params))*/
+	if (check_error_config(params))
 	{
 		perror("La carte présente une ou plusieures erreurs");
 		free_list_map(map);

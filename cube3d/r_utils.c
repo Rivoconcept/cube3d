@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 10:25:12 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/23 19:34:48 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/24 18:31:29 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,20 @@ int	find_char(char *str, char c)
 	return (0);
 }
 
-int	is_only_space(char *str)
+int	is_line_map(char *str)
 {
 	int	i;
 
 	i = 0;
 	if (!str)
 		return (0);
-	while (str[i] != '\0' && str[i] != '\n' && ft_is_space(str[i]))
+	if (str[i] == '\n')
+	{
+		return (0);
+	}
+	while (str[i] != '\n' && (str[i] == 32 || str[i] == 49))
 		i++;
-	if (str[i] == '\n' || str[i] == '\0')
+	if (str[i] == '\n')
 	{
 		return (1);
 	}

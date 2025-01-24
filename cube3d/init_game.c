@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 11:07:54 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/24 16:03:25 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/24 19:05:15 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
@@ -71,18 +71,20 @@ void put_data_config(t_params *params, char *gnl, int *i)
 		params->ea = ft_strdup(ft_strchr(gnl, '.'));
 	if (gnl[*i] == 'F')
 	{
+		(*i)++;
 		while (ft_is_space(gnl[*i]))
 			(*i)++;
 		params->f = ft_strdup(&gnl[*i]);
 	}
 	if (gnl[*i] == 'C')
 	{
+		(*i)++;
 		while (ft_is_space(gnl[*i]))
 			(*i)++;
 		params->c = ft_strdup(&gnl[*i]);
 	}
 }
-int	init_config(int *flag, char *gnl, t_params *params)
+void	init_config(char *gnl, t_params *params)
 {
 	int		i;
 
@@ -90,24 +92,7 @@ int	init_config(int *flag, char *gnl, t_params *params)
 	while (ft_is_space(gnl[i]))
 		i++;
 	put_data_config(params, gnl, &i);
-	if (check_error_config(params) && is_all_config_set(params))
-		*flag = 1;
-	return (0);
 }
-int validate_map_line(char *line)
-{
-	int i = 0;
-	while (line[i])
-	{
-		if (line[i] != '1' && line[i] != '0' && line[i] != 'N' &&
-			line[i] != 'S' && line[i] != 'E' && line[i] != 'W' &&
-			!ft_is_space(line[i]))
-			return (0); // Ligne invalide
-		i++;
-	}
-	return (1); // Ligne valide
-}
-
 
 t_map *put_map(int fd, t_params *params)
 {
@@ -119,21 +104,20 @@ t_map *put_map(int fd, t_params *params)
 	line = NULL;
 	map = NULL;
 	flag = 0;
-	(void)params;
 	gnl = get_next_line(fd);
 	while (gnl != NULL)
 	{
 		line = NULL;
 		if (!flag)
-			init_config(&flag, gnl, params);
-		if (flag && !is_only_space(gnl))
+			init_config(gnl, params);
+		if (is_line_map(gnl) && is_all_config_set(params))
+			flag = 1;
+		if (flag)
 		{
 			initialize_line(&line, gnl);
-			free(gnl);
 			initialize_map(&map, line);
 		}
-		else
-			free(gnl);
+		free(gnl);
 		gnl = get_next_line(fd);
 	}
 	return (map);
