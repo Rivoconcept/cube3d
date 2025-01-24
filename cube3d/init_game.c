@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 11:07:54 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/23 19:21:38 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/23 20:04:10 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,6 @@ void	initialize_map(t_map **head, t_line *line)
 	put_ranks_map(head);
 }
 
-/*NO ./path_to_the_north_texture
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
-F 220,100,0
-C 225,30,0*/
-
 void put_data_config(t_params *params, char *gnl, int *i)
 {
 	if (gnl[*i] == 'N' && gnl[*i + 1] == 'O')
@@ -98,25 +91,27 @@ int	init_config(int *flag, char *gnl, t_params *params)
 		i++;
 	put_data_config(params, gnl, &i);
 	if (check_error_config(params) && is_all_config_set(params))
-		flag = 1;
+		*flag = 1;
 	return (0);
 }
 
-t_map *put_map(int fd, int *flag)
+t_map *put_map(int fd, t_params *params)
 {
 	t_map	*map;
 	t_line	*line;
 	char	*gnl;
+	int 	flag;
 
 	line = NULL;
 	map = NULL;
+	flag = 0;
 	gnl = get_next_line(fd);
 	while (gnl != NULL)
 	{
 		line = NULL;
-		if (!*flag)
-
-		if (*flag)
+		if (!flag)
+			init_config(&flag, gnl, params);
+		if (flag)
 		{
 			initialize_line(&line, gnl);
 			free(gnl);
@@ -127,20 +122,18 @@ t_map *put_map(int fd, int *flag)
 	return (map);
 }
 
-t_map	*load_map(char *argv)
+t_map	*load_map(char *argv, t_params *params)
 {
 	int		fd;
-	int		flag;
 	t_map	*map;
 
-	flag = 0;
 	fd = open(argv, O_RDONLY);
 	if (fd == -1)
 	{
 		printf("Error\nErreur lors de l'ouverture du fichier");
 		exit(EXIT_FAILURE);
 	}
-	map = init_config(fd, &flag);
+	map = put_map(fd, params);
 	close(fd);
 	return (map);
 }

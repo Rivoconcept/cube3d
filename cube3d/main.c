@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 10:30:13 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/22 18:33:23 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/23 20:03:15 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ void	mlx_window_open(t_params *params)
 	}
 }
 
-void	check_map(char *argv)
+void	check_map(char *argv, t_params *params)
 {
 	t_map	*map;
 
-	map = load_map(argv);
+	map = load_map(argv, params);
 	if (!map)
 	{
 		perror("Impossible d'initialiser la carte !");
@@ -60,18 +60,10 @@ void	check_map(char *argv)
 	free_list_map(map);
 }
 
-void	so_long_initializer(char *argv)
+void	so_long_initializer(char *argv, t_params *params)
 {
-	t_params	*params;
-
-	params = create_list_param();
-	if (!params)
-	{
-		perror("Erreur d'allocation de mémoire pour le paramètre");
-		exit(EXIT_FAILURE);
-	}
 	mlx_initialization(params);
-	params->map = load_map(argv);
+	params->map = load_map(argv, params);
 	if (!params->map)
 	{
 		perror("Failed to load map");
@@ -89,6 +81,14 @@ void	so_long_initializer(char *argv)
 
 int	main(int argc, char **argv)
 {
+	t_params	*params;
+
+	params = create_list_param();
+	if (!params)
+	{
+		perror("Erreur d'allocation de mémoire pour le paramètre");
+		exit(EXIT_FAILURE);
+	}
 	if (argc != 2 || (argc == 2 && !argv[1][0]) || !check_extension(argv[1]))
 	{
 		perror("Invalid parameter");
@@ -96,8 +96,8 @@ int	main(int argc, char **argv)
 	}
 	else
 	{
-		check_map(argv[1]);
-		so_long_initializer(argv[1]);
+		check_map(argv[1], params);
+		so_long_initializer(argv[1], params);
 	}
 	return (0);
 }

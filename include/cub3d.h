@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 13:55:48 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/23 19:19:53 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/23 19:55:40 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void					change_value(t_map *map, t_position *pos, char c);
 void					move_pass(t_params *params, t_position *pos, int token);
 void					initialize_map(t_map **head, t_line *line);
 void					initialize_line(t_line **head, char *argv);
-t_map					*load_map(char *argv);
+t_map	*load_map(char *argv, t_params *params);
 void					free_list_position(t_position *head);
 void					free_list_map(t_map *head_map);
 
@@ -178,7 +178,7 @@ void					put_img_you_win(t_params *params);
 void					put_img_wall(t_params *params);
 void					put_img_data(t_params *params);
 
-void					so_long_initializer(char *argv);
+void	so_long_initializer(char *argv);
 
 void					clean_img_1(t_params *params);
 void					clean_img_2(t_params *params);

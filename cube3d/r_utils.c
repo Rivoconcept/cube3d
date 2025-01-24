@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 10:25:12 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/23 19:17:25 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/23 19:34:48 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	is_only_space(char *str)
 		return (0);
 	while (str[i] != '\0' && str[i] != '\n' && ft_is_space(str[i]))
 		i++;
-	if (str[i] == '\n' || str[i] == '\0');
+	if (str[i] == '\n' || str[i] == '\0')
 	{
 		return (1);
 	}
@@ -125,6 +125,7 @@ int check_error_color(char *color)
 			free_array(tab);
 			return (1);
 		}
+		i++;
 	}
 	free_array(tab);
 	return (0);
