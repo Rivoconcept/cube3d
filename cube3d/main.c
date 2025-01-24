@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 10:30:13 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/23 20:03:15 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:56:13 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../include/cub3d.h"
 
@@ -51,12 +51,12 @@ void	check_map(char *argv, t_params *params)
 		free_list_map(map);
 		exit(EXIT_FAILURE);
 	}
-	else if (check_flood_fill(map))
+	/*else if (check_flood_fill(map))
 	{
 		perror("Un ou plusieurs chemin bloque(s). Le jeu est impossible !");
 		free_list_map(map);
 		exit(EXIT_FAILURE);
-	}
+	}*/
 	free_list_map(map);
 }
 

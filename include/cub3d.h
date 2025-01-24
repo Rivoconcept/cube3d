@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 13:55:48 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/23 19:55:40 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/24 11:00:24 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -178,7 +178,7 @@ void					put_img_you_win(t_params *params);
 void					put_img_wall(t_params *params);
 void					put_img_data(t_params *params);
 
-void	so_long_initializer(char *argv);
+void	so_long_initializer(char *argv, t_params *params);
 
 void					clean_img_1(t_params *params);
 void					clean_img_2(t_params *params);

@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 11:07:54 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/23 20:04:10 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/24 16:03:25 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../include/cub3d.h"
 
@@ -94,6 +94,20 @@ int	init_config(int *flag, char *gnl, t_params *params)
 		*flag = 1;
 	return (0);
 }
+int validate_map_line(char *line)
+{
+	int i = 0;
+	while (line[i])
+	{
+		if (line[i] != '1' && line[i] != '0' && line[i] != 'N' &&
+			line[i] != 'S' && line[i] != 'E' && line[i] != 'W' &&
+			!ft_is_space(line[i]))
+			return (0); // Ligne invalide
+		i++;
+	}
+	return (1); // Ligne valide
+}
+
 
 t_map *put_map(int fd, t_params *params)
 {
@@ -105,18 +119,21 @@ t_map *put_map(int fd, t_params *params)
 	line = NULL;
 	map = NULL;
 	flag = 0;
+	(void)params;
 	gnl = get_next_line(fd);
 	while (gnl != NULL)
 	{
 		line = NULL;
 		if (!flag)
 			init_config(&flag, gnl, params);
-		if (flag)
+		if (flag && !is_only_space(gnl))
 		{
 			initialize_line(&line, gnl);
 			free(gnl);
 			initialize_map(&map, line);
 		}
+		else
+			free(gnl);
 		gnl = get_next_line(fd);
 	}
 	return (map);
