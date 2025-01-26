@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:37:35 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/23 16:36:43 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/26 15:34:53 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_map	*create_list_map(t_line *line)
 
 	if (line == NULL)
 	{
-		fprintf(stderr, "Error: La Liste Line est vide.\n");
+		perror_msg("The list line is null", NULL);
 		exit(EXIT_FAILURE);
 	}
 	new_element = (t_map *)malloc(sizeof(t_map));

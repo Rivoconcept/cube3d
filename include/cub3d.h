@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 13:55:48 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/24 18:26:35 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/26 15:34:59 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void					change_value(t_map *map, t_position *pos, char c);
 void					move_pass(t_params *params, t_position *pos, int token);
 void					initialize_map(t_map **head, t_line *line);
 void					initialize_line(t_line **head, char *argv);
-t_map	*load_map(char *argv, t_params *params);
+t_map	*load_map(int fd, t_params *params);
 void					free_list_position(t_position *head);
 void					free_list_map(t_map *head_map);
 
@@ -178,7 +178,7 @@ void					put_img_you_win(t_params *params);
 void					put_img_wall(t_params *params);
 void					put_img_data(t_params *params);
 
-void	so_long_initializer(char *argv, t_params *params);
+void	so_long_initializer(int fd, t_params *params);
 
 void					clean_img_1(t_params *params);
 void					clean_img_2(t_params *params);
@@ -194,14 +194,17 @@ int is_wall_up(t_position *pos, t_map *map);
 int is_wall_down(t_position *pos, t_map *map);
 
 int	ft_is_space(char c);
+int is_only_space(char *str);
 int	find_char(char *str, char c);
 int	is_line_map(char *str);
 int check_error_config(t_params *params);
 int is_all_config_set(t_params *params);
 
-
+char	*copy_config(char *gnl, int *i);
+int	perror_msg(char *error, char *var);
 
 /***************************************** */
+
 void    print_map(t_params *params);
 void 	print_config(t_params *params);
 void    print_line(t_line *line);

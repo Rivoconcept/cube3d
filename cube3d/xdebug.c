@@ -2,12 +2,12 @@
 
 void print_config(t_params *params)
 {
-    printf("no: %s", params->no);
-    printf("so: %s", params->so);
-    printf("we: %s", params->we);
-    printf("ea: %s", params->ea);
-    printf("f: %s", params->f);
-    printf("c: %s", params->c);
+    printf("no: %s\n", params->no);
+    printf("so: %s\n", params->so);
+    printf("we: %s\n", params->we);
+    printf("ea: %s\n", params->ea);
+    printf("f: %s\n", params->f);
+    printf("c: %s\n", params->c);
 }
 
 void    print_line(t_line *line)

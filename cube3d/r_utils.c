@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 10:25:12 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/24 18:31:29 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/26 13:15:47 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,20 @@ int	find_char(char *str, char c)
 			return (1);
 		i++;
 	}
+	return (0);
+}
+
+int is_only_space(char *str)
+{
+	int		i;
+
+	i = 0;
+	if (!str || str[0] == '\n' || str[0] == '\0')
+		return (0);
+	while(ft_is_space(str[i]))
+		i++;
+	if (str[i] == '\n' || str[i] == '\0')
+		return (1);
 	return (0);
 }
 
@@ -148,5 +162,15 @@ int check_error_config(t_params *params)
 		return (1);
 	}
 	return (0);
+}
+
+int	perror_msg(char *error, char *var)
+{
+	ft_putstr_fd("Error\n", 2);
+	ft_putstr_fd(var, 2);
+	if (error)
+		ft_putstr_fd(error, 2);
+	ft_putstr_fd("\n", 2);
+	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 11:07:54 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/24 19:05:15 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/26 16:14:39 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,42 +59,75 @@ void	initialize_map(t_map **head, t_line *line)
 	put_ranks_map(head);
 }
 
-void put_data_config(t_params *params, char *gnl, int *i)
+char	*copy_config(char *gnl, int *i)
+{
+	int		j;
+	int		size;
+	char	*config;
+
+	j = 0;
+	size = 0;
+	while (ft_isalpha(gnl[*i]))
+		(*i)++;
+	while (ft_is_space(gnl[*i]))
+		(*i)++;
+	size = (int)ft_strlen(gnl) - *i;
+	config = (char *)malloc(sizeof(char) * (size + 1));
+	if (!config)
+    {
+        perror("Failed to allocate memory for config");
+        exit(EXIT_FAILURE);
+    }
+	while (gnl[*i] && gnl[*i] != '\0' && gnl[*i] != '\n')
+	{
+		config[j] = gnl[*i];
+		j++;
+		(*i)++;
+	}
+	config[j] = '\0';
+	return (config);
+}
+
+int put_data_config(t_params *params, char *gnl, int *i)
 {
 	if (gnl[*i] == 'N' && gnl[*i + 1] == 'O')
-		params->no = ft_strdup(ft_strchr(gnl, '.'));
+		if (!(params->no = copy_config(gnl, i)))
+			return (perror_msg("Allocation Failed on ", params->no));
 	if (gnl[*i] == 'S' && gnl[*i + 1] == 'O')
-		params->so = ft_strdup(ft_strchr(gnl, '.'));
+		if (!(params->so = copy_config(gnl, i)))
+			return (perror_msg("Allocation Failed on ", params->so));		
 	if (gnl[*i] == 'W' && gnl[*i + 1] == 'E')
-		params->we = ft_strdup(ft_strchr(gnl, '.'));
+		if (!(params->we = copy_config(gnl, i)))
+			return (perror_msg("Allocation Failed on ", params->we));
 	if (gnl[*i] == 'E' && gnl[*i + 1] == 'A')
-		params->ea = ft_strdup(ft_strchr(gnl, '.'));
+		if (!(params->ea = copy_config(gnl, i)))
+			return (perror_msg("Allocation Failed on ", params->ea));
 	if (gnl[*i] == 'F')
-	{
-		(*i)++;
-		while (ft_is_space(gnl[*i]))
-			(*i)++;
-		params->f = ft_strdup(&gnl[*i]);
-	}
+		if (!(params->f = copy_config(gnl, i)))
+			return (perror_msg("Allocation Failed on ", params->f));
 	if (gnl[*i] == 'C')
-	{
-		(*i)++;
-		while (ft_is_space(gnl[*i]))
-			(*i)++;
-		params->c = ft_strdup(&gnl[*i]);
-	}
+		if (!(params->c = copy_config(gnl, i)))
+			return (perror_msg("Allocation Failed on ", params->c));
+	return (0);
 }
-void	init_config(char *gnl, t_params *params)
+int	init_config(int *flag, char *gnl, t_params *params)
 {
 	int		i;
 
 	i = 0;
-	while (ft_is_space(gnl[i]))
-		i++;
-	put_data_config(params, gnl, &i);
+	if (!*flag && !is_only_space(gnl))
+	{
+		while (ft_is_space(gnl[i]))
+			i++;
+		if (put_data_config(params, gnl, &i))
+			return (1);
+	}
+	if (!is_only_space(gnl) && is_all_config_set(params))
+		*flag = 1;
+	return (0);
 }
 
-t_map *put_map(int fd, t_params *params)
+t_map *load_map(int fd, t_params *params)
 {
 	t_map	*map;
 	t_line	*line;
@@ -108,10 +141,8 @@ t_map *put_map(int fd, t_params *params)
 	while (gnl != NULL)
 	{
 		line = NULL;
-		if (!flag)
-			init_config(gnl, params);
-		if (is_line_map(gnl) && is_all_config_set(params))
-			flag = 1;
+		if (init_config(&flag, gnl, params))
+			exit(EXIT_FAILURE);
 		if (flag)
 		{
 			initialize_line(&line, gnl);
@@ -120,21 +151,5 @@ t_map *put_map(int fd, t_params *params)
 		free(gnl);
 		gnl = get_next_line(fd);
 	}
-	return (map);
-}
-
-t_map	*load_map(char *argv, t_params *params)
-{
-	int		fd;
-	t_map	*map;
-
-	fd = open(argv, O_RDONLY);
-	if (fd == -1)
-	{
-		printf("Error\nErreur lors de l'ouverture du fichier");
-		exit(EXIT_FAILURE);
-	}
-	map = put_map(fd, params);
-	close(fd);
 	return (map);
 }
