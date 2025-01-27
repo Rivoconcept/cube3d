@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 11:07:54 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/27 21:35:04 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/27 22:17:48 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,42 +88,38 @@ char	*copy_config(char *gnl, int *i)
 	return (config);
 }
 
+int in_base(char *gnl)
+{
+	return ((gnl[0] == 'N' && gnl[1] == 'O') \
+		|| (gnl[0] == 'S' && gnl[1] == 'O') \
+		|| (gnl[0] == 'W' && gnl[1] == 'E') \
+		|| (gnl[0] == 'E' && gnl[1] == 'A') \
+		|| (gnl[0] == 'F' && gnl[1] == ' ') \
+		|| (gnl[0] == 'C' && gnl[1] == ' '));
+}
+
 int put_data_config(t_params *params, char *gnl, int *i)
 {
+	if (!in_base(gnl))
+		return (perror_msg("Data error: ", gnl));
 	if (gnl[*i] == 'N' && gnl[*i + 1] == 'O')
-	{
 		if (!(params->no = copy_config(gnl, i)))
 			return (perror_msg("Allocation Failed on ", params->no));
-	}
-	else if (gnl[*i] == 'S' && gnl[*i + 1] == 'O')
-	{
+	if (gnl[*i] == 'S' && gnl[*i + 1] == 'O')
 		if (!(params->so = copy_config(gnl, i)))
 			return (perror_msg("Allocation Failed on ", params->so));		
-	}
-	else if (gnl[*i] == 'W' && gnl[*i + 1] == 'E')
-	{
+	if (gnl[*i] == 'W' && gnl[*i + 1] == 'E')
 		if (!(params->we = copy_config(gnl, i)))
 			return (perror_msg("Allocation Failed on ", params->we));
-	}
-	else if (gnl[*i] == 'E' && gnl[*i + 1] == 'A')
-	{
+	if (gnl[*i] == 'E' && gnl[*i + 1] == 'A')
 		if (!(params->ea = copy_config(gnl, i)))
 			return (perror_msg("Allocation Failed on ", params->ea));
-	}
-	else if (gnl[*i] == 'F')
-	{
+	if (gnl[*i] == 'F')
 		if (!(params->f = copy_config(gnl, i)))
 			return (perror_msg("Allocation Failed on ", params->f));
-	}
-	else if (gnl[*i] == 'C')
-	{
+	if (gnl[*i] == 'C')
 		if (!(params->c = copy_config(gnl, i)))
 			return (perror_msg("Allocation Failed on ", params->c));
-	}
-	else if (is_only_space(gnl))
-		return (0);
-	else
-		return (perror_msg("Data error: ", gnl));
 	return (0);
 }
 
@@ -137,7 +133,11 @@ int	init_config(int *flag, char *gnl, t_params *params)
 		while (ft_is_space(gnl[i]))
 			i++;
 		if (put_data_config(params, gnl, &i))
+		{
+			free(gnl);
+			cleanup(params);
 			return (1);
+		}
 	}
 	return (0);
 }
@@ -159,11 +159,7 @@ t_map *load_map(int fd, t_params *params)
 		if (is_all_config_set(params))
 			flag = 1;
 		if (init_config(&flag, gnl, params))
-		{
-			free(gnl);
-			cleanup(params);
 			exit(EXIT_FAILURE);
-		}
 		if (flag)
 		{
 			initialize_line(&line, gnl);
