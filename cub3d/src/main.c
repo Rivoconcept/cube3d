@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:00 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/01/26 16:53:25 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/27 18:55:04 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	check_map(int fd, t_params *params)
 	{
 		close(fd);
 		cleanup(params);
-		return (perror_msg("one or more errors were detected in map", NULL));
+		return (perror_msg("one or more errors were detected in the map configuration", NULL));
 	}
 	/*else if (check_flood_fill(map))
 	{
@@ -75,10 +75,17 @@ int	main(int argc, char **argv)
 		return (perror_msg("Allocation failed on create_list_param", NULL));
 	params->map = load_map(fd, params);
 	if (!params->map)
-		return (perror_msg("Failed to load map", NULL));
+	{
+		close(fd);
+		cleanup(params);
+		ft_exit_faillure("one or more errors were detected in the map configuration", NULL);
+	}
 	if (check_map(fd, params))
 		exit(EXIT_FAILURE);
-	print_config(params);
+	//print_config(params);
+	print_map(params);
+	check_wall(params->map);
+	printf("\n******************************************************\n\n");
 	print_map(params);
 	cleanup(params);
 	close(fd);

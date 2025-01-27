@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 10:25:12 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/26 16:18:03 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/27 18:53:36 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,12 @@ int	perror_msg(char *error, char *var)
 		ft_putstr_fd(error, 2);
 	ft_putstr_fd("\n", 2);
 	return (1);
+}
+
+void ft_exit_faillure(char *error, char *var)
+{
+	perror_msg(error, var);
+	exit(EXIT_FAILURE);
 }
 
 void	free_array(char **arr)

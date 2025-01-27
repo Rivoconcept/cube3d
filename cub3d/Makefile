@@ -6,12 +6,14 @@
 #    By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/22 08:39:35 by rhanitra          #+#    #+#              #
-#    Updated: 2025/01/25 16:08:03 by rhanitra         ###   ########.fr        #
+#    Updated: 2025/01/27 17:45:40 by rhanitra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CUB3D = main.c r_manage_list_1.c r_manage_list_2.c r_manage_list_3.c \
-		r_check_data_error.c r_init_game.c r_cleanup.c r_utils.c xdebug.c
+		r_check_data_error.c r_init_game.c r_cleanup.c r_utils.c \
+		check_error_wall_1.c check_error_wall_2.c search_function.c \
+		xdebug.c
  
 DIR_CUB3D = ./src/
 SRC_CUB3D= $(addprefix $(DIR_CUB3D),$(CUB3D))

@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/01/26 16:18:13 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/27 19:25:10 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,26 +168,58 @@ int	ft_is_space(char c);
 int	is_line_map(char *str);
 void	free_array(char **arr);
 int is_all_config_set(t_params *params);
-
-t_line	*create_list_line(char data);
-t_map	*create_list_map(t_line *line);
-t_position	*create_list_position(void);
-t_params	*create_list_param(void);
-void	put_ranks_line(t_line **head);
-void	put_ranks_map(t_map **head);
-void	free_list_position(t_position *head);
-void	free_list_map(t_map *head_map);
-
 t_map *load_map(int fd, t_params *params);
 int check_error_config(t_params *params);
 void	cleanup(t_params *params);
 
+
+
 int is_only_space(char *str);
 int	perror_msg(char *error, char *var);
+void ft_exit_faillure(char *error, char *var);
 
 int	check_intrus_data(t_map *map);
 int	count_data_game(t_map *map, char c);
 int	check_extension(char *str);
+
+//r_manage_list_1.c
+t_line	*create_list_line(char data);
+t_map	*create_list_map(t_line *line);
+t_position	*create_list_position(void);
+t_params	*create_list_param(void);
+
+//r_manage_list_2.c
+int	count_element_list(t_line *head);
+int	count_element_list_mapcol(t_map *head);
+int	count_element_list_mapline(t_map *head);
+void	put_ranks_line(t_line **head);
+void	put_ranks_map(t_map **head);
+
+//r_manage_list_3.c
+void	free_list_position(t_position *head);
+void	free_list_map(t_map *head_map);
+
+
+
+
+//check_error_wall_1.c
+int is_wall_left(t_position *pos, t_map *map);
+int is_wall_right(t_position *pos, t_map *map);
+int is_wall_up(t_position *pos, t_map *map);
+int is_wall_down(t_position *pos, t_map *map);
+
+//check_error_wall_2.c
+void	go_up(t_map *map, t_position *pos);
+void	go_down(t_map *map, t_position *pos);
+void	go_left(t_map *map, t_position *pos);
+void	go_right(t_map *map, t_position *pos);
+
+//search_function.c
+t_position	*put_position_p(t_map *map, char c);
+char	find_value(t_map *map, t_position *pos);
+void	change_value(t_map *map, t_position *pos, char c);
+
+void	check_wall(t_map *map);
 
 void    print_map(t_params *params);
 void    print_line(t_line *line);
