@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "cub3d.h": "c",
+        "cstdlib": "c",
+        "map": "c",
+        "format": "c"
+    }
+}
