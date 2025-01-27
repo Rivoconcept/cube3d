@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 10:25:12 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/27 18:53:36 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/27 21:33:16 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,9 @@ int	is_line_map(char *str)
 	if (!str)
 		return (0);
 	if (str[i] == '\n')
-	{
 		return (0);
-	}
-	while (str[i] != '\n' && (str[i] == 32 || str[i] == 49))
+	while (str[i] != '\n' && str[i] == 32 && str[i] == 49 && str[i] == 48 \
+		&& str[i] == 'N' && str[i] == 'E' && str[i] == 'W' && str[i] == 'S')
 		i++;
 	if (str[i] == '\n')
 	{
@@ -58,8 +57,10 @@ int is_only_space(char *str)
 	int		i;
 
 	i = 0;
-	if (!str || str[0] == '\n' || str[0] == '\0')
+	if (!str)
 		return (0);
+	if (str[0] == '\n' || str[0] == '\0')
+		return (1);
 	while(ft_is_space(str[i]))
 		i++;
 	if (str[i] == '\n' || str[i] == '\0')
@@ -70,9 +71,9 @@ int is_only_space(char *str)
 int	perror_msg(char *error, char *var)
 {
 	ft_putstr_fd("Error\n", 2);
-	ft_putstr_fd(var, 2);
 	if (error)
 		ft_putstr_fd(error, 2);
+	ft_putstr_fd(var, 2);
 	ft_putstr_fd("\n", 2);
 	return (1);
 }
@@ -106,10 +107,8 @@ void	free_array(char **arr)
 
 int is_all_config_set(t_params *params)
 {
-	if (params->no != NULL && params->so != NULL && params->we != NULL \
-		&& params->ea != NULL && params->f != NULL && params->c != NULL)
-		return (1);
-	return (0);
+	return (params->no != NULL && params->so != NULL && params->we != NULL \
+		&& params->ea != NULL && params->f != NULL && params->c != NULL);
 }
 
 int check_error_path(t_params *params)

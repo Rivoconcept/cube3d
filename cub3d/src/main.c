@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:00 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/01/27 18:55:04 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/27 21:32:37 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,12 @@ int	main(int argc, char **argv)
 	}
 	if (check_map(fd, params))
 		exit(EXIT_FAILURE);
-	//print_config(params);
+	print_config(params);
+	printf("\n\n******************************************************\n\n");
 	print_map(params);
-	check_wall(params->map);
-	printf("\n******************************************************\n\n");
-	print_map(params);
+	//check_wall(params->map);
+	//printf("\n\n******************************************************\n\n");
+	//print_map(params);
 	cleanup(params);
 	close(fd);
 	return (0);

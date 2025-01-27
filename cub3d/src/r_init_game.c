@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 11:07:54 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/26 16:52:48 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/27 21:35:04 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,25 +91,42 @@ char	*copy_config(char *gnl, int *i)
 int put_data_config(t_params *params, char *gnl, int *i)
 {
 	if (gnl[*i] == 'N' && gnl[*i + 1] == 'O')
+	{
 		if (!(params->no = copy_config(gnl, i)))
 			return (perror_msg("Allocation Failed on ", params->no));
-	if (gnl[*i] == 'S' && gnl[*i + 1] == 'O')
+	}
+	else if (gnl[*i] == 'S' && gnl[*i + 1] == 'O')
+	{
 		if (!(params->so = copy_config(gnl, i)))
 			return (perror_msg("Allocation Failed on ", params->so));		
-	if (gnl[*i] == 'W' && gnl[*i + 1] == 'E')
+	}
+	else if (gnl[*i] == 'W' && gnl[*i + 1] == 'E')
+	{
 		if (!(params->we = copy_config(gnl, i)))
 			return (perror_msg("Allocation Failed on ", params->we));
-	if (gnl[*i] == 'E' && gnl[*i + 1] == 'A')
+	}
+	else if (gnl[*i] == 'E' && gnl[*i + 1] == 'A')
+	{
 		if (!(params->ea = copy_config(gnl, i)))
 			return (perror_msg("Allocation Failed on ", params->ea));
-	if (gnl[*i] == 'F')
+	}
+	else if (gnl[*i] == 'F')
+	{
 		if (!(params->f = copy_config(gnl, i)))
 			return (perror_msg("Allocation Failed on ", params->f));
-	if (gnl[*i] == 'C')
+	}
+	else if (gnl[*i] == 'C')
+	{
 		if (!(params->c = copy_config(gnl, i)))
 			return (perror_msg("Allocation Failed on ", params->c));
+	}
+	else if (is_only_space(gnl))
+		return (0);
+	else
+		return (perror_msg("Data error: ", gnl));
 	return (0);
 }
+
 int	init_config(int *flag, char *gnl, t_params *params)
 {
 	int		i;
@@ -122,9 +139,6 @@ int	init_config(int *flag, char *gnl, t_params *params)
 		if (put_data_config(params, gnl, &i))
 			return (1);
 	}
-	if (!is_only_space(gnl) && is_line_map(gnl) \
-		&& is_all_config_set(params))
-		*flag = 1;
 	return (0);
 }
 
@@ -142,9 +156,15 @@ t_map *load_map(int fd, t_params *params)
 	while (gnl != NULL)
 	{
 		line = NULL;
+		if (is_all_config_set(params))
+			flag = 1;
 		if (init_config(&flag, gnl, params))
+		{
+			free(gnl);
+			cleanup(params);
 			exit(EXIT_FAILURE);
-		if (flag && !is_only_space(gnl))
+		}
+		if (flag)
 		{
 			initialize_line(&line, gnl);
 			initialize_map(&map, line);

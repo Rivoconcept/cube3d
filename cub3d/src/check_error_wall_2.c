@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 11:08:07 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/27 19:40:59 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/27 20:37:39 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	go_up(t_map *map, t_position *pos)
 		else
 			break ; 
 	}
-	if (!is_wall_left(pos, map))
+	/*if (!is_wall_left(pos, map))
 		pos->value.x -= 1;
 	else
-		pos->value.x += 1;
+		pos->value.x += 1;*/
 }
 
 void	go_down(t_map *map, t_position *pos)
@@ -40,10 +40,10 @@ void	go_down(t_map *map, t_position *pos)
 		else
 			break ; 
 	}
-	if (!is_wall_right(pos, map))
+	/*if (!is_wall_right(pos, map))
 		pos->value.x -= 1;
 	else
-		pos->value.x += 1;
+		pos->value.x += 1;*/
 }
 
 void	go_left(t_map *map, t_position *pos)
@@ -59,10 +59,10 @@ void	go_left(t_map *map, t_position *pos)
 		else
 			break ; 
 	}
-	if (!is_wall_down(pos, map))
+	/*if (!is_wall_down(pos, map))
 		pos->value.y -= 1;
 	else
-		pos->value.y += 1;
+		pos->value.y += 1;*/
 }
 
 void	go_right(t_map *map, t_position *pos)
@@ -76,13 +76,19 @@ void	go_right(t_map *map, t_position *pos)
 		else
 			break ; 
 	}
-	if (!is_wall_down(pos, map))
+	/*if (!is_wall_down(pos, map))
 		pos->value.y -= 1;
 	else
-		pos->value.y += 1;
+		pos->value.y += 1;*/
 }
 
-/*t_map	*put_position_f(t_map *map, char c)
+/*int check_place(t_map *map, t_position *pos)
+{
+
+}*/
+
+
+/*t_map	*check_wall(t_map *map, char c)
 {
 	t_map		*current_map;
 	t_line		*current_line;
@@ -128,7 +134,12 @@ int get_initial_pos(t_line *line)
 	return (-1);
 }
 
-void	check_wall(t_map *map)
+/*int is_wall(t_position *pos, t_map *map)
+{
+
+}*/
+
+/*void	check_wall(t_map *map)
 {
 	t_line		*line;
 	t_position	*pos;
@@ -150,7 +161,7 @@ void	check_wall(t_map *map)
 		// 	break ;
 		i++;
 	}
-	/*while (1)
+	while (1)
 	{
 		go_up(map, pos, line, map);
 		go_down(map, pos, line, map);
@@ -158,6 +169,6 @@ void	check_wall(t_map *map)
 		go_right(map, pos, line, map);
 		if (pos->value.x == 0 && pos->value.y == 0)
 			break ;
-	}*/
+	}
 	free(pos);
-}
+}*/
