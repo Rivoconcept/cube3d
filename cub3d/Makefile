@@ -6,12 +6,13 @@
 #    By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/22 08:39:35 by rhanitra          #+#    #+#              #
-#    Updated: 2025/01/27 17:45:40 by rhanitra         ###   ########.fr        #
+#    Updated: 2025/01/28 18:52:56 by rhanitra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CUB3D = main.c r_manage_list_1.c r_manage_list_2.c r_manage_list_3.c \
-		r_check_data_error.c r_init_game.c r_cleanup.c r_utils.c \
+		r_check_data_error.c r_init_game.c r_cleanup.c r_utils_1.c \
+		r_utils_2.c r_utils_3.c \
 		check_error_wall_1.c check_error_wall_2.c search_function.c \
 		xdebug.c
  
