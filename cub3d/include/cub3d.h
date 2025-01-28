@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/01/27 21:32:02 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/28 14:24:52 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -176,7 +176,7 @@ void	cleanup(t_params *params);
 
 int is_only_space(char *str);
 int	perror_msg(char *error, char *var);
-void ft_exit_faillure(char *error, char *var);
+void ft_exit_faillure(t_params *params, int fd, char *error, char *var);
 
 int	check_intrus_data(t_map *map);
 int	count_data_game(t_map *map, char c);
@@ -219,7 +219,7 @@ t_position	*put_position_p(t_map *map, char c);
 char	find_value(t_map *map, t_position *pos);
 void	change_value(t_map *map, t_position *pos, char c);
 
-void	check_wall(t_map *map);
+int	check_wall(t_params *params);
 
 void    print_map(t_params *params);
 void    print_line(t_line *line);

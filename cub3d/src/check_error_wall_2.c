@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   check_error_wall_2.c                               :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 11:08:07 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/27 20:37:39 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/28 16:25:10 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../include/cub3d.h"
 
@@ -172,3 +172,46 @@ int get_initial_pos(t_line *line)
 	}
 	free(pos);
 }*/
+
+int is_not_wall(t_map *map, t_position *pos)
+{
+	if (pos->value.y == 0 || pos->value.x == 0 \
+		|| pos->value.y == count_element_list_mapline(map) - 1)
+	{
+		return (1);
+	}
+	return (0);
+}
+
+int	is_data_game(char c)
+{
+	return (c == 48 || c == 'N' || c == 'W' || c == 'S' || c == 'E');
+}
+
+int	check_wall(t_params *params)
+{
+	t_map		*current_map;
+	t_line		*current_line;
+	t_position	*pos;
+
+	current_map = params->map;
+	pos = create_list_position();
+	while (current_map)
+	{
+		current_line = current_map->line_value.line;
+		pos->value.y = current_map->line_value.index;
+		while (current_line)
+		{
+			pos->value.x = current_line->cell_value.index;
+			if (is_data_game(current_line->cell_value.value))
+			{
+				if (is_not_wall(params->map, pos))
+					return (free(pos), 1);
+			}
+			current_line = current_line->next;
+		}
+		current_map = current_map->next;
+	}
+	return (free(pos), 0);
+}
+

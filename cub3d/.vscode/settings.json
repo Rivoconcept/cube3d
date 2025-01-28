@@ -3,6 +3,8 @@
         "cub3d.h": "c",
         "cstdlib": "c",
         "map": "c",
-        "format": "c"
+        "format": "c",
+        "type_traits": "c",
+        "utility": "c"
     }
 }

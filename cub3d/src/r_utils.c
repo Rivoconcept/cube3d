@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_utils.c                                          :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 10:25:12 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/27 21:33:16 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/28 14:08:06 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../include/cub3d.h"
 
@@ -78,8 +78,10 @@ int	perror_msg(char *error, char *var)
 	return (1);
 }
 
-void ft_exit_faillure(char *error, char *var)
+void ft_exit_faillure(t_params *params, int fd, char *error, char *var)
 {
+	close(fd);
+	cleanup(params);
 	perror_msg(error, var);
 	exit(EXIT_FAILURE);
 }

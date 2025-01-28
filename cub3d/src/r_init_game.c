@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_init_game.c                                      :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 11:07:54 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/27 22:17:48 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/28 13:27:16 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../include/cub3d.h"
 
@@ -160,7 +160,7 @@ t_map *load_map(int fd, t_params *params)
 			flag = 1;
 		if (init_config(&flag, gnl, params))
 			exit(EXIT_FAILURE);
-		if (flag)
+		if (flag && !is_only_space(gnl))
 		{
 			initialize_line(&line, gnl);
 			initialize_map(&map, line);
