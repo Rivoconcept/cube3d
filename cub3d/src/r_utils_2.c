@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_utils_2.c                                        :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:48:23 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/28 18:48:26 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/29 15:49:00 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../include/cub3d.h"
 
@@ -85,14 +85,10 @@ int check_error_config(t_params *params)
 {
 	if (params->no == NULL || params->so == NULL || params->we == NULL \
 		|| params->ea == NULL || params->f == NULL || params->c == NULL)
-		return (1);
-	if (check_error_path(params))
-		return (1);
+		return (perror_msg("Erron on data config", NULL));
 	if (check_error_color(params->f))
-	{
-		printf("Error\nErron on data color\n");
-		return (1);
-	}
+		return (perror_msg("Erron on data color", NULL));
+	if (check_error_color(params->c))
+		return (perror_msg("Erron on data color", NULL));
 	return (0);
 }
-

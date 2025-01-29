@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/01/28 18:57:24 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/29 16:23:19 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -164,13 +164,8 @@ typedef struct s_params
 
 /************************************************************* */
 
-int	ft_is_space(char c);
-int	is_line_map(char *str);
-void	free_array(char **arr);
-int is_all_config_set(t_params *params);
-t_map *load_map(int fd, t_params *params);
-int check_error_config(t_params *params);
-void	cleanup(t_params *params);
+
+
 
 
 
@@ -215,19 +210,25 @@ int check_error_config(t_params *params);
 
 //r_utils_3.c
 
+//check_error_1.c
+int is_not_playable(char c, t_position *pos, t_map *map);
 
+//check_error_2.c
+int	check_map(t_params *params);
 
-//check_error_wall_1.c
-int is_wall_left(t_position *pos, t_map *map);
-int is_wall_right(t_position *pos, t_map *map);
-int is_wall_up(t_position *pos, t_map *map);
-int is_wall_down(t_position *pos, t_map *map);
+//r_cleanup.c
+void	cleanup(t_params *params);
 
-//check_error_wall_2.c
-void	go_up(t_map *map, t_position *pos);
-void	go_down(t_map *map, t_position *pos);
-void	go_left(t_map *map, t_position *pos);
-void	go_right(t_map *map, t_position *pos);
+//r_init_game_1.c
+void	initialize_line(t_line **head, char *gnl);
+void	initialize_map(t_map **head, t_line *line);
+char	*copy_config(char *gnl, int *i);
+int in_base(char *gnl);
+int put_data_config(t_params *params, char *gnl, int *i);
+
+//r_init_game_2.c
+int	init_config(int *flag, char *gnl, t_params *params);
+t_map *load_map(int fd, t_params *params);
 
 //search_function.c
 t_position	*put_position_p(t_map *map, char c);

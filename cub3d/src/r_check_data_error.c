@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_check_data_error.c                               :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:50:23 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/28 18:50:24 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/29 14:54:13 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../include/cub3d.h"
 
@@ -37,6 +37,7 @@ int	count_data_game(t_map *map, char c)
 int	check_intrus_data(t_map *map)
 {
 	char		data;
+	char		temp[1];
 	t_map		*current_map;
 	t_line		*current_line;
 
@@ -50,7 +51,11 @@ int	check_intrus_data(t_map *map)
 			data = current_line->cell_value.value;
 			if (data != 'N' && data != 'S' && data != 'E' && data != 'W' \
 				&& data != 49 && data != 10 && data != 48 && data != 32)
-				return (1);
+			{
+				temp[0] = data;
+				temp[1] = '\n';
+				return (perror_msg("Invalid data: ", temp));
+			}
 			current_line = current_line->next;
 		}
 		current_map = current_map->next;

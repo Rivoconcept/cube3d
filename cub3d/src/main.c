@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:00 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/01/28 18:43:22 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/29 16:17:20 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../include/cub3d.h"
 
@@ -43,26 +43,14 @@ void	mlx_window_open(t_params *params)
 } */
 
 
-int	check_map(int fd, t_params *params)
+int	check_error(int fd, t_params *params)
 {
 	if (check_error_config(params))
-	{
-		close(fd);
-		cleanup(params);
-		return (perror_msg("Failed to load map", NULL));
-	}
+		return (close(fd), cleanup(params), 1);
 	if (check_intrus_data(params->map))
-	{
-		close(fd);
-		cleanup(params);
-		return (perror_msg("one or more errors were detected in the map configuration", NULL));
-	}
-	/*else if (check_flood_fill(map))
-	{
-		perror("Un ou plusieurs chemin bloque(s). Le jeu est impossible !");
-		free_list_map(map);
-		exit(EXIT_FAILURE);
-	}*/
+		return (close(fd), cleanup(params), 1);
+	if (check_map(params))
+		return (close(fd), cleanup(params), 1);
 	return (0);
 }
 
@@ -83,15 +71,12 @@ int	main(int argc, char **argv)
 	if (!params->map)
 		ft_exit_faillure(params, fd, "one or more errors were detected \
 			in the map configuration", NULL);
-	if (check_map(fd, params))
+	if (check_error(fd, params))
 		exit(EXIT_FAILURE);
 	print_config(params);
 	printf("\n\n******************************************************\n\n");
-	//print_map(params);
-	if (check_wall(params))
-		ft_exit_faillure(params, fd, "The wall is not closed", NULL);
-	//printf("\n\n******************************************************\n\n");
-	//print_map(params);
+	print_map(params);
+
 	cleanup(params);
 	close(fd);
 	return (0);
