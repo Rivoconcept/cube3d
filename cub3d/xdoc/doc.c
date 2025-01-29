@@ -1,4 +1,3 @@
-https://docs.unity3d.com/ScriptReference/Object.Destroy.html
 https://www.youtube.com/watch?v=fO-BOwalGnk
 https://www.youtube.com/watch?v=gYRrGTC7GtA&list=PLCWsH9Tj9oWyDM4W43VMj5yo2PdyYMGst
 https://www.youtube.com/watch?v=xZe0ZYPzxkg

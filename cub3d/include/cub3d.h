@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/01/28 14:24:52 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/28 18:57:24 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -199,6 +199,21 @@ void	put_ranks_map(t_map **head);
 void	free_list_position(t_position *head);
 void	free_list_map(t_map *head_map);
 
+//r_utils_1.c
+int	ft_is_space(char c);
+int	perror_msg(char *error, char *var);
+void ft_exit_faillure(t_params *params, int fd, char *error, char *var);
+void	free_array(char **arr);
+int	find_char(char *str, char c);
+
+//r_utils_2.c
+int	is_line_map(char *str);
+int is_only_space(char *str);
+int is_all_config_set(t_params *params);
+int check_error_color(char *color);
+int check_error_config(t_params *params);
+
+//r_utils_3.c
 
 
 
