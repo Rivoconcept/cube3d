@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/01/29 16:23:19 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/30 07:41:41 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -216,6 +216,9 @@ int is_not_playable(char c, t_position *pos, t_map *map);
 //check_error_2.c
 int	check_map(t_params *params);
 
+//check_error_3.c
+int	check_error(int fd, t_params *params);
+
 //r_cleanup.c
 void	cleanup(t_params *params);
 
@@ -235,7 +238,7 @@ t_position	*put_position_p(t_map *map, char c);
 char	find_value(t_map *map, t_position *pos);
 void	change_value(t_map *map, t_position *pos, char c);
 
-int	check_wall(t_params *params);
+
 
 void    print_map(t_params *params);
 void    print_line(t_line *line);
