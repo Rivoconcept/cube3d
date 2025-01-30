@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_utils_2.c                                        :+:      :+:    :+:   */
@@ -6,30 +6,11 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:48:23 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/29 15:49:00 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/30 17:38:43 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
-int	is_line_map(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-		return (0);
-	if (str[i] == '\n')
-		return (0);
-	while (str[i] != '\n' && str[i] == 32 && str[i] == 49 && str[i] == 48 \
-		&& str[i] == 'N' && str[i] == 'E' && str[i] == 'W' && str[i] == 'S')
-		i++;
-	if (str[i] == '\n')
-	{
-		return (1);
-	}
-	return (0);
-}
 
 int is_only_space(char *str)
 {
@@ -81,14 +62,35 @@ int check_error_color(char *color)
 	return (0);
 }
 
+int invalid_color_config(char *color)
+{
+	int	i;
+
+	i = 0;
+	if (!color)
+		return (0);
+	while (color[i] != '\0')
+	{
+		if (ft_isdigit(color[i]) || color[i] == ',')
+		{
+			i++;
+			continue ;
+		}
+		if (!ft_isdigit(color[i]) && color[i] != ',')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int check_error_config(t_params *params)
 {
 	if (params->no == NULL || params->so == NULL || params->we == NULL \
 		|| params->ea == NULL || params->f == NULL || params->c == NULL)
 		return (perror_msg("Erron on data config", NULL));
-	if (check_error_color(params->f))
+	if (check_error_color(params->f) || invalid_color_config(params->f))
 		return (perror_msg("Erron on data color", NULL));
-	if (check_error_color(params->c))
+	if (check_error_color(params->c) || invalid_color_config(params->c))
 		return (perror_msg("Erron on data color", NULL));
 	return (0);
 }
