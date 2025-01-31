@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:50:08 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/28 18:58:56 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/31 18:58:51 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void handle_free(char *str)
 
 void	cleanup(t_params *params)
 {
-	/*if (params->win_open)
+	if (params->win_open)
 	{
 		mlx_destroy_window(params->mlx_connexion, params->win_open);
 		params->win_open = NULL;
@@ -33,7 +33,7 @@ void	cleanup(t_params *params)
 		mlx_destroy_display(params->mlx_connexion);
 		free(params->mlx_connexion);
 		params->mlx_connexion = NULL;
-	}*/
+	}
 	if (params->map)
 		free_list_map(params->map);
 	handle_free(params->no);
