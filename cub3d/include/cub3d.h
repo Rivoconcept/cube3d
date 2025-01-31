@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/01/30 07:41:41 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/01/31 18:58:23 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -29,8 +29,8 @@
 # include <sys/wait.h>
 # include <math.h>
 
-# define SCREEN_HEIGHT 			1000
-# define SCREEN_WIDTH 			1500
+# define SCREEN_WIDTH 			1024
+# define SCREEN_HEIGHT 			720
 
 # define ESC 					53
 # define X_EVENT_KEY_PRESS		2
@@ -221,6 +221,10 @@ int	check_error(int fd, t_params *params);
 
 //r_cleanup.c
 void	cleanup(t_params *params);
+
+//r_handle_window.c
+int	handle_keypress(int keycode, t_params *params);
+int	handle_mouse_click(t_params *params);
 
 //r_init_game_1.c
 void	initialize_line(t_line **head, char *gnl);
