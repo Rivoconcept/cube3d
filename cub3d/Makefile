@@ -6,7 +6,7 @@
 #    By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/22 08:39:35 by rhanitra          #+#    #+#              #
-#    Updated: 2025/01/31 18:59:18 by rhanitra         ###   ########.fr        #
+#    Updated: 2025/02/01 15:56:36 by rhanitra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,9 @@ CUB3D = main.c r_manage_list_1.c r_manage_list_2.c r_manage_list_3.c \
 		r_check_data_error.c r_init_game_1.c r_init_game_2.c r_cleanup.c \
 		r_utils_1.c r_utils_2.c r_utils_3.c r_handle_window.c \
 		check_error_1.c check_error_2.c check_error_3.c search_function.c \
-		xdebug.c
- 
+		r_render.c \
+		xdebug.c 
+
 DIR_CUB3D = ./src/
 SRC_CUB3D= $(addprefix $(DIR_CUB3D),$(CUB3D))
 

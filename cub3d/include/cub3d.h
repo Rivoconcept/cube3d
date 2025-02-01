@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/01/31 18:58:23 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/01 18:04:57 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <math.h>
+
+#define RED_PIXEL 0xFF0000
 
 # define SCREEN_WIDTH 			1024
 # define SCREEN_HEIGHT 			720
@@ -109,17 +111,29 @@ typedef struct s_adress
 	int					y;
 }						t_adress;
 
+//position of map_value
 typedef struct s_position
 {
 	t_adress			value;
 	struct s_position	*next;
 }						t_position;
 
-typedef struct s_fill
+//ground_color
+typedef struct s_ground_color
 {
-	t_position			value;
-	struct s_fill		*next;
-}						t_fill;
+    int	r;
+    int	g;
+    int b;
+}	t_ground_color;
+
+//ceiling_color
+typedef struct s_ceiling_color
+{
+    int	r;
+    int	g;
+    int b;
+}	t_ceiling_color;
+
 
 typedef struct s_image
 {
@@ -146,6 +160,8 @@ typedef struct s_params
 	// t_image				img;
 	t_map				*map;
 	t_position			*pos;
+	t_ground_color		*g_color;
+	t_ceiling_color		*c_color;
 	void				*mlx_connexion;
 	void				*win_open;
 	char				*no;
@@ -242,7 +258,7 @@ t_position	*put_position_p(t_map *map, char c);
 char	find_value(t_map *map, t_position *pos);
 void	change_value(t_map *map, t_position *pos, char c);
 
-
+int	pixel_render(t_params *params);
 
 void    print_map(t_params *params);
 void    print_line(t_line *line);
