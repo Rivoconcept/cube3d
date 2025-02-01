@@ -6,13 +6,11 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:49:57 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/30 16:58:19 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/01 18:27:30 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
-
 
 int	init_config(int *flag, char *gnl, t_params *params)
 {
