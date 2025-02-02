@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:49:10 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/28 18:49:11 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/02 13:13:14 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,6 @@ int	count_element_list(t_line *head)
 		current = current->next;
 	}
 	return (count);
-}
-
-void update_col(int count, int *col)
-{
-	if (*col < count)
-	{
-		*col = count;
-	}
 }
 
 int	count_element_list_mapcol(t_map *head)
