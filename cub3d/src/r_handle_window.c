@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 18:40:10 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/31 18:40:54 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/02 16:31:44 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,20 @@ int	handle_keypress(int keycode, t_params *params)
 		cleanup(params);
 		exit(0);
 	}
-	/*if (count_data_game(params->map, 'P'))
-	{
-		if (keycode == 122 || keycode == 65362)
-			move_player(params, 1);
-		if (keycode == 115 || keycode == 65364)
-			move_player(params, 2);
-		if (keycode == 113 || keycode == 65361)
-			move_player(params, 3);
-		if (keycode == 100 || keycode == 65363)
-			move_player(params, 4);
-	}
-	else
-		put_img_you_win(params);*/
+	/*int step = 100; 
+
+	if (keycode == 65362)
+		params->player->y -= step;
+	if (keycode == 65364)
+		params->player->y += step;
+	if (keycode == 65361)
+		params->player->x -= step;
+	if (keycode == 65363)
+		params->player->x += step;
+    mlx_clear_window(params->mlx_connexion, params->win_open);
+    put_wall(params);
+	put_player(params);*/
+
 	return (0);
 }
 

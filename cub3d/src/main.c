@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:00 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/01 15:58:31 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/02 15:31:05 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,15 @@ void	mlx_window_open(t_params *params)
 void	game_initializer(t_params *params)
 {
 	mlx_initialization(params);
-	params->win_width = SCREEN_WIDTH;
-	params->win_height = SCREEN_HEIGHT;
+	// params->win_width = SCREEN_WIDTH;
+	// params->win_height = SCREEN_HEIGHT;
+	params->win_width = count_element_list_mapcol(params->map) * 64;
+	params->win_height = count_element_list_mapline(params->map) * 64;
 	mlx_window_open(params);
 	mlx_hook(params->win_open, KeyPress, KeyPressMask, handle_keypress, params);
 	mlx_hook(params->win_open, 17, 1L << 17, handle_mouse_click, params);
-	//put_img_data(params);
-	pixel_render(params);
+	put_wall(params);
+	put_player(params);
 	mlx_loop(params->mlx_connexion);
 }
 
@@ -68,7 +70,10 @@ int	main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	// print_config(params);
 	// printf("\n\n******************************************************\n\n");
+	// printf("Ground color: R=%d, G=%d, B=%d\n", params->f_color->r, params->f_color->g, params->f_color->b);
+	// printf("Ground color: R=%d, G=%d, B=%d\n", params->c_color->r, params->c_color->g, params->c_color->b);
 	// print_map(params);
+
 	game_initializer(params);
 	cleanup(params);
 	close(fd);

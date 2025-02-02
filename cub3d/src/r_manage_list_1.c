@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:48:59 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/01 18:07:08 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/02 13:13:22 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,29 +56,28 @@ t_position	*create_list_position(void)
 	return (new_pos);
 }
 
-t_params	*create_list_param(void)
+t_f	*init_ground_color(void)
 {
-	t_params	*new_params;
+	t_f	*ground;
 
-	new_params = (t_params *)malloc(sizeof(t_params));
-	if (new_params == NULL)
+	ground = (t_f *)malloc(sizeof(t_f));
+	if (ground == NULL)
 		return (NULL);
-	new_params->mlx_connexion = NULL;
-	new_params->win_open = NULL;
-	new_params->map = NULL;
-	new_params->pos = NULL;
-	new_params->g_color = NULL;
-	new_params->c_color = NULL;
-	new_params->no = NULL;
-	new_params->so = NULL;
-	new_params->we = NULL;
-	new_params->ea = NULL;
-	new_params->f = NULL;
-	new_params->c = NULL;
-	new_params->x = 0;
-	new_params->y = 0;
-	new_params->win_width = 0;
-	new_params->win_height = 0;
-	new_params->next = NULL;
-	return (new_params);
+	ground->r = 0;
+	ground->g = 0;
+	ground->b = 0;
+	return (ground);
+}
+
+t_c	*init_ceiling_color(void)
+{
+	t_c	*ceiling;
+
+	ceiling = (t_c *)malloc(sizeof(t_c));
+	if (ceiling == NULL)
+		return (NULL);
+	ceiling->r = 0;
+	ceiling->g = 0;
+	ceiling->b = 0;
+	return (ceiling);
 }

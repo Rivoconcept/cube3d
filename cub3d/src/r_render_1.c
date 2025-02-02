@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   r_render.c                                         :+:      :+:    :+:   */
+/*   r_render_1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/01 17:47:39 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/02 10:45:49 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-int	parse_color(uint8_t red, uint8_t green, uint8_t blue)
+int	encode_color(uint8_t r, uint8_t g, uint8_t b)
 {
-    return (red << 16 | green << 8 | blue);
+    return (r << 16 | g << 8 | b);
 }
 
 int	pixel_render(t_params *params)

@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/01 18:04:57 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/02 15:02:09 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,21 +119,39 @@ typedef struct s_position
 }						t_position;
 
 //ground_color
-typedef struct s_ground_color
+typedef struct s_f
 {
     int	r;
     int	g;
     int b;
-}	t_ground_color;
+}	t_f;
 
 //ceiling_color
-typedef struct s_ceiling_color
+typedef struct s_c
 {
     int	r;
     int	g;
     int b;
-}	t_ceiling_color;
+}	t_c;
 
+//rectangle_form
+typedef struct s_player
+{
+    int	x;
+    int	y;
+    int width;
+    int height;
+    int color;
+}	t_player;
+
+typedef struct s_rect
+{
+    int	x;
+    int	y;
+    int width;
+    int height;
+    int color;
+}	t_rect;
 
 typedef struct s_image
 {
@@ -160,8 +178,10 @@ typedef struct s_params
 	// t_image				img;
 	t_map				*map;
 	t_position			*pos;
-	t_ground_color		*g_color;
-	t_ceiling_color		*c_color;
+	t_f					*f_color;
+	t_c					*c_color;
+	t_rect				*rect;
+	t_player			*player;
 	void				*mlx_connexion;
 	void				*win_open;
 	char				*no;
@@ -197,7 +217,8 @@ int	check_extension(char *str);
 t_line	*create_list_line(char data);
 t_map	*create_list_map(t_line *line);
 t_position	*create_list_position(void);
-t_params	*create_list_param(void);
+t_f	*init_ground_color(void);
+t_c	*init_ceiling_color(void);
 
 //r_manage_list_2.c
 int	count_element_list(t_line *head);
@@ -209,6 +230,16 @@ void	put_ranks_map(t_map **head);
 //r_manage_list_3.c
 void	free_list_position(t_position *head);
 void	free_list_map(t_map *head_map);
+t_params	*create_list_param(void);
+
+//r_render_1.c
+int	encode_color(uint8_t r, uint8_t g, uint8_t b);
+int	pixel_render(t_params *params);
+
+//r_render_2.c
+
+
+
 
 //r_utils_1.c
 int	ft_is_space(char c);
@@ -218,10 +249,9 @@ void	free_array(char **arr);
 int	find_char(char *str, char c);
 
 //r_utils_2.c
-int	is_line_map(char *str);
 int is_only_space(char *str);
 int is_all_config_set(t_params *params);
-int check_error_color(char *color);
+int check_error_color(char *color, t_params *params);
 int check_error_config(t_params *params);
 
 //r_utils_3.c
@@ -260,6 +290,16 @@ void	change_value(t_map *map, t_position *pos, char c);
 
 int	pixel_render(t_params *params);
 
+
+//x_debuggging
+
+t_rect	*init_rectangle(void);
+void	put_rectangle(t_params *params, t_map *map, t_line *line);
+
+t_player	*init_player(void);
+void	put_player(t_params *params);
+
+void	put_wall(t_params *params);
 void    print_map(t_params *params);
 void    print_line(t_line *line);
 void print_config(t_params *params);

@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:48:23 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/01 18:34:13 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/02 09:03:40 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,27 @@ int is_all_config_set(t_params *params)
 		&& params->ea != NULL && params->f != NULL && params->c != NULL);
 }
 
-
+void parse_color(t_params *params, char *color, int i, int value)
+{
+	if (color == params->f)
+	{
+		if (i == 0)
+			params->f_color->r = value;
+		if (i == 1)
+			params->f_color->g = value;
+		if (i == 2)
+			params->f_color->b = value;
+	}
+	if (color == params->c)
+	{
+		if (i == 0)
+			params->c_color->r = value;
+		if (i == 1)
+			params->c_color->g = value;
+		if (i == 2)
+			params->c_color->b = value;
+	}
+}
 
 int check_error_color(char *color, t_params *params)
 {
@@ -52,7 +72,7 @@ int check_error_color(char *color, t_params *params)
 		value = ft_atoi(tab[i]);
 		if (value < 0 || value > 255)
 			return (free_array(tab), 1);
-
+		parse_color(params, color, i, value);
 		i++;
 	}
 	return (free_array(tab), 0);

@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:50:08 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/31 18:58:51 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/02 14:39:13 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@ void	cleanup(t_params *params)
 		free(params->mlx_connexion);
 		params->mlx_connexion = NULL;
 	}
+	if (params->f_color)
+		free(params->f_color);
+	if (params->c_color)
+		free(params->c_color);
+	if (params->rect)
+		free(params->rect);
+	if (params->player)
+		free(params->player);
 	if (params->map)
 		free_list_map(params->map);
 	handle_free(params->no);
