@@ -5,6 +5,9 @@
         "map": "c",
         "format": "c",
         "type_traits": "c",
-        "utility": "c"
+        "utility": "c",
+        "random": "c",
+        "*.tcc": "c",
+        "initializer_list": "c"
     }
 }

@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:00 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/03 12:50:45 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/03 16:47:04 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
@@ -44,8 +44,8 @@ void	game_initializer(t_params *params)
 	mlx_window_open(params);
 	mlx_hook(params->win_open, KeyPress, KeyPressMask, handle_keypress, params);
 	mlx_hook(params->win_open, 17, 1L << 17, handle_mouse_click, params);
-	//put_wall(params);
-	//put_player(params);
+	put_wall(params);
+	put_player(params);
 	mlx_loop(params->mlx_connexion);
 }
 
