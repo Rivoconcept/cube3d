@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/02 15:02:09 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:56:17 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -298,6 +298,10 @@ void	put_rectangle(t_params *params, t_map *map, t_line *line);
 
 t_player	*init_player(void);
 void	put_player(t_params *params);
+void draw_square(int x, int y, int size, int color, t_params *params);
+
+
+
 
 void	put_wall(t_params *params);
 void    print_map(t_params *params);
