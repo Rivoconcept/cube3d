@@ -1,14 +1,4 @@
-   1101
-11110001111
-1PC00E000001
-0000000000001     
-10000000000000
-100000000000001
-111100111011111
-   1111
-
-
-   NO ./path_to_the_north_texture
+NO ./path_to_the_north_texture
 SO ./path_to_the_south_texture
 WE ./path_to_the_west_texture
 EA ./path_to_the_east_texture

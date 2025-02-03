@@ -1,6 +1,6 @@
 #include "../include/cub3d.h"
 
-void draw_square(t_params *params)
+/*void draw_square(t_params *params)
 {
 	int	i = 0;
 
@@ -27,4 +27,4 @@ void draw_square(t_params *params)
 		pixel_render(params);
 		l++;
 	}
-}
+}*/

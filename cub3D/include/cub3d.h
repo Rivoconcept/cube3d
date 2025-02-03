@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/03 15:56:17 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/03 17:01:40 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -175,7 +175,6 @@ typedef struct s_image
 
 typedef struct s_params
 {
-	// t_image				img;
 	t_map				*map;
 	t_position			*pos;
 	t_f					*f_color;
@@ -184,6 +183,7 @@ typedef struct s_params
 	t_player			*player;
 	void				*mlx_connexion;
 	void				*win_open;
+	void				*img;
 	char				*no;
 	char				*so;
 	char				*we;
@@ -233,7 +233,7 @@ void	free_list_map(t_map *head_map);
 t_params	*create_list_param(void);
 
 //r_render_1.c
-int	encode_color(uint8_t r, uint8_t g, uint8_t b);
+int	encode_color(uint8_t r, uint8_t g, uint8_t b, t_params *params);
 int	pixel_render(t_params *params);
 
 //r_render_2.c
