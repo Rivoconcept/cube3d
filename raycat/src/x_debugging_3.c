@@ -41,7 +41,7 @@ int draw_player(t_params *params)
         int end_x = center_x + (y * half_width / triangle_height);
 		x = start_x;
 		while (x++ <= end_x)
-            mlx_pixel_put(params->mlx_connexion, params->win_open, x, top_y + y, params->player->color);
+			my_mlx_pixel_put(x, top_y + y, params->player->color, params);
 	}
     return (0);
 }

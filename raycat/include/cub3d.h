@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/03 18:49:50 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/03 18:31:43 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,8 +237,8 @@ void	free_list_map(t_map *head_map);
 t_params	*create_list_param(void);
 
 //r_render_1.c
-int	encode_color(uint8_t r, uint8_t g, uint8_t b, t_params *params);
-int	pixel_render(t_params *params);
+int	encode_color(uint8_t r, uint8_t g, uint8_t b);
+void    my_mlx_pixel_put(int x, int y, int color, t_params *params);
 void move_player(t_player *player);
 int draw_loop(t_params *params);
 
