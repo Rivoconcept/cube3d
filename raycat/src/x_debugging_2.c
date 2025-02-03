@@ -17,26 +17,31 @@ t_rect	*init_rectangle(void)
 
 int draw_rectangle(t_params *params)
 {
-    int	i;
-	int	j;
+    int		i;
+	int		j;
+    t_rect *rect = params->rect;
 
     if (params->win_open == NULL)
+	{
         return (1);
-    j = params->rect->x;
-    while (j < params->rect->x + params->rect->width)
-        mlx_pixel_put(params->mlx_connexion, params->win_open, j++, params->rect->y, params->rect->color);
-    j = params->rect->x;
-    while (j < params->rect->x + params->rect->width)
-        mlx_pixel_put(params->mlx_connexion, params->win_open, j++, params->rect->y + params->rect->height - 1, params->rect->color);
-    i = params->rect->y;
-    while (i < params->rect->y + params->rect->height)
-        mlx_pixel_put(params->mlx_connexion, params->win_open, params->rect->x, i++, params->rect->color);
-    i = params->rect->y;
-    while (i < params->rect->y + params->rect->height)
-        mlx_pixel_put(params->mlx_connexion, params->win_open, params->rect->x + params->rect->width - 1, i++, params->rect->color);
-
+	}
+	j = rect->x;
+	while (j < rect->x + rect->width)
+	{
+        my_mlx_pixel_put(j, rect->y, rect->color, params);
+        my_mlx_pixel_put(j, rect->y + rect->height - 1, rect->color, params);
+		j++;
+	}
+	i = rect->y;
+	while (i < rect->y + rect->height)
+	{
+        my_mlx_pixel_put(rect->x, i, rect->color, params);
+        my_mlx_pixel_put(rect->x + rect->width - 1, i, rect->color, params); 
+		i++;
+	}
     return (0);
 }
+
 
 void	put_rectangle(t_params *params, t_map *map, t_line *line)
 {

@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:00 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/03 19:01:45 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/03 19:56:33 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,6 @@ void	game_initializer(t_params *params)
 	mlx_hook(params->win_open, 17, 1L << 17, handle_mouse_click, params);
 	
 	mlx_loop_hook(params->mlx_connexion, draw_loop, params);
-
-
-	put_wall(params);
-	put_player(params);
 	mlx_loop(params->mlx_connexion);
 }
 
