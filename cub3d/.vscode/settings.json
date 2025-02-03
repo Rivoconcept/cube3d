@@ -7,6 +7,7 @@
         "type_traits": "c",
         "utility": "c",
         "random": "c",
-        "*.tcc": "c"
+        "*.tcc": "c",
+        "initializer_list": "c"
     }
 }

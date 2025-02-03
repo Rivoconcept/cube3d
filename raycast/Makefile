@@ -10,11 +10,7 @@
 #                                                                              #
 #******************************************************************************#
 
-CUB3D = main.c r_manage_list_1.c r_manage_list_2.c r_manage_list_3.c \
-		r_check_data_error.c r_init_game_1.c r_init_game_2.c r_cleanup.c \
-		r_utils_1.c r_utils_2.c r_utils_3.c \
-		check_error_1.c check_error_2.c check_error_3.c search_function.c \
-		xdebug.c
+CUB3D = main.c 
  
 DIR_CUB3D = ./src/
 SRC_CUB3D= $(addprefix $(DIR_CUB3D),$(CUB3D))

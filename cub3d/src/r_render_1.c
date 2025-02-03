@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_render_1.c                                       :+:      :+:    :+:   */
@@ -6,14 +6,17 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/02 10:45:49 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/03 16:13:02 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../include/cub3d.h"
 
-int	encode_color(uint8_t r, uint8_t g, uint8_t b)
+int	encode_color(uint8_t r, uint8_t g, uint8_t b, t_params *params)
 {
+    if (params->x >= params->win_width || params->y >= params->win_height \
+        || params->x < 0 || params->y < 0)
+		return (0);
     return (r << 16 | g << 8 | b);
 }
 
