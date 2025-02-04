@@ -1,4 +1,4 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
@@ -6,9 +6,9 @@
 #    By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/22 08:39:35 by rhanitra          #+#    #+#              #
-#    Updated: 2025/02/03 15:57:59 by rhanitra         ###   ########.fr        #
+#    Updated: 2025/02/04 18:52:18 by rhanitra         ###   ########.fr        #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
 CUB3D = main.c r_manage_list_1.c r_manage_list_2.c r_manage_list_3.c \
 		r_check_data_error.c r_init_game_1.c r_init_game_2.c r_cleanup.c \
@@ -55,7 +55,7 @@ $(LIBFT):
 
 $(EXEC) : $(OBJ_CUB3D) $(GNL) $(LIBFT) $(MINILIBX)
 	$(CC)  $(CFLAGS) -o $@ $^ -L$(DIR_GNL) -lgnl \
-		-L$(DIR_MINILIBX) -lmlx -lXext -lX11 -lXext
+		-L$(DIR_MINILIBX) -lmlx -lXext -lX11 -lXext -lm
 
 clean :
 	$(RM) $(OBJ_CUB3D)

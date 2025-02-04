@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_render_1.c                                       :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/04 13:45:52 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/04 18:45:05 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
@@ -28,21 +28,6 @@ void    my_mlx_pixel_put(int x, int y, int color, t_params *params)
     *(unsigned int*)dst = color;
 }
 
-
-void move_player(t_player *player)
-{
-    int step;
-
-    step = 5;
-    if (player->key_up)
-        player->y -= step;
-    if (player->key_down)
-        player->y += step;
-    if (player->key_left)
-        player->x -= step;
-    if (player->key_right)
-        player->x += step;
-}
 
 void clear_img(t_params *params)
 {
@@ -64,10 +49,6 @@ void clear_img(t_params *params)
 
 int draw_loop(t_params *params)
 {
-    t_player    *player;
-
-    player = params->player;
-    move_player(player);
     clear_img(params);
     put_wall(params);
     put_player(params);
