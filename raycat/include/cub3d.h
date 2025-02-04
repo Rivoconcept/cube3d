@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/03 18:31:43 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/04 13:45:33 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -44,10 +44,11 @@
 # define X_EVENT_EXIT			17
 
 
-# define W 						119
-# define A 						97
-# define S 						115
-# define D 						100
+# define Z 119
+# define A 97
+# define S 115
+# define D 100
+
 
 
 typedef struct s_point
@@ -187,6 +188,7 @@ typedef struct s_params
 	t_player			*player;
 	void				*mlx_connexion;
 	void				*win_open;
+	char				init;
 	char				*no;
 	char				*so;
 	char				*we;
@@ -212,7 +214,7 @@ int is_only_space(char *str);
 int	perror_msg(char *error, char *var);
 void ft_exit_faillure(t_params *params, int fd, char *error, char *var);
 
-int	check_intrus_data(t_map *map);
+int	check_intrus_data(t_params *params);
 int	count_data_game(t_map *map, char c);
 int	check_extension(char *str);
 
