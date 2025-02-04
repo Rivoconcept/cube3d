@@ -19,53 +19,49 @@ t_player	*init_player(void)
 	return (player);
 }
 
+
 int draw_player(t_params *params)
 {
-    int x, y;
-    int center_x, top_y;
-    int half_width;
-    
-    if (params->win_open == NULL)
-        return (1);
+    int	i;
+	int j;
+	int x;
+    int y;
 
-    int triangle_width = params->rect->width / 5;
-    int triangle_height = params->rect->height / 5;
-
-    center_x = params->player->x + (params->rect->width / 2);
-    top_y = params->player->y + (params->rect->height / 2) - (triangle_height / 2);
-    half_width = triangle_width / 3;
-	y = 0;
-    while ( y++ < triangle_height)
+    i = 0;
+	x = params->player->x + (params->rect->width / 2);
+    y = params->player->y + (params->rect->height / 2);
+	my_mlx_pixel_put(x, y, params->player->color, params);
+	while (i < 5)
 	{
-		int start_x = center_x - (y * half_width / triangle_height);
-        int end_x = center_x + (y * half_width / triangle_height);
-		x = start_x;
-		while (x++ <= end_x)
-			my_mlx_pixel_put(x, top_y + y, params->player->color, params);
+		j = 0;
+		my_mlx_pixel_put(x, y + i, params->player->color, params);
+		while (j <= i)
+		{
+			my_mlx_pixel_put(x - j, y +  i, params->player->color, params);
+			my_mlx_pixel_put(x + j, y +  i, params->player->color, params);
+			j++;
+		}
+		i++;
 	}
     return (0);
 }
 
-
 void	put_triangle(t_params *params, t_map *map, t_line *line)
 {
-	int	height;
-	int	width;
-
-	height = count_element_list_mapline(params->map);
-	width = count_element_list_mapcol(params->map);
-	if (line->cell_value.value == 'N' \
-		 && map->line_value.index <= height \
-		 && line->cell_value.index < width )
+	if (line->cell_value.value == params->init)
 	{
-		params->player->x = line->cell_value.index * 64;
-		params->player->y = map->line_value.index * 64;
+		if (params->player->x == 0 && params->player->y == 0)
+		{
+			params->player->x = line->cell_value.index * 64;
+			params->player->y = map->line_value.index * 64;
+		}
 		params->player->width = 64;
 		params->player->height = 64;
 		params->player->color = 0xffff3f;
 		draw_player(params);
 	}
 }
+
 
 void	put_player(t_params *params)
 {
