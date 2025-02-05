@@ -7,6 +7,7 @@ t_player	*init_player(void)
 	player = (t_player *)malloc(sizeof(t_player));
 	if (player == NULL)
 		return (NULL);
+	player->init = '\0';
 	player->x = 0;
 	player->y = 0;
 	player->width = 0;
@@ -25,26 +26,22 @@ void rotate_and_draw(int x, int y, int pivot_x, int pivot_y, double angle, t_par
     my_mlx_pixel_put(new_x, new_y, params->player->color, params);
 }
 
-int draw_player(t_params *params)
+int draw_player(t_params *params, int x, int y)
 {
     int		i;
 	int		j;
-    int		x;
-	int		y;
     int		pivot_x;
 	int		pivot_y;
     double	angle;
 	
 	i = 0;
 	angle = params->delta;
-	x = params->player->x + (params->rect->width / 2);
-    y = params->player->y + (params->rect->height / 2);
     pivot_x = x;
     pivot_y = y;
     while (i++ < 5)
 	{
 		j = 0;
-		while (j++ <= i)
+		while (j++ < i)
 		{
 			rotate_and_draw(x, y, pivot_x, pivot_y, angle, params);
             rotate_and_draw(x, y + i, pivot_x, pivot_y, angle, params);
@@ -55,47 +52,19 @@ int draw_player(t_params *params)
     return (0);
 }
 
-
-
-/*int draw_player(t_params *params)
-{
-    int	i;
-	int j;
-	int x;
-    int y;
-
-    i = 0;
-	x = params->player->x + (params->rect->width / 2);
-    y = params->player->y + (params->rect->height / 2);
-	my_mlx_pixel_put(x, y, params->player->color, params);
-	while (i < 5)
-	{
-		j = 0;
-		my_mlx_pixel_put(x, y + i, params->player->color, params);
-		while (j <= i)
-		{
-			my_mlx_pixel_put(x - j, y +  i, params->player->color, params);
-			my_mlx_pixel_put(x + j, y +  i, params->player->color, params);
-			j++;
-		}
-		i++;
-	}
-    return (0);
-}*/
-
 void	put_triangle(t_params *params, t_map *map, t_line *line)
 {
-	if (line->cell_value.value == params->init)
+	if (line->cell_value.value == params->player->init)
 	{
 		if (params->player->x == 0 && params->player->y == 0)
 		{
-			params->player->x = line->cell_value.index * 64;
-			params->player->y = map->line_value.index * 64;
+			params->player->x = (line->cell_value.index * COL_SIZE) + (COL_SIZE / 2);
+			params->player->y = (map->line_value.index * COL_SIZE) + (COL_SIZE / 2);
 		}
-		params->player->width = 64;
-		params->player->height = 64;
+		params->player->width = COL_SIZE;
+		params->player->height = COL_SIZE;
 		params->player->color = 0xffff3f;
-		draw_player(params);
+		draw_player(params, params->player->x, params->player->y);
 	}
 }
 

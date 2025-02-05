@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_handle_window.c                                  :+:      :+:    :+:   */
@@ -6,36 +6,53 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 18:40:10 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/05 11:39:40 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/05 19:48:21 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-int	handle_keypress(int keycode, t_params *params)
+void  escape_window(int keycode, t_params *params)
 {
 	if (keycode == XK_Escape)
 	{
 		cleanup(params);
 		exit(0);
 	}
+}
 
-	if (keycode == 119)
-		params->player->y -= 5;
-	if (keycode == 97)
-		params->player->y += 5;
-	if (keycode == 115)
-		params->player->x -= 5;
-	if (keycode == 100)
-		params->player->x += 5;
- 	if (keycode == 65361)
-	{
+void	rotate_palyer(int keycode, t_params *params)
+{
+	if (keycode == 65361)
         params->delta -= 0.09;
-	}
     if (keycode == 65363)
-	{
         params->delta += 0.09;
+}
+
+int	handle_keypress(int keycode, t_params *params)
+{
+	int	x;
+	int	y;
+	int	step;
+
+	step = 1;
+	x = params->player->x ;
+	y = params->player->y;
+	escape_window(keycode, params);
+	rotate_palyer(keycode, params);
+	if (put_element_value(params, x, y) == '1')
+	{
+		printf("oui");
+		return (0);
 	}
+	if (keycode == 122)
+		params->player->y -= step;
+	if (keycode == 115)
+		params->player->y += step;
+	if (keycode == 113)
+		params->player->x -= step;
+	if (keycode == 100)
+		params->player->x += step;
 	return (0);
 }
 
