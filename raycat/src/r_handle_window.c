@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_handle_window.c                                  :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 18:40:10 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/04 20:02:11 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/05 11:39:40 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../include/cub3d.h"
 
@@ -28,13 +28,13 @@ int	handle_keypress(int keycode, t_params *params)
 		params->player->x -= 5;
 	if (keycode == 100)
 		params->player->x += 5;
- 	if (keycode == 65362)
+ 	if (keycode == 65361)
 	{
-        params->player->delta -= 0.09;
+        params->delta -= 0.09;
 	}
-    if (keycode == 65364)
+    if (keycode == 65363)
 	{
-        params->player->delta += 0.09;
+        params->delta += 0.09;
 	}
 	return (0);
 }

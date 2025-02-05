@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/04 18:55:49 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/05 11:38:11 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -142,7 +142,6 @@ typedef struct s_player
     int width;
     int height;
     int color;
-	double	delta;
 }	t_player;
 
 typedef struct s_rect
@@ -186,6 +185,7 @@ typedef struct s_params
 	void				*mlx_connexion;
 	void				*win_open;
 	char				init;
+	double				delta;
 	char				*no;
 	char				*so;
 	char				*we;

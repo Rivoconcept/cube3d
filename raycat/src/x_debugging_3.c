@@ -12,7 +12,6 @@ t_player	*init_player(void)
 	player->width = 0;
 	player->height = 0;
 	player->color = 0;
-	player->delta = 0;
 	return (player);
 }
 void rotate_and_draw(int x, int y, int pivot_x, int pivot_y, double angle, t_params *params)
@@ -37,7 +36,7 @@ int draw_player(t_params *params)
     double	angle;
 	
 	i = 0;
-	angle = params->player->delta;
+	angle = params->delta;
 	x = params->player->x + (params->rect->width / 2);
     y = params->player->y + (params->rect->height / 2);
     pivot_x = x;
