@@ -6,7 +6,7 @@
 #    By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/22 08:39:35 by rhanitra          #+#    #+#              #
-#    Updated: 2025/02/03 15:57:59 by rhanitra         ###   ########.fr        #
+#    Updated: 2025/02/05 08:20:49 by rhanitra         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -55,7 +55,7 @@ $(LIBFT):
 
 $(EXEC) : $(OBJ_CUB3D) $(GNL) $(LIBFT) $(MINILIBX)
 	$(CC)  $(CFLAGS) -o $@ $^ -L$(DIR_GNL) -lgnl \
-		-L$(DIR_MINILIBX) -lmlx -lXext -lX11 -lXext
+		-L$(DIR_MINILIBX) -lmlx -lXext -lX11 -lXext -lm
 
 clean :
 	$(RM) $(OBJ_CUB3D)

@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 18:40:10 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/04 17:11:56 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/05 08:20:14 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -20,27 +20,22 @@ int	handle_keypress(int keycode, t_params *params)
 		exit(0);
 	}
 
-	/*if (keycode == Z)
-		params->player->key_up = true;
-	if (keycode == S)
-		params->player->key_down = true;
-	if (keycode == Q)
-		params->player->key_left = true;
-	if (keycode == D)
-		params->player->key_right = true;*/
-
 	if (keycode == 119)
 		params->player->y -= 5;
 	if (keycode == 97)
 		params->player->y += 5;
-	if (keycode == 115 || keycode == 65361)
+	if (keycode == 115)
 		params->player->x -= 5;
-	if (keycode == 100 || keycode == 65363)
+	if (keycode == 100)
 		params->player->x += 5;
-	/*if (keycode == 65361)
-		params->player->x -= 5;
-	if (keycode == 65363)
-		params->player->x += 5;*/
+	if (keycode == 65361)
+	{
+        params->delta -= 0.1;
+	}
+    if (keycode == 65363)
+	{
+        params->delta += 0.1;
+	}
 
 	return (0);
 }
