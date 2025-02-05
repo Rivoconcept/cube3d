@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 18:40:10 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/05 19:48:21 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/05 21:09:32 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,17 @@ int	handle_keypress(int keycode, t_params *params)
 	int	step;
 
 	step = 1;
-	x = params->player->x ;
+	x = params->player->x;
 	y = params->player->y;
 	escape_window(keycode, params);
 	rotate_palyer(keycode, params);
-	if (put_element_value(params, x, y) == '1')
-	{
-		printf("oui");
-		return (0);
-	}
-	if (keycode == 122)
+	if (keycode == 122 && put_element_value(params, x, y - 1) != '1')
 		params->player->y -= step;
-	if (keycode == 115)
+	if (keycode == 115 && put_element_value(params, x, y + 1) != '1')
 		params->player->y += step;
-	if (keycode == 113)
+	if (keycode == 113 && put_element_value(params, x - 1, y) != '1')
 		params->player->x -= step;
-	if (keycode == 100)
+	if (keycode == 100 && put_element_value(params, x + 1, y) != '1');
 		params->player->x += step;
 	return (0);
 }
