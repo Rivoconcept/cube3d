@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:49:17 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/04 12:33:35 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/05 11:38:57 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -70,6 +70,7 @@ t_params	*create_list_param(void)
 	new_params->rect = init_rectangle();
 	new_params->player = init_player();
 	new_params->init = 0;
+	new_params->delta = 0;
 	new_params->no = NULL;
 	new_params->so = NULL;
 	new_params->we = NULL;
