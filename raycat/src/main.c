@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:00 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/04 13:55:50 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/05 16:57:59 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
@@ -39,8 +39,8 @@ void	game_initializer(t_params *params)
 	mlx_initialization(params);
 	// params->win_width = SCREEN_WIDTH;
 	// params->win_height = SCREEN_HEIGHT;
-	params->win_width = count_element_list_mapcol(params->map) * 64;
-	params->win_height = count_element_list_mapline(params->map) * 64;
+	params->win_width = count_element_list_mapcol(params->map) * COL_SIZE;
+	params->win_height = count_element_list_mapline(params->map) * COL_SIZE;
 	mlx_window_open(params);
 	params->image->img = mlx_new_image(params->mlx_connexion, params->win_width, params->win_height);
 	if (!params->image->img)

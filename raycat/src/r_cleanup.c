@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_cleanup.c                                        :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:50:08 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/04 13:55:36 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/05 18:41:50 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
@@ -35,6 +35,8 @@ void	cleanup(t_params *params)
 		free(params->mlx_connexion);
 		params->mlx_connexion = NULL;
 	}
+	if (params->pos)
+		free(params->pos);
 	if (params->image)
 		free(params->image);
 	if (params->f_color)

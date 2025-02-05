@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_check_data_error.c                               :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:50:23 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/04 13:39:06 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/05 19:19:32 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
@@ -52,7 +52,7 @@ int	check_intrus_data(t_params *params)
 				&& data != 49 && data != 10 && data != 48 && data != 32)
 				return (perror_msg("Invalid data entry in map", NULL));
 			if ( data == 'N' || data == 'W' || data == 'E' || data == 'S')
-				params->init = data;
+				params->player->init = data;
 			current_line = current_line->next;
 		}
 		current_map = current_map->next;
