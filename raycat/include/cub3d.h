@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/05 19:20:20 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/06 15:46:01 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -37,6 +37,7 @@
 
 
 # define PI 					3.14159265359
+# define STEP					3.0
 
 
 # define ESC 					53
@@ -261,6 +262,8 @@ int check_error_color(char *color, t_params *params);
 int check_error_config(t_params *params);
 
 //r_utils_3.c
+int get_pos_x(int x);
+int get_pos_y(int y);
 
 //check_error_1.c
 int is_not_playable(char c, t_position *pos, t_map *map);
@@ -298,7 +301,29 @@ void	change_value(t_map *map, t_position *pos, char c);
 int	pixel_render(t_params *params);
 
 
-//x_debuggging
+//r_handle_game_1.c
+t_rect	*init_rectangle(void);
+int draw_rectangle(t_params *params);
+void	put_rectangle(t_params *params, t_map *map, t_line *line);
+void	put_wall(t_params *params);
+
+//r_handle_game_2.c
+t_player	*init_player(void);
+void rotate_and_draw(int x, int y, int pivot_x, int pivot_y, double angle, t_params *params);
+int draw_player(t_params *params, int x, int y);
+void	put_triangle(t_params *params, t_map *map, t_line *line);
+void	put_player(t_params *params);
+
+//r_handle_game_3.c
+void  escape_window(int keycode, t_params *params);
+int direction_calc(double *x, double *y, int keycode, t_params *params);
+int	handle_keypress(int keycode, t_params *params);
+int	handle_mouse_click(t_params *params);
+
+
+//r_put_value.c
+char	put_element_value(t_params *params, int x, int y);
+
 
 t_rect	*init_rectangle(void);
 void	put_rectangle(t_params *params, t_map *map, t_line *line);

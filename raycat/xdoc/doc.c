@@ -6,6 +6,10 @@ https://www.youtube.com/watch?v=2beZWqv_gGA
 https://www.youtube.com/watch?v=g8p7nAbDz6Y
 https://www.youtube.com/watch?v=G9i78WoBBIU
 https://aurelienbrabant.fr/blog/pixel-drawing-with-the-minilibx
+https://siril.readthedocs.io/fr/latest/processing/pixelmath.html
+https://www.youtube.com/watch?v=ZnMU9MWU2pM
+https://www.youtube.com/watch?v=Qr7UlrWVCpI 
+https://www.youtube.com/watch?v=Cg-aWMDHFLE
 
 #include <stdio.h>
 #include <stdlib.h>
