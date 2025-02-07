@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/07 18:10:14 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/07 18:28:39 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,7 +310,7 @@ void  escape_window(int keycode, t_params *params);
 
 //r_put_value.c
 char	put_map_value(t_params *params, int x, int y);
-double 	get_distance(t_params *params);
+double get_distance(t_params *params, double angle);
 
 //r_render_1.c
 int	encode_color(uint8_t r, uint8_t g, uint8_t b);
@@ -318,7 +318,8 @@ void    my_mlx_pixel_put(int x, int y, int color, t_params *params);
 int draw_loop(t_params *params);
 
 //r_render_2.c
-void ray_trace(t_params *params);
+void ray_trace(t_params *params, double angle);
+void trace_fov(t_params *params);
 
 //r_render_3.c
 int direction_calc(double *x, double *y, int keycode, t_params *params);
