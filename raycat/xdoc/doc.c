@@ -5,6 +5,7 @@ https://www.youtube.com/watch?v=ebzlMOw79Yw
 https://www.youtube.com/watch?v=2beZWqv_gGA
 https://www.youtube.com/watch?v=g8p7nAbDz6Y
 https://www.youtube.com/watch?v=G9i78WoBBIU
+https://www.permadi.com/tutorial/raycast/rayc2.html#google_vignette
 https://aurelienbrabant.fr/blog/pixel-drawing-with-the-minilibx
 https://siril.readthedocs.io/fr/latest/processing/pixelmath.html
 https://www.youtube.com/watch?v=ZnMU9MWU2pM
