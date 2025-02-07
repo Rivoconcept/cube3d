@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/06 15:46:01 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/07 15:17:09 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -322,8 +322,8 @@ int	handle_mouse_click(t_params *params);
 
 
 //r_put_value.c
-char	put_element_value(t_params *params, int x, int y);
-
+char	put_map_value(t_params *params, int x, int y);
+double cast_ray(t_params *params);
 
 t_rect	*init_rectangle(void);
 void	put_rectangle(t_params *params, t_map *map, t_line *line);
@@ -332,7 +332,7 @@ char get_map_element(t_params *params, int x, int y);
 t_player	*init_player(void);
 void	put_player(t_params *params);
 
-char	put_element_value(t_params *params, int x, int y);
+char	put_map_value(t_params *params, int x, int y);
 
 
 void	put_wall(t_params *params);

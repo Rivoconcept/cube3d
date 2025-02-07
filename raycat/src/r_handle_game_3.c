@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 18:40:10 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/06 15:42:50 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/07 15:19:46 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -40,13 +40,13 @@ void	rotate_palyer(int keycode, t_params *params)
 	y = params->player->y;
 	escape_window(keycode, params);
 	rotate_palyer(keycode, params);
-	if (keycode == 122 && put_element_value(params, x, y - 1) != '1')
+	if (keycode == 122 && put_map_value(params, x, y - 1) != '1')
 		params->player->y -= step;
-	if (keycode == 115 && put_element_value(params, x, y + 1) != '1')
+	if (keycode == 115 && put_map_value(params, x, y + 1) != '1')
 		params->player->y += step;
-	if (keycode == 113 && put_element_value(params, x - 1, y) != '1')
+	if (keycode == 113 && put_map_value(params, x - 1, y) != '1')
 		params->player->x -= step;
-	if (keycode == 100 && put_element_value(params, x + 1, y) != '1')
+	if (keycode == 100 && put_map_value(params, x + 1, y) != '1')
 		params->player->x += step;
 	return (0);
 }*/
@@ -89,11 +89,12 @@ int	handle_keypress(int keycode, t_params *params)
 	rotate_palyer(keycode, params);
 	if (!direction_calc(&x, &y, keycode, params))
 		return (0);
-	if (put_element_value(params, (int)x, (int)y) != '1')
+	if (put_map_value(params, (int)x, (int)y) != '1')
 	{
 		params->player->x = x;
 		params->player->y = y;
 	}
+	printf("%f\n", cast_ray(params));
 	return (0);
 }
 
