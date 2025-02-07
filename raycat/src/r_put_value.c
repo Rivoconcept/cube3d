@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_put_value.c                                      :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 08:00:40 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/07 15:35:35 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/07 18:38:51 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
@@ -54,6 +54,38 @@ double cast_ray(t_params *params)
     }
     
     return distance;
+}
+
+/*void get_direction(double *x, double *y, double angle, double step)
+{
+    *x = sin(angle) * step;
+    *y = -cos(angle) * step; // On garde le sens de MinilibX (Y inversé)
+}*/
+
+
+double get_distance(t_params *params)
+{
+    double rx;
+    double ry;
+    double dir_x;
+    double dir_y;
+    double step;
+    double distance;
+
+    step = 1.0;
+    distance = 0.0;
+    rx = params->player->x;
+    ry = params->player->y;
+    dir_x = sin(params->delta) * step;
+    dir_y = -cos(params->delta) * step;
+    //get_direction(&dir_x, &dir_y, params->delta, step);
+    while (put_map_value(params, (int)rx, (int)ry) != '1')
+    {
+        rx += dir_x;
+        ry += dir_y;
+        distance += step;
+    }
+    return (distance);
 }
 
 

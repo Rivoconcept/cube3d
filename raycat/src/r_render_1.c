@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/04 18:45:05 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/07 18:43:06 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int draw_loop(t_params *params)
     clear_img(params);
     put_wall(params);
     put_player(params);
+    ray_trace(params);
     mlx_put_image_to_window(params->mlx_connexion, params->win_open, params->image->img, 0, 0);
     return (0);
 }
