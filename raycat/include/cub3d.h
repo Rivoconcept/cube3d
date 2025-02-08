@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/08 17:10:16 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/08 18:47:27 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-# define RED_PIXEL 0xFF0000
-
 # define SCREEN_WIDTH 1024
 # define SCREEN_HEIGHT 720
 # define SLICE_SIZE 64
@@ -44,8 +42,8 @@
 # define X_EVENT_KEY_RELEASE 1
 # define X_EVENT_EXIT 17
 
-# define Z 119
-# define A 97
+# define Z 122
+# define A 113
 # define S 115
 # define D 100
 
@@ -258,9 +256,23 @@ int						check_error(int fd, t_params *params);
 void					clear_img(t_params *params);
 void					cleanup(t_params *params);
 
-// r_handle_window.c
-int						handle_keypress(int keycode, t_params *params);
-int						handle_mouse_click(t_params *params);
+// r_handle_game_1.c
+t_rect					*init_rectangle(void);
+int						draw_rectangle(t_params *params);
+void					put_rectangle(t_params *params, t_map *map,
+							t_line *line);
+void					put_wall(t_params *params);
+
+// r_handle_game_2.c
+void					rotate_and_draw(int x, int y, int pivot_x, int pivot_y,
+							double angle, t_params *params);
+int						draw_player(t_params *params, int x, int y);
+void	put_triangle(t_params *params, t_line *line);
+void					put_player(t_params *params);
+
+// r_handle_game_3.c
+void					escape_window(int keycode, t_params *params);
+
 
 // r_init_game_1.c
 void					initialize_line(t_line **head, char *gnl);
@@ -273,29 +285,14 @@ int						put_data_config(t_params *params, char *gnl, int *i);
 int						init_config(int *flag, char *gnl, t_params *params);
 t_map					*load_map(int fd, t_params *params);
 
+// r_init_game_3.c
+t_player				*init_player(void);
+void	put_player_adress(t_params *params);
+
 // search_function.c
 t_position				*put_position_p(t_map *map, char c);
 char					find_value(t_map *map, t_position *pos);
 void					change_value(t_map *map, t_position *pos, char c);
-
-// r_handle_game_1.c
-t_rect					*init_rectangle(void);
-int						draw_rectangle(t_params *params);
-void					put_rectangle(t_params *params, t_map *map,
-							t_line *line);
-void					put_wall(t_params *params);
-
-// r_handle_game_2.c
-t_player				*init_player(void);
-void					rotate_and_draw(int x, int y, int pivot_x, int pivot_y,
-							double angle, t_params *params);
-int						draw_player(t_params *params, int x, int y);
-void					put_triangle(t_params *params, t_map *map,
-							t_line *line);
-void					put_player(t_params *params);
-
-// r_handle_game_3.c
-void					escape_window(int keycode, t_params *params);
 
 // r_put_value.c
 char					put_map_value(t_params *params, int x, int y);

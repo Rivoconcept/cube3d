@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:00 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/08 16:13:27 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/08 18:27:43 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	game_initializer(t_params *params)
 	
 	mlx_hook(params->win_open, KeyPress, KeyPressMask, handle_keypress, params);
 	mlx_hook(params->win_open, 17, 1L << 17, handle_mouse_click, params);
-	
+	put_player_adress(params);
 	mlx_loop_hook(params->mlx_connexion, draw_loop, params);
 	mlx_loop(params->mlx_connexion);
 }

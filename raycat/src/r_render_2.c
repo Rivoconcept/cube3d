@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/08 18:01:53 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/08 18:39:29 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	trace_fov(t_params *params)
 	double	end_angle;
     double distance;
     
-	// step = (PI / 180) * 1.0;
     step = FOV / SCREEN_WIDTH;
 	start_angle = params->delta - (FOV / 2);
 	end_angle = params->delta + (FOV / 2);
@@ -78,7 +77,6 @@ void	trace_fov(t_params *params)
 	while (angle <= end_angle)
 	{
 	    distance = get_distance(params, angle);
-       printf("%f\n", distance);
 		ray_trace(params, angle, distance);
 		angle += step;
 	}

@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/08 13:56:22 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/08 18:44:28 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,25 @@ void	rotate_palyer(int keycode, t_params *params)
 
 int direction_calc(double *x, double *y, int keycode, t_params *params)
 {
-	if (keycode == 122)
+	if (keycode == Z)
 	{
 		*x = params->player->x + sin(params->delta) * STEP;
 		*y = params->player->y - cos(params->delta) * STEP;
 		return (1);
 	}
-	else if (keycode == 115)
+	else if (keycode == S)
 	{
 		*x = params->player->x - sin(params->delta) * STEP;
 		*y = params->player->y + cos(params->delta) * STEP;
 		return (1);
 	}
-	else if (keycode == 113)
+	else if (keycode == A)
 	{
 		*x = params->player->x - cos(params->delta) * STEP;
 		*y = params->player->y - sin(params->delta) * STEP;
 		return (1);
 	}
-	else if (keycode == 100)
+	else if (keycode == D)
 	{
 		*x = params->player->x + cos(params->delta) * STEP;
 		*y = params->player->y + sin(params->delta) * STEP;

@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/08 18:09:23 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/08 19:25:09 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,14 @@ int get_wall_height(double distance)
     dpp = (SCREEN_WIDTH / 2.0) / tan(FOV / 2.0);
     if (distance <= 0)
         return (SCREEN_HEIGHT);
-    wall_height = (int)((SLICE_SIZE / distance) * dpp);
+    if (distance < 0.5)
+        distance = 0.5; // Empêche les distances trop petites qui explosent la hauteur
+
+    // wall_height = (int)((SLICE_SIZE / distance) * dpp);
+    wall_height = (int)((SLICE_SIZE / (distance + 0.01)) * dpp);
     if (wall_height > SCREEN_HEIGHT)
         wall_height = SCREEN_HEIGHT;
+
     return (wall_height);
 }
 
@@ -50,8 +55,8 @@ void put_wall_pexel(t_params *params, int column, double distance)
     int bottom;
 
     wall_height = get_wall_height(distance);
-    top = (SCREEN_HEIGHT / 2) - (wall_height / 2);
-    bottom = (SCREEN_HEIGHT / 2) + (wall_height / 2);
+    top = (SCREEN_HEIGHT / 3) - (wall_height / 2);
+    bottom = (SCREEN_HEIGHT / 3) + (wall_height / 2);
     if (top < 0)
         top = 0;
     if (bottom > SCREEN_HEIGHT)
@@ -69,14 +74,13 @@ void draw_wall(t_params *params)
     step = FOV / SCREEN_WIDTH;
     angle = params->delta - (FOV / 2);
     col = 0;
-    // distance = get_distance(params, angle);
-    // put_wall_pexel(params, col, distance);
     while (col < SCREEN_WIDTH)
     {
         distance = get_distance(params, angle);
-        printf("%d\n", get_wall_height(distance));
-        // if (distance > 0.1)
-           //put_wall_pexel(params, col, distance);
+
+
+        if (distance > 0.1)
+           put_wall_pexel(params, col, distance * 2);
         angle += step;
         col++;
     }
