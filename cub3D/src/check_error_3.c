@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 11:08:07 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/30 08:21:43 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/04 13:40:41 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -39,7 +39,7 @@ int	check_error(int fd, t_params *params)
 {
 	if (check_error_config(params))
 		return (close(fd), cleanup(params), 1);
-	if (check_intrus_data(params->map))
+	if (check_intrus_data(params))
 		return (close(fd), cleanup(params), 1);
 	if (check_map(params))
 		return (close(fd), cleanup(params), 1);
