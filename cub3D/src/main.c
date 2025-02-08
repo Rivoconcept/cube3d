@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:00 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/03 16:47:04 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/05 16:57:59 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,32 @@ void	game_initializer(t_params *params)
 	mlx_initialization(params);
 	// params->win_width = SCREEN_WIDTH;
 	// params->win_height = SCREEN_HEIGHT;
-	params->win_width = count_element_list_mapcol(params->map) * 64;
-	params->win_height = count_element_list_mapline(params->map) * 64;
+	params->win_width = count_element_list_mapcol(params->map) * COL_SIZE;
+	params->win_height = count_element_list_mapline(params->map) * COL_SIZE;
 	mlx_window_open(params);
+	params->image->img = mlx_new_image(params->mlx_connexion, params->win_width, params->win_height);
+	if (!params->image->img)
+	{
+		perror_msg("Failed to create image", NULL);
+		cleanup(params);
+		exit(EXIT_FAILURE);
+	}
+	params->image->data = mlx_get_data_addr(params->image->img, &params->image->bpp, &params->image->line_len, &params->image->endian);
+	if (!params->image->data)
+	{
+		perror_msg("Failed to get image data", NULL);
+		cleanup(params);
+		exit(EXIT_FAILURE);
+	}
+	mlx_put_image_to_window(params->mlx_connexion, params->win_open, params->image->img, 0, 0);
+	
+	/*mlx_hook(params->win_open, 2, 1L << 0, handle_keypress, params);
+	mlx_hook(params->win_open, 3, 1L << 1, handle_keyrelease, params);*/
+	
 	mlx_hook(params->win_open, KeyPress, KeyPressMask, handle_keypress, params);
 	mlx_hook(params->win_open, 17, 1L << 17, handle_mouse_click, params);
-	put_wall(params);
-	put_player(params);
+	
+	mlx_loop_hook(params->mlx_connexion, draw_loop, params);
 	mlx_loop(params->mlx_connexion);
 }
 

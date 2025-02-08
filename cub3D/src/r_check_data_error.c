@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_check_data_error.c                               :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:50:23 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/01/30 07:32:46 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/05 19:19:32 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
@@ -34,14 +34,14 @@ int	count_data_game(t_map *map, char c)
 	return (count);
 }
 
-int	check_intrus_data(t_map *map)
+int	check_intrus_data(t_params *params)
 {
 	char		data;
 	t_map		*current_map;
 	t_line		*current_line;
 
 	data = '0';
-	current_map = map;
+	current_map = params->map;
 	while (current_map != NULL)
 	{
 		current_line = current_map->line_value.line;
@@ -51,6 +51,8 @@ int	check_intrus_data(t_map *map)
 			if (data != 'N' && data != 'S' && data != 'E' && data != 'W' \
 				&& data != 49 && data != 10 && data != 48 && data != 32)
 				return (perror_msg("Invalid data entry in map", NULL));
+			if ( data == 'N' || data == 'W' || data == 'E' || data == 'S')
+				params->player->init = data;
 			current_line = current_line->next;
 		}
 		current_map = current_map->next;

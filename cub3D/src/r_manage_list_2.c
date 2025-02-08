@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_manage_list_2.c                                  :+:      :+:    :+:   */
@@ -6,11 +6,27 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:49:10 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/02 13:13:14 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/04 10:26:47 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../include/cub3d.h"
+
+t_img	*init_list_img(void)
+{
+	t_img		*img;
+	img = (t_img *)malloc(sizeof(t_img));
+	if (!img)
+		return (NULL);
+	img->img = NULL;
+	img->data = NULL;
+	img->bpp = 0;
+	img->line_len = 0;
+	img->endian = 0;
+	return (img);
+}
+
+
 
 int	count_element_list(t_line *head)
 {

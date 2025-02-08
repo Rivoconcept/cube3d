@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/03 17:01:40 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/07 18:28:39 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,25 @@
 
 # define SCREEN_WIDTH 			1024
 # define SCREEN_HEIGHT 			720
+# define COL_SIZE				64
+
+
+# define PI 					3.14159265359
+# define STEP					3.0
+
 
 # define ESC 					53
-# define X_EVENT_KEY_PRESS		2
-# define X_EVENT_KEY_RELEASE	3
+# define X_EVENT_KEY_PRESS		0
+# define X_EVENT_KEY_RELEASE	1
 # define X_EVENT_EXIT			17
 
 
-# define W 						13
-# define A 						0
-# define S 						1
-# define D 						2
-# define UP 					126
-# define DOWN 					125
-# define LEFT 					123
-# define RIGHT 					124
+# define Z 119
+# define A 97
+# define S 115
+# define D 100
+
+
 
 typedef struct s_point
 {
@@ -59,13 +63,11 @@ typedef struct s_point
 
 typedef struct s_img
 {
-	void	*pointer_to_image;
-	char	*address;
-	int		bits_per_pixel;
-	int		line_length;
+	void	*img;
+	char	*data;
+	int		bpp;
+	int		line_len;
 	int		endian;
-	int		width;
-	int		height;
 }				t_img;
 
 typedef struct s_key
@@ -137,11 +139,12 @@ typedef struct s_c
 //rectangle_form
 typedef struct s_player
 {
-    int	x;
-    int	y;
-    int width;
-    int height;
-    int color;
+	char	init;
+    int		x;
+    int		y;
+    int 	width;
+    int 	height;
+    int 	color;
 }	t_player;
 
 typedef struct s_rect
@@ -175,6 +178,7 @@ typedef struct s_image
 
 typedef struct s_params
 {
+	t_img				*image;
 	t_map				*map;
 	t_position			*pos;
 	t_f					*f_color;
@@ -183,7 +187,7 @@ typedef struct s_params
 	t_player			*player;
 	void				*mlx_connexion;
 	void				*win_open;
-	void				*img;
+	double				delta;
 	char				*no;
 	char				*so;
 	char				*we;
@@ -209,7 +213,7 @@ int is_only_space(char *str);
 int	perror_msg(char *error, char *var);
 void ft_exit_faillure(t_params *params, int fd, char *error, char *var);
 
-int	check_intrus_data(t_map *map);
+int	check_intrus_data(t_params *params);
 int	count_data_game(t_map *map, char c);
 int	check_extension(char *str);
 
@@ -221,6 +225,7 @@ t_f	*init_ground_color(void);
 t_c	*init_ceiling_color(void);
 
 //r_manage_list_2.c
+t_img	*init_list_img(void);
 int	count_element_list(t_line *head);
 int	count_element_list_mapcol(t_map *head);
 int	count_element_list_mapline(t_map *head);
@@ -231,14 +236,6 @@ void	put_ranks_map(t_map **head);
 void	free_list_position(t_position *head);
 void	free_list_map(t_map *head_map);
 t_params	*create_list_param(void);
-
-//r_render_1.c
-int	encode_color(uint8_t r, uint8_t g, uint8_t b, t_params *params);
-int	pixel_render(t_params *params);
-
-//r_render_2.c
-
-
 
 
 //r_utils_1.c
@@ -255,6 +252,8 @@ int check_error_color(char *color, t_params *params);
 int check_error_config(t_params *params);
 
 //r_utils_3.c
+int get_pos_x(int x);
+int get_pos_y(int y);
 
 //check_error_1.c
 int is_not_playable(char c, t_position *pos, t_map *map);
@@ -270,6 +269,7 @@ void	cleanup(t_params *params);
 
 //r_handle_window.c
 int	handle_keypress(int keycode, t_params *params);
+int	handle_keyrelease(int keycode, t_params *params);
 int	handle_mouse_click(t_params *params);
 
 //r_init_game_1.c
@@ -291,16 +291,50 @@ void	change_value(t_map *map, t_position *pos, char c);
 int	pixel_render(t_params *params);
 
 
-//x_debuggging
+//r_handle_game_1.c
+t_rect	*init_rectangle(void);
+int draw_rectangle(t_params *params);
+void	put_rectangle(t_params *params, t_map *map, t_line *line);
+void	put_wall(t_params *params);
+
+//r_handle_game_2.c
+t_player	*init_player(void);
+void rotate_and_draw(int x, int y, int pivot_x, int pivot_y, double angle, t_params *params);
+int draw_player(t_params *params, int x, int y);
+void	put_triangle(t_params *params, t_map *map, t_line *line);
+void	put_player(t_params *params);
+
+//r_handle_game_3.c
+void  escape_window(int keycode, t_params *params);
+
+
+//r_put_value.c
+char	put_map_value(t_params *params, int x, int y);
+double get_distance(t_params *params, double angle);
+
+//r_render_1.c
+int	encode_color(uint8_t r, uint8_t g, uint8_t b);
+void    my_mlx_pixel_put(int x, int y, int color, t_params *params);
+int draw_loop(t_params *params);
+
+//r_render_2.c
+void ray_trace(t_params *params, double angle);
+void trace_fov(t_params *params);
+
+//r_render_3.c
+int direction_calc(double *x, double *y, int keycode, t_params *params);
+int	handle_keypress(int keycode, t_params *params);
+int	handle_mouse_click(t_params *params);
+
 
 t_rect	*init_rectangle(void);
 void	put_rectangle(t_params *params, t_map *map, t_line *line);
+char get_map_element(t_params *params, int x, int y);
 
 t_player	*init_player(void);
 void	put_player(t_params *params);
-void draw_square(int x, int y, int size, int color, t_params *params);
 
-
+char	put_map_value(t_params *params, int x, int y);
 
 
 void	put_wall(t_params *params);
