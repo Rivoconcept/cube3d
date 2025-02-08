@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_handle_game_2.c                                  :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 08:00:52 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/07 08:00:53 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/08 17:53:42 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
@@ -70,11 +70,11 @@ void	put_triangle(t_params *params, t_map *map, t_line *line)
 	{
 		if (params->player->x == 0 && params->player->y == 0)
 		{
-			params->player->x = (line->cell_value.index * COL_SIZE) + (COL_SIZE / 2);
-			params->player->y = (map->line_value.index * COL_SIZE) + (COL_SIZE / 2);
+			params->player->x = (line->cell_value.index * SLICE_SIZE) + (SLICE_SIZE / 2);
+			params->player->y = (map->line_value.index * SLICE_SIZE) + (SLICE_SIZE / 2);
 		}
-		params->player->width = COL_SIZE;
-		params->player->height = COL_SIZE;
+		params->player->width = SLICE_SIZE;
+		params->player->height = SLICE_SIZE;
 		params->player->color = 0xffff3f;
 		draw_player(params, params->player->x, params->player->y);
 	}

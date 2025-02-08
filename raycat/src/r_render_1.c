@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/07 18:09:00 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/08 13:56:22 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,31 +28,56 @@ void    my_mlx_pixel_put(int x, int y, int color, t_params *params)
     *(unsigned int*)dst = color;
 }
 
-
-void clear_img(t_params *params)
+void	rotate_palyer(int keycode, t_params *params)
 {
-    int x;
-    int y;
-
-    y = 0;
-    while (y < params->win_height)
-    {
-        x = 0;
-        while (x < params->win_width)
-        {
-            my_mlx_pixel_put(x, y, 0x000000, params);
-            x++;
-        }
-        y++;
-    }
+	if (keycode == 65361)
+        params->delta -= 0.09;
+    if (keycode == 65363)
+        params->delta += 0.09;
 }
 
-int draw_loop(t_params *params)
+int direction_calc(double *x, double *y, int keycode, t_params *params)
 {
-    clear_img(params);
-    put_wall(params);
-    put_player(params);
-    trace_fov(params);
-    mlx_put_image_to_window(params->mlx_connexion, params->win_open, params->image->img, 0, 0);
-    return (0);
+	if (keycode == 122)
+	{
+		*x = params->player->x + sin(params->delta) * STEP;
+		*y = params->player->y - cos(params->delta) * STEP;
+		return (1);
+	}
+	else if (keycode == 115)
+	{
+		*x = params->player->x - sin(params->delta) * STEP;
+		*y = params->player->y + cos(params->delta) * STEP;
+		return (1);
+	}
+	else if (keycode == 113)
+	{
+		*x = params->player->x - cos(params->delta) * STEP;
+		*y = params->player->y - sin(params->delta) * STEP;
+		return (1);
+	}
+	else if (keycode == 100)
+	{
+		*x = params->player->x + cos(params->delta) * STEP;
+		*y = params->player->y + sin(params->delta) * STEP;
+		return (1);
+	}
+	return (0);
+}
+
+int	handle_keypress(int keycode, t_params *params)
+{
+	double	x;
+	double	y;
+
+	escape_window(keycode, params);
+	rotate_palyer(keycode, params);
+	if (!direction_calc(&x, &y, keycode, params))
+		return (0);
+	if (put_map_value(params, (int)x, (int)y) != '1')
+	{
+		params->player->x = x;
+		params->player->y = y;
+	}
+	return (0);
 }
