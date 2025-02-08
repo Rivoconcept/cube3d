@@ -6,11 +6,29 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:50:08 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/05 18:41:50 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/08 14:11:22 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+void clear_img(t_params *params)
+{
+    int x;
+    int y;
+
+    y = 0;
+    while (y < params->win_height)
+    {
+        x = 0;
+        while (x < params->win_width)
+        {
+            my_mlx_pixel_put(x, y, 0x000000, params);
+            x++;
+        }
+        y++;
+    }
+}
 
 void handle_free(char *str)
 {
