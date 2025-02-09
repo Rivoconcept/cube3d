@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   r_render_3.c                                       :+:      :+:    :+:   */
+/*   r_handle_game_4.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/07 18:39:17 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/09 12:56:10 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,49 +20,27 @@ void	rotate_palyer(int keycode, t_params *params)
         params->delta += 0.09;
 }
 
-/*int	handle_keypress(int keycode, t_params *params)
-{
-	int	x;
-	int	y;
-	int	step;
-
-	step = 1;
-	x = params->player->x;
-	y = params->player->y;
-	escape_window(keycode, params);
-	rotate_palyer(keycode, params);
-	if (keycode == 122 && put_map_value(params, x, y - 1) != '1')
-		params->player->y -= step;
-	if (keycode == 115 && put_map_value(params, x, y + 1) != '1')
-		params->player->y += step;
-	if (keycode == 113 && put_map_value(params, x - 1, y) != '1')
-		params->player->x -= step;
-	if (keycode == 100 && put_map_value(params, x + 1, y) != '1')
-		params->player->x += step;
-	return (0);
-}*/
-
 int direction_calc(double *x, double *y, int keycode, t_params *params)
 {
-	if (keycode == 122)
+	if (keycode == Z)
 	{
 		*x = params->player->x + sin(params->delta) * STEP;
 		*y = params->player->y - cos(params->delta) * STEP;
 		return (1);
 	}
-	else if (keycode == 115)
+	else if (keycode == S)
 	{
 		*x = params->player->x - sin(params->delta) * STEP;
 		*y = params->player->y + cos(params->delta) * STEP;
 		return (1);
 	}
-	else if (keycode == 113)
+	else if (keycode == A)
 	{
 		*x = params->player->x - cos(params->delta) * STEP;
 		*y = params->player->y - sin(params->delta) * STEP;
 		return (1);
 	}
-	else if (keycode == 100)
+	else if (keycode == D)
 	{
 		*x = params->player->x + cos(params->delta) * STEP;
 		*y = params->player->y + sin(params->delta) * STEP;
@@ -85,7 +63,5 @@ int	handle_keypress(int keycode, t_params *params)
 		params->player->x = x;
 		params->player->y = y;
 	}
-	//ray_trace(params);
-	//printf("%f\n", get_distance(params));
 	return (0);
 }

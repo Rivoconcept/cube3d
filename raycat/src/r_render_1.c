@@ -6,78 +6,80 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/08 18:44:28 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/09 13:11:23 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-int	encode_color(uint8_t r, uint8_t g, uint8_t b)
+double	get_distance(t_params *params, double angle)
 {
-    return (r << 16 | g << 8 | b);
+	double	rx;
+	double	ry;
+	double	dir_x;
+	double	dir_y;
+	double	step;
+	double	distance;
+
+	step = 0.1;
+	distance = 0.0;
+	rx = params->player->x;
+	ry = params->player->y;
+	dir_x = sin(angle) * step;
+	dir_y = -cos(angle) * step;
+	while (put_map_value(params, (int)rx, (int)ry) != '1')
+	{
+		rx += dir_x;
+		ry += dir_y;
+		distance += step;
+	}
+	return (distance);
+}
+void	ray_trace(t_params *params, double angle, double distance)
+{
+	double	i;
+	int		px;
+	int		py;
+	double	ray_x;
+	double	ray_y;
+	double	dir_x;
+	double	dir_y;
+
+	i = 0.0;
+    px = 0;
+    py = 0;
+	dir_x = sin(angle);
+	dir_y = -cos(angle);
+	ray_x = params->player->x;
+	ray_y = params->player->y;
+	while (i < distance)
+	{
+		px = (int)(ray_x + dir_x * i);
+		py = (int)(ray_y + dir_y * i);
+		my_mlx_pixel_put(px, py, 0x00FF00, params);
+		i += 0.1;
+	}
 }
 
-void    my_mlx_pixel_put(int x, int y, int color, t_params *params)
+void	trace_fov(t_params *params)
 {
-    char    *dst;
-
-    if (x < 0 || y < 0 || x >= params->win_width || y >= params->win_height)
-        return ;
-    dst = params->image->data + (y * params->image->line_len + x * \
-        (params->image->bpp / 8));
-    *(unsigned int*)dst = color;
+	double	step;
+	double	angle;
+	double	start_angle;
+	double	end_angle;
+    double distance;
+    
+    step = FOV / SCREEN_WIDTH;
+	start_angle = params->delta - (FOV / 2);
+	end_angle = params->delta + (FOV / 2);
+	angle = start_angle;
+    distance = 0.0;
+	while (angle <= end_angle)
+	{
+	    distance = get_distance(params, angle);
+		ray_trace(params, angle, distance);
+		angle += step;
+	}
 }
 
-void	rotate_palyer(int keycode, t_params *params)
-{
-	if (keycode == 65361)
-        params->delta -= 0.09;
-    if (keycode == 65363)
-        params->delta += 0.09;
-}
 
-int direction_calc(double *x, double *y, int keycode, t_params *params)
-{
-	if (keycode == Z)
-	{
-		*x = params->player->x + sin(params->delta) * STEP;
-		*y = params->player->y - cos(params->delta) * STEP;
-		return (1);
-	}
-	else if (keycode == S)
-	{
-		*x = params->player->x - sin(params->delta) * STEP;
-		*y = params->player->y + cos(params->delta) * STEP;
-		return (1);
-	}
-	else if (keycode == A)
-	{
-		*x = params->player->x - cos(params->delta) * STEP;
-		*y = params->player->y - sin(params->delta) * STEP;
-		return (1);
-	}
-	else if (keycode == D)
-	{
-		*x = params->player->x + cos(params->delta) * STEP;
-		*y = params->player->y + sin(params->delta) * STEP;
-		return (1);
-	}
-	return (0);
-}
-
-int	handle_keypress(int keycode, t_params *params)
-{
-	double	x;
-	double	y;
-
-	escape_window(keycode, params);
-	rotate_palyer(keycode, params);
-	if (!direction_calc(&x, &y, keycode, params))
-		return (0);
-	if (put_map_value(params, (int)x, (int)y) != '1')
-	{
-		params->player->x = x;
-		params->player->y = y;
-	}
-	return (0);
-}

@@ -6,80 +6,81 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/08 18:39:29 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/09 13:12:00 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-double	get_distance(t_params *params, double angle)
+int get_wall_height(double distance)
 {
-	double	rx;
-	double	ry;
-	double	dir_x;
-	double	dir_y;
-	double	step;
-	double	distance;
+    double dpp;
+    int wall_height;
 
-	step = 0.1;
-	distance = 0.0;
-	rx = params->player->x;
-	ry = params->player->y;
-	dir_x = sin(angle) * step;
-	dir_y = -cos(angle) * step;
-	while (put_map_value(params, (int)rx, (int)ry) != '1')
-	{
-		rx += dir_x;
-		ry += dir_y;
-		distance += step;
-	}
-	return (distance);
-}
-void	ray_trace(t_params *params, double angle, double distance)
-{
-	double	i;
-	int		px;
-	int		py;
-	double	ray_x;
-	double	ray_y;
-	double	dir_x;
-	double	dir_y;
-
-	i = 0.0;
-    px = 0;
-    py = 0;
-	dir_x = sin(angle);
-	dir_y = -cos(angle);
-	ray_x = params->player->x;
-	ray_y = params->player->y;
-	while (i < distance)
-	{
-		px = (int)(ray_x + dir_x * i);
-		py = (int)(ray_y + dir_y * i);
-		my_mlx_pixel_put(px, py, 0x00FF00, params);
-		i += 0.1;
-	}
+    dpp = (SCREEN_WIDTH / 2.0) / tan(FOV / 2.0);
+    if (distance <= 0)
+        return (SCREEN_HEIGHT);
+    if (distance < 0.5)
+        distance = 0.5;
+    wall_height = (int)((SLICE_SIZE / (distance + 0.01)) * dpp);
+    if (wall_height > SCREEN_HEIGHT)
+        wall_height = SCREEN_HEIGHT;
+    return (wall_height);
 }
 
-void	trace_fov(t_params *params)
+
+void draw_vertical_line(t_params *params, int x, int y_start, int y_end)
 {
-	double	step;
-	double	angle;
-	double	start_angle;
-	double	end_angle;
-    double distance;
+    int y;
     
+    y = y_start;
+    if (y_end > y_start)
+    {
+        while (y < y_end)
+        {
+            my_mlx_pixel_put(x, y, 0xFFFFFF, params);
+            y++;
+        }
+    }
+}
+
+
+void put_wall_pexel(t_params *params, int column, double distance)
+{
+    int wall_height;
+    int top;
+    int bottom;
+
+    wall_height = get_wall_height(distance);
+    top = (SCREEN_HEIGHT / 2) - (wall_height / 2);
+    bottom = (SCREEN_HEIGHT / 2) + (wall_height / 2);
+    if (top < 0)
+        top = 0;
+    if (bottom > SCREEN_HEIGHT)
+        bottom = SCREEN_HEIGHT;
+    draw_vertical_line(params, column, top, bottom);
+}
+
+void draw_wall(t_params *params)
+{
+    double step;
+    double angle;
+    double distance;
+    int col;
+
     step = FOV / SCREEN_WIDTH;
-	start_angle = params->delta - (FOV / 2);
-	end_angle = params->delta + (FOV / 2);
-	angle = start_angle;
-    distance = 0.0;
-	while (angle <= end_angle)
-	{
-	    distance = get_distance(params, angle);
-		ray_trace(params, angle, distance);
-		angle += step;
-	}
+    angle = params->delta - (FOV / 2);
+    col = 0;
+    while (col < SCREEN_WIDTH)
+    {
+        distance = get_distance(params, angle);
+
+
+        if (distance > 0.1)
+           put_wall_pexel(params, col, distance * 2);
+        angle += step;
+        col++;
+    }
 }
 
 
