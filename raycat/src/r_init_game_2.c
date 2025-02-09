@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:49:57 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/01 18:27:30 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/09 12:58:59 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,31 @@ t_map *load_map(int fd, t_params *params)
 		gnl = get_next_line(fd);
 	}
 	return (map);
+}
+
+void	init_player(t_params *params)
+{
+	t_map	*current_map;
+	t_line	*line;
+
+	current_map = params->map;
+	while (current_map != NULL)
+	{
+		line = current_map->line_value.line;
+		while (line != NULL)
+		{
+			if (line->cell_value.value == params->player->init)
+			{
+				if (params->player->x == 0 && params->player->y == 0)
+				{
+					params->player->x = (line->cell_value.index * SLICE_SIZE)
+						+ (SLICE_SIZE / 2);
+					params->player->y = (current_map->line_value.index
+							* SLICE_SIZE) + (SLICE_SIZE / 2);
+				}
+			}
+			line = line->next;
+		}
+		current_map = current_map->next;
+	}
 }

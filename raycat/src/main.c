@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:00 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/08 18:27:43 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/09 12:59:07 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ void	mlx_window_open(t_params *params)
 void	game_initializer(t_params *params)
 {
 	mlx_initialization(params);
-	// params->win_width = SCREEN_WIDTH;
-	// params->win_height = SCREEN_HEIGHT;
-	params->win_width = count_element_list_mapcol(params->map) * SLICE_SIZE;
-	params->win_height = count_element_list_mapline(params->map) * SLICE_SIZE;
+	params->win_width = SCREEN_WIDTH;
+	params->win_height = SCREEN_HEIGHT;
+	// params->win_width = count_element_list_mapcol(params->map) * SLICE_SIZE;
+	// params->win_height = count_element_list_mapline(params->map) * SLICE_SIZE;
 	mlx_window_open(params);
 	params->image->img = mlx_new_image(params->mlx_connexion, params->win_width, params->win_height);
 	if (!params->image->img)
@@ -63,7 +63,7 @@ void	game_initializer(t_params *params)
 	
 	mlx_hook(params->win_open, KeyPress, KeyPressMask, handle_keypress, params);
 	mlx_hook(params->win_open, 17, 1L << 17, handle_mouse_click, params);
-	put_player_adress(params);
+	
 	mlx_loop_hook(params->mlx_connexion, draw_loop, params);
 	mlx_loop(params->mlx_connexion);
 }
@@ -87,12 +87,7 @@ int	main(int argc, char **argv)
 			in the map configuration", NULL);
 	if (check_error(fd, params))
 		exit(EXIT_FAILURE);
-	// print_config(params);
-	// printf("\n\n******************************************************\n\n");
-	// printf("Ground color: R=%d, G=%d, B=%d\n", params->f_color->r, params->f_color->g, params->f_color->b);
-	// printf("Ground color: R=%d, G=%d, B=%d\n", params->c_color->r, params->c_color->g, params->c_color->b);
-	// print_map(params);
-
+	init_player(params);
 	game_initializer(params);
 	cleanup(params);
 	close(fd);

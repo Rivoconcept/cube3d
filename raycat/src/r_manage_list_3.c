@@ -6,11 +6,42 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:49:17 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/05 19:19:49 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/09 13:09:42 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+void	put_ranks_line(t_line **head)
+{
+	int		index;
+	t_line	*current;
+
+	index = 0;
+	current = *head;
+	while (current != NULL)
+	{
+		current->cell_value.index = index;
+		index++;
+		current = current->next;
+	}
+}
+
+void	put_ranks_map(t_map **head)
+{
+	int		index;
+	t_map	*current;
+
+	index = 0;
+	current = *head;
+	while (current != NULL)
+	{
+		current->line_value.index = index;
+		index++;
+		current = current->next;
+	}
+}
+
 
 void	free_list_position(t_position *head)
 {
@@ -68,7 +99,7 @@ t_params	*create_list_param(void)
 	new_params->f_color = init_ground_color();
 	new_params->c_color = init_ceiling_color();
 	new_params->rect = init_rectangle();
-	new_params->player = init_player();
+	new_params->player = init_list_player();
 	new_params->delta = 0;
 	new_params->no = NULL;
 	new_params->so = NULL;

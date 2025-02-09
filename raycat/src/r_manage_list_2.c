@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_manage_list_2.c                                  :+:      :+:    :+:   */
@@ -6,11 +6,27 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:49:10 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/04 10:26:47 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/09 13:14:05 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+t_player	*init_list_player(void)
+{
+	t_player	*player;
+
+	player = (t_player *)malloc(sizeof(t_player));
+	if (player == NULL)
+		return (NULL);
+	player->init = '\0';
+	player->x = 0;
+	player->y = 0;
+	player->width = 0;
+	player->height = 0;
+	player->color = 0;
+	return (player);
+}
 
 t_img	*init_list_img(void)
 {
@@ -25,8 +41,6 @@ t_img	*init_list_img(void)
 	img->endian = 0;
 	return (img);
 }
-
-
 
 int	count_element_list(t_line *head)
 {
@@ -90,34 +104,4 @@ int	count_element_list_mapline(t_map *head)
 		current = current->next;
 	}
 	return (count);
-}
-
-void	put_ranks_line(t_line **head)
-{
-	int		index;
-	t_line	*current;
-
-	index = 0;
-	current = *head;
-	while (current != NULL)
-	{
-		current->cell_value.index = index;
-		index++;
-		current = current->next;
-	}
-}
-
-void	put_ranks_map(t_map **head)
-{
-	int		index;
-	t_map	*current;
-
-	index = 0;
-	current = *head;
-	while (current != NULL)
-	{
-		current->line_value.index = index;
-		index++;
-		current = current->next;
-	}
 }
