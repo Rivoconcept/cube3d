@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+         #
+#    By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/22 08:39:35 by rhanitra          #+#    #+#              #
-#    Updated: 2025/02/07 18:10:31 by rhanitra         ###   ########.fr        #
+#    Updated: 2025/02/12 12:08:13 by ttelolah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CUB3D = main.c r_manage_list_1.c r_manage_list_2.c r_manage_list_3.c \
 		r_handle_game_1.c r_handle_game_2.c r_handle_game_3.c  \
 		check_error_1.c check_error_2.c check_error_3.c search_function.c \
 		r_render_1.c r_render_2.c r_render_3.c\
-		x_debugging.c 
+		x_debugging.c t_player.c 
 
 DIR_CUB3D = ./src/
 SRC_CUB3D= $(addprefix $(DIR_CUB3D),$(CUB3D))

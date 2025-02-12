@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
+/*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/07 18:28:39 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/12 11:57:31 by ttelolah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,4 +341,8 @@ void	put_wall(t_params *params);
 void    print_map(t_params *params);
 void    print_line(t_line *line);
 void print_config(t_params *params);
+
+void	modulo_angle(double *angle);
+void	init_player_direction(t_params *params);
+void	rotate_player(int keycode, t_params *params);
 #endif
