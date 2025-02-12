@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
+/*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:00 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/05 16:57:59 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/12 12:13:33 by ttelolah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	mlx_window_open(t_params *params)
 void	game_initializer(t_params *params)
 {
 	mlx_initialization(params);
+	init_player_direction(params);
 	// params->win_width = SCREEN_WIDTH;
 	// params->win_height = SCREEN_HEIGHT;
 	params->win_width = count_element_list_mapcol(params->map) * COL_SIZE;

@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   r_render_3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
+/*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/07 18:39:17 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/12 12:03:52 by ttelolah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-void	rotate_palyer(int keycode, t_params *params)
+void	rotate_player(int keycode, t_params *params)
 {
 	if (keycode == 65361)
-        params->delta -= 0.09;
-    if (keycode == 65363)
-        params->delta += 0.09;
+		params->delta -= 0.09;
+	if (keycode == 65363)
+		params->delta += 0.09;
+	modulo_angle(&params->delta);
 }
 
 /*int	handle_keypress(int keycode, t_params *params)
@@ -77,7 +78,7 @@ int	handle_keypress(int keycode, t_params *params)
 	double	y;
 
 	escape_window(keycode, params);
-	rotate_palyer(keycode, params);
+	rotate_player(keycode, params);
 	if (!direction_calc(&x, &y, keycode, params))
 		return (0);
 	if (put_map_value(params, (int)x, (int)y) != '1')
