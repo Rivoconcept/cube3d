@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_handle_game_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
+/*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 08:00:58 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/07 08:00:59 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/13 21:44:53 by ttelolah         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
@@ -75,7 +75,7 @@ void	put_rectangle(t_params *params, t_map *map, t_line *line)
 	}
 }
 
-void	put_wall(t_params *params)
+/* void	put_wall(t_params *params)
 {
 	t_map	*current_map;
 	t_line	*current_line;
@@ -91,4 +91,30 @@ void	put_wall(t_params *params)
 		}
 		current_map = current_map->next;
 	}
+} */
+
+void put_wall(t_params *params)
+{
+    t_map *current_map;
+    t_line *current_line;
+    int view_distance = 10;
+    int player_x = (int)params->player->x;
+    int player_y = (int)params->player->y;
+    
+    current_map = params->map;
+    while (current_map != NULL && abs(current_map->line_value.index - player_y) <= view_distance)
+    {
+        if (abs(current_map->line_value.index - player_y) <= view_distance)
+        {
+            current_line = current_map->line_value.line;
+            while (current_line != NULL)
+            {
+                if (abs(current_line->cell_value.index - player_x) <= view_distance)
+                    put_rectangle(params, current_map, current_line);
+                current_line = current_line->next;
+            }
+        }
+        current_map = current_map->next;
+    }
 }
+

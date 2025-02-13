@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   r_search.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
+/*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:49:34 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/13 18:08:17 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/13 21:54:42 by ttelolah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,21 @@ char	putval(t_params *params, int x, int y)
 
 char put_map_value(t_params *params, int x, int y)
 {
-    char c;
+	t_moov moov;
 
-    c = putval(params, x, y);
-	if (c == '1')
-        return c;
-    if (putval(params, x + 1, y) == '1' || putval(params, x - 1, y) == '1' ||
-        putval(params, x, y + 1) == '1' || putval(params, x, y - 1) == '1')
+    moov.center = putval(params, x, y);
+    if (moov.center == '1')
         return '1';
-    if ((putval(params, x + 1, y) == '1' && putval(params, x, y + 1) == '1') ||
-        (putval(params, x - 1, y) == '1' && putval(params, x, y - 1) == '1') ||
-        (putval(params, x + 1, y) == '1' && putval(params, x, y - 1) == '1') ||
-        (putval(params, x - 1, y) == '1' && putval(params, x, y + 1) == '1'))
+    moov.left = putval(params, x - 1, y);
+    moov.right = putval(params, x + 1, y);
+    moov.up = putval(params, x, y - 1);
+    moov.down = putval(params, x, y + 1);
+    if (moov.left == '1' || moov.right == '1' || moov.up == '1' || moov.down == '1')
         return '1';
-    return c;
+    if ((moov.right == '1' && moov.down == '1') ||
+        (moov.left == '1' && moov.up == '1') ||
+        (moov.right == '1' && moov.up == '1') ||
+        (moov.left == '1' && moov.down == '1'))
+        return '1';
+    return moov.center;
 }

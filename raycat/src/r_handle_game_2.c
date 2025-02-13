@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   r_handle_game_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
+/*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 08:00:52 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/09 12:36:26 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/13 21:44:42 by ttelolah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	put_triangle(t_params *params, t_map *map, t_line *line)
 }
 
 
-void	put_player(t_params *params)
+/* void	put_player(t_params *params)
 {
 	t_map	*current_map;
 	t_line	*current_line;
@@ -82,4 +82,32 @@ void	put_player(t_params *params)
 		}
 		current_map = current_map->next;
 	}
+} */
+
+void	put_player(t_params *params)
+{
+	t_map	*current_map;
+	t_line	*current_line;
+	int		view_distance;
+	int		player_x;
+	int		player_y;
+
+	view_distance = 10;
+	player_x = (int)params->player->x;
+	player_y = (int)params->player->y;
+	current_map = params->map;
+	while (current_map != NULL
+		&& abs(current_map->line_value.index - player_y) <= view_distance)
+	{
+		current_line = current_map->line_value.line;
+		while (current_line != NULL)
+		{
+			if (abs(current_line->cell_value.index - player_x)
+				<= view_distance)
+				put_triangle(params, current_map, current_line);
+			current_line = current_line->next;
+		}
+		current_map = current_map->next;
+	}
 }
+

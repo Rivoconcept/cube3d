@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   r_render_1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
+/*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/13 18:13:29 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/13 21:52:55 by ttelolah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@ double	get_distance(t_params *params, double angle)
 	double	step;
 	double	distance;
 
-	step = 0.1;
+	step = 1.0;
 	distance = 0.0;
 	rx = params->player->x;
 	ry = params->player->y;
+	modulo_angle(&angle);
 	dir_x = sin(angle) * step;
 	dir_y = -cos(angle) * step;
 	while (put_map_value(params, (int)rx, (int)ry) != '1')
@@ -48,6 +49,7 @@ void	ray_trace(t_params *params, double angle, double distance)
 	i = 0.0;
     px = 0;
     py = 0;
+	modulo_angle(&angle);
 	dir_x = sin(angle);
 	dir_y = -cos(angle);
 	ray_x = params->player->x;
@@ -61,25 +63,24 @@ void	ray_trace(t_params *params, double angle, double distance)
 	}
 }
 
-void	trace_fov(t_params *params)
+void trace_fov(t_params *params)
 {
-	double	step;
-	double	angle;
-	double	start_angle;
-	double	end_angle;
+    double angle;
+    double step;
     double distance;
-    
+    int i;
+
     step = FOV / SCREEN_WIDTH;
-	start_angle = params->delta - (FOV / 2);
-	end_angle = params->delta + (FOV / 2);
-	angle = start_angle;
-    distance = 0.0;
-	while (angle <= end_angle)
-	{
-	    distance = get_distance(params, angle);
-		ray_trace(params, angle, distance);
-		angle += step;
-	}
+    i = 0;
+    while (i < SCREEN_WIDTH)
+    {
+        angle = params->delta - (FOV / 2) + (step * i);
+        modulo_angle(&angle);
+        distance = get_distance(params, angle);
+        ray_trace(params, angle, distance);
+        i++;
+    }
 }
+
 
 
