@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:48:23 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/09 13:55:37 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/13 17:49:48 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,44 +34,26 @@ int is_all_config_set(t_params *params)
 		&& params->ea != NULL && params->f != NULL && params->c != NULL);
 }
 
-int get_pos_x(int x)
+int get_pos_x(int x, t_params *params)
 {
-	int	i;
-	int	size;
-	int	min;
-	int	max;
+	int	map_width;
 
-	i = 0;
-	size = SCREEN_WIDTH / 64;
-	while (i < size)
+	map_width = count_element_list_mapcol(params->map);
+	if (x < 0 || x >= map_width * 64)
 	{
-		min = i * 64;
-		max = (i + 1) * 64;
-
-		if (x >= min && x < max)
-			return (i);
-		i++;
+		return (-1);
 	}
-	return (-1);
+	return x / 64;
 }
 
-int get_pos_y(int y)
+int get_pos_y(int y, t_params *params)
 {
-	int	i;
-	int	size;
-	int	min;
-	int	max;
+	int	map_height;
 
-	i = 0;
-	size = SCREEN_HEIGHT / 64;
-	while (i < size)
+	map_height = count_element_list_mapline(params->map);
+    if (y < 0 || y >= map_height * 64)
 	{
-		min = i * 64; 
-		max = (i + 1) * 64;
-
-		if (y >= min && y < max)
-			return (i);
-		i++;
+        return (-1);
 	}
-	return (-1);
+	return y / 64;
 }
