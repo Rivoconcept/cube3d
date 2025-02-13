@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   r_render_3.c                                       :+:      :+:    :+:   */
+/*   t_player.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/13 15:17:51 by ttelolah         ###   ########.fr       */
+/*   Created: 2025/02/12 09:35:39 by ttelolah          #+#    #+#             */
+/*   Updated: 2025/02/13 14:55:19 by ttelolah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-
-int draw_loop(t_params *params)
+void	init_player_direction(t_params *params)
 {
-    clear_img(params);
-    // put_wall(params);
-    // put_player(params);
-    // trace_fov(params);
-    draw_wall(params);
-    mlx_put_image_to_window(params->mlx_connexion, params->win_open, \
-    params->image->img, 0, 0);
-    return (0);
+	if (params->player->init == 'N')
+		params->delta = 0;
+	else if (params->player->init == 'S')
+		params->delta = PI;
+	else if (params->player->init == 'E')
+		params->delta = PI / 2;
+	else if (params->player->init == 'W')
+		params->delta = 3 * PI / 2;
 }
+
+void	modulo_angle(double *angle)
+{
+	while (*angle < 0)
+		*angle += 2 * PI;
+	while (*angle >= 2 * PI)
+		*angle -= 2 * PI;
+}
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
+/*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/09 14:16:26 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/13 14:56:11 by ttelolah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,7 +251,7 @@ int	encode_color(uint8_t r, uint8_t g, uint8_t b);
 void    my_mlx_pixel_put(int x, int y, int color, t_params *params);
 
 //r_handle_game_4.c
-void	rotate_palyer(int keycode, t_params *params);
+//void	rotate_palyer(int keycode, t_params *params);
 int direction_calc(double *x, double *y, int keycode, t_params *params);
 int	handle_keypress(int keycode, t_params *params);
 
@@ -334,4 +334,8 @@ int get_pos_y(int y);
 void    print_map(t_params *params);
 void    print_line(t_line *line);
 void print_config(t_params *params);
+
+void	modulo_angle(double *angle);
+void	init_player_direction(t_params *params);
+void	rotate_player(int keycode, t_params *params);
 #endif
