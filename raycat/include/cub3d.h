@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
+/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/13 14:56:11 by ttelolah         ###   ########.fr       */
+/*   Updated: 2025/02/13 17:08:08 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -326,8 +326,8 @@ int check_error_config(t_params *params);
 //r_utils_3.c
 int is_only_space(char *str);
 int is_all_config_set(t_params *params);
-int get_pos_x(int x);
-int get_pos_y(int y);
+int get_pos_x(int x, t_params *params);
+int get_pos_y(int y, t_params *params);
 
 
 

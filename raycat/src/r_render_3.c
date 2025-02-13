@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   r_render_3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
+/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/13 15:17:51 by ttelolah         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:10:05 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

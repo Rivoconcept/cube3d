@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/09 13:12:00 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/13 17:56:47 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void draw_wall(t_params *params)
     double distance;
     int col;
 
+    // step = (PI / 180) * 0.1;
     step = FOV / SCREEN_WIDTH;
     angle = params->delta - (FOV / 2);
     col = 0;
