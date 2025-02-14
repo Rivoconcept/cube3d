@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   r_handle_game_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
+/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 08:00:52 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/13 21:44:42 by ttelolah         ###   ########.fr       */
+/*   Updated: 2025/02/14 18:25:24 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	put_triangle(t_params *params, t_map *map, t_line *line)
 }
 
 
-/* void	put_player(t_params *params)
+void	put_player(t_params *params)
 {
 	t_map	*current_map;
 	t_line	*current_line;
@@ -82,9 +82,9 @@ void	put_triangle(t_params *params, t_map *map, t_line *line)
 		}
 		current_map = current_map->next;
 	}
-} */
+} 
 
-void	put_player(t_params *params)
+/*void	put_player(t_params *params)
 {
 	t_map	*current_map;
 	t_line	*current_line;
@@ -109,5 +109,5 @@ void	put_player(t_params *params)
 		}
 		current_map = current_map->next;
 	}
-}
+}*/
 
