@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   r_handle_game_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
+/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 08:00:58 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/13 21:44:53 by ttelolah         ###   ########.fr       */
+/*   Updated: 2025/02/14 18:25:39 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	put_rectangle(t_params *params, t_map *map, t_line *line)
 	}
 }
 
-/* void	put_wall(t_params *params)
+ void	put_wall(t_params *params)
 {
 	t_map	*current_map;
 	t_line	*current_line;
@@ -91,9 +91,9 @@ void	put_rectangle(t_params *params, t_map *map, t_line *line)
 		}
 		current_map = current_map->next;
 	}
-} */
+} 
 
-void put_wall(t_params *params)
+/*void put_wall(t_params *params)
 {
     t_map *current_map;
     t_line *current_line;
@@ -116,5 +116,5 @@ void put_wall(t_params *params)
         }
         current_map = current_map->next;
     }
-}
+}*/
 
