@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
+/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/13 21:08:19 by ttelolah         ###   ########.fr       */
+/*   Updated: 2025/02/15 12:55:33 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@
 
 /*typedef struct s_point
 {
-	double			x;
-	double			y;
+	float			x;
+	float			y;
 }			t_point;*/
 
 
@@ -167,27 +167,16 @@ typedef struct s_rect
 
 typedef struct s_image
 {
-	void				*wall_up_left;
-	void				*wall_up_center;
-	void				*wall_up_right;
-	void				*wall_left;
-	void				*wall_right;
-	void				*wall_down_left;
-	void				*wall_down_center;
-	void				*wall_down_right;
-	void				*flower_one;
-	void				*flower_two;
-	void				*ground;
-	void				*collectible;
-	void				*player;
-	void				*exit_close;
-	void				*exit_open;
-	void				*you_win;
+    t_img   wall_NO;
+    t_img   wall_SO;
+    t_img   wall_EA;
+    t_img   wall_WE;
 }						t_image;
 
 typedef struct s_params
 {
 	t_img				*image;
+	t_image				*wall;
 	t_map				*map;
 	t_position			*pos;
 	t_f					*f_color;
@@ -196,7 +185,7 @@ typedef struct s_params
 	t_player			*player;
 	void				*mlx_connexion;
 	void				*win_open;
-	double				delta;
+	float				delta;
 	char				*no;
 	char				*so;
 	char				*we;
@@ -247,7 +236,7 @@ void	put_rectangle(t_params *params, t_map *map, t_line *line);
 void	put_wall(t_params *params);
 
 //r_handle_game_2.c
-void rotate_and_draw(int x, int y, int pivot_x, int pivot_y, double angle, t_params *params);
+void rotate_and_draw(int x, int y, int pivot_x, int pivot_y, float angle, t_params *params);
 int draw_player(t_params *params, int x, int y);
 void	put_triangle(t_params *params, t_map *map, t_line *line);
 void	put_player(t_params *params);
@@ -260,7 +249,7 @@ void    my_mlx_pixel_put(int x, int y, int color, t_params *params);
 
 //r_handle_game_4.c
 //void	rotate_palyer(int keycode, t_params *params);
-int direction_calc(double *x, double *y, int keycode, t_params *params);
+int direction_calc(float *x, float *y, int keycode, t_params *params);
 int	handle_keypress(int keycode, t_params *params);
 
 //r_init_game_1.c
@@ -297,15 +286,15 @@ void	free_list_map(t_map *head_map);
 t_params	*create_list_param(void);
 
 //r_render_1.c
-double	get_distance(t_params *params, double angle);
-void	ray_trace(t_params *params, double angle, double distance);
+float	get_distance(t_params *params, float angle);
+void	ray_trace(t_params *params, float angle, float distance);
 void	trace_fov(t_params *params);
 
 
 //r_render_2.c
-int get_wall_height(double distance);
+int get_wall_height(float distance);
 void draw_vertical_line(t_params *params, int x, int y_start, int y_end);
-void put_wall_pexel(t_params *params, int column, double distance);
+void put_wall_pexel(t_params *params, int column, float distance);
 void draw_wall(t_params *params);
 
 
@@ -343,7 +332,7 @@ void    print_map(t_params *params);
 void    print_line(t_line *line);
 void print_config(t_params *params);
 
-void	modulo_angle(double *angle);
+void	modulo_angle(float *angle);
 void	init_player_direction(t_params *params);
 void	rotate_player(int keycode, t_params *params);
 #endif
