@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:55:54 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/15 15:47:00 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/15 16:47:28 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,69 +49,23 @@ t_img	*get_wall_texture(t_params *params, char wall_dir)
     return (NULL);
 }
 
-/*void draw_vertical_line(t_params *params, int x, int y_start, int y_end, t_img *texture, float wall_x, int wall_height)
+int	get_pixel_color(t_img *wall, int x, int y)
 {
-    int y;
-    int tex_x;
-    int tex_y;
-    int color;
+    int		color;
+    char	*pixel;
 
-    tex_x = (int)(wall_x * texture->line_len) % texture->line_len;
-
-    y = y_start;
-    while (y < y_end)
-    {
-        tex_y = ((y - y_start) * texture->line_len) / wall_height;
-        int pixel_index = (tex_y * texture->line_len) + (tex_x * (texture->bpp / 8));
-        color = *(int *)(texture->data + pixel_index);
-
-        my_mlx_pixel_put(x, y, color, params);
-        y++;
-    }
+    if (x < 0 || y < 0 || x >= wall->line_len || y >= wall->endian)
+        return (0x000000);
+    pixel = wall->data + (y * wall->line_len + x * (wall->bpp / 8));
+    color = *(int *)pixel;
+    return (color);
 }
 
-void put_wall_pexel(t_params *params, int column, float distance, char wall_dir, float wall_x)
+void	display_pixel_from_texture(t_img *wall, int tex_x, int tex_y, int screen_x, int screen_y, t_params *params)
 {
-    int wall_height;
-    int top;
-    int bottom;
-    t_img *texture;
+    int	color;
 
-    wall_height = get_wall_height(distance);
-    top = (SCREEN_HEIGHT / 2) - (wall_height / 2);
-    bottom = top + wall_height;
-    if (top < 0)
-        top = 0;
-    if (bottom > SCREEN_HEIGHT)
-        bottom = SCREEN_HEIGHT;
-
-    texture = get_wall_texture(params, wall_dir);
-    if (!texture)
-        return;
-
-    draw_vertical_line(params, column, top, bottom, texture, wall_x, wall_height);
+    color = get_pixel_color(wall, tex_x, tex_y);
+    my_mlx_pixel_put(screen_x, screen_y, color, params);
 }
-
-void draw_wall(t_params *params)
-{
-    float step;
-    float angle;
-    float distance;
-    int col;
-    char wall_dir;
-    float wall_x;
-
-    step = FOV / SCREEN_WIDTH;
-    angle = params->delta - (FOV / 2);
-    col = 0;
-    while (col < SCREEN_WIDTH)
-    {
-        distance = get_distance(params, angle, &wall_dir, &wall_x);
-        distance *= cos(angle - params->delta);
-        if (distance > 0.1)
-            put_wall_pexel(params, col, distance, wall_dir, wall_x);
-        angle += step;
-        col++;
-    }
-}*/
 

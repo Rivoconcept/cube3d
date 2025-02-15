@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/15 14:58:35 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/15 18:05:53 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void draw_vertical_line(t_params *params, int x, int y_start, int y_end)
         }
     }
 }
-
 
 void put_wall_pexel(t_params *params, int column, float distance)
 {
