@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/15 09:48:36 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/15 19:03:30 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	rotate_player(int keycode, t_params *params)
 {
 	if (keycode == 65361)
-		params->delta -= 0.09;
+		params->delta -= 0.05;
 	if (keycode == 65363)
-		params->delta += 0.09;
+		params->delta += 0.05;
 	modulo_angle(&params->delta);
 }
 
