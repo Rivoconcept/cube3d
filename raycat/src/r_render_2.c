@@ -6,15 +6,15 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/14 21:12:27 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/15 12:55:30 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-int get_wall_height(double distance)
+int get_wall_height(float distance)
 {
-    double dpp;
+    float dpp;
     int wall_height;
 
     dpp = (SCREEN_WIDTH / 2.0) / tan(FOV / 2.0);
@@ -28,7 +28,6 @@ int get_wall_height(double distance)
         wall_height = SCREEN_HEIGHT;
     return (wall_height);
 }
-
 
 void draw_vertical_line(t_params *params, int x, int y_start, int y_end)
 {
@@ -46,7 +45,7 @@ void draw_vertical_line(t_params *params, int x, int y_start, int y_end)
 }
 
 
-void put_wall_pexel(t_params *params, int column, double distance)
+void put_wall_pexel(t_params *params, int column, float distance)
 {
     int wall_height;
     int top;
@@ -66,9 +65,9 @@ void put_wall_pexel(t_params *params, int column, double distance)
 
 /*void draw_wall(t_params *params)
 {
-    double step;
-    double angle;
-    double distance;
+    float step;
+    float angle;
+    float distance;
     int col;
 
     step = FOV / SCREEN_WIDTH;
@@ -88,9 +87,9 @@ void put_wall_pexel(t_params *params, int column, double distance)
 
 void draw_wall(t_params *params)
 {
-    double step;
-    double angle;
-    double distance;
+    float step;
+    float angle;
+    float distance;
     int col;
 
     step = FOV / SCREEN_WIDTH;

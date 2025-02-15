@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   r_cleanup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
+/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:50:08 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/13 21:45:28 by ttelolah         ###   ########.fr       */
+/*   Updated: 2025/02/15 12:55:50 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

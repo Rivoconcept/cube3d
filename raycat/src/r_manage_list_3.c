@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:49:17 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/09 13:09:42 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/15 12:55:36 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ t_params	*create_list_param(void)
 	new_params->mlx_connexion = NULL;
 	new_params->win_open = NULL;
 	new_params->image = init_list_img();
+	new_params->wall = NULL;
 	new_params->map = NULL;
 	new_params->pos = create_list_position();
 	new_params->f_color = init_ground_color();

@@ -6,20 +6,20 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/14 20:53:25 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/15 09:48:36 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-double	get_distance(t_params *params, double angle)
+float	get_distance(t_params *params, float angle)
 {
-	double	rx;
-	double	ry;
-	double	dir_x;
-	double	dir_y;
-	double	step;
-	double	distance;
+	float	rx;
+	float	ry;
+	float	dir_x;
+	float	dir_y;
+	float	step;
+	float	distance;
 
 	step = 1.0;
 	distance = 0.0;
@@ -38,15 +38,15 @@ double	get_distance(t_params *params, double angle)
 }
 
 
-void	ray_trace(t_params *params, double angle, double distance)
+void	ray_trace(t_params *params, float angle, float distance)
 {
-	double	i;
+	float	i;
 	int		px;
 	int		py;
-	double	ray_x;
-	double	ray_y;
-	double	dir_x;
-	double	dir_y;
+	float	ray_x;
+	float	ray_y;
+	float	dir_x;
+	float	dir_y;
 
 	i = 0.0;
     px = 0;
@@ -67,9 +67,9 @@ void	ray_trace(t_params *params, double angle, double distance)
 
 void trace_fov(t_params *params)
 {
-    double angle;
-    double step;
-    double distance;
+    float angle;
+    float step;
+    float distance;
     int i;
 
     step = FOV / SCREEN_WIDTH;

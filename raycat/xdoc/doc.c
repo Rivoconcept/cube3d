@@ -6,6 +6,7 @@ https://www.youtube.com/watch?v=2beZWqv_gGA
 https://www.youtube.com/watch?v=g8p7nAbDz6Y
 https://www.youtube.com/watch?v=G9i78WoBBIU
 https://aurelienbrabant.fr/blog/pixel-drawing-with-the-minilibx
+https://stdbc.tistory.com/62
 
 #include <stdio.h>
 #include <stdlib.h>
