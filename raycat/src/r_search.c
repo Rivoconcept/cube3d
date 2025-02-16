@@ -39,7 +39,6 @@ char	putval(t_params *params, int x, int y)
 {
 	params->pos->value.x = get_pos_x(x, params);
 	params->pos->value.y = get_pos_y(y, params);
-	// printf("x :%d - y :%d\n", params->pos->value.x, params->pos->value.y);
 	return (find_value(params->map, params->pos));
 }
 
