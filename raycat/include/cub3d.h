@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/15 12:55:33 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/16 11:09:39 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 
 #define RED_PIXEL 0xFF0000
 
-# define SCREEN_WIDTH 			1024
-# define SCREEN_HEIGHT 			720
+# define SCREEN_WIDTH 			640
+# define SCREEN_HEIGHT 			480
 # define SLICE_SIZE				64
 
 
@@ -70,14 +70,6 @@ typedef struct s_moov
 	char down;
 }				t_moov;
 
-typedef struct s_img
-{
-	void	*img;
-	char	*data;
-	int		bpp;
-	int		line_len;
-	int		endian;
-}				t_img;
 
 /*typedef struct s_key
 {
@@ -164,6 +156,16 @@ typedef struct s_rect
     int height;
     int color;
 }	t_rect;
+
+typedef struct s_img
+{
+	void	*img;
+	char	*data;
+	int		bpp;
+	int		line_len;
+	int		endian;
+}				t_img;
+
 
 typedef struct s_image
 {

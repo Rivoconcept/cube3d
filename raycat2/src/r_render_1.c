@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/15 18:55:51 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/16 13:32:02 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 	return (distance);
 }*/
 
-float	get_distance(t_params *params, float angle)
+/*float	get_distance(t_params *params, float angle)
 {
 	float	rx;
 	float	ry;
@@ -60,84 +60,73 @@ float	get_distance(t_params *params, float angle)
 		distance += step;
 	}
 	return (distance);
+}*/
+
+
+float get_distance(t_params *params, float angle)
+{
+    float rx, ry;       // Position du rayon
+    float dx, dy;       // Direction du rayon
+   // float step_x, step_y; // Incréments pour atteindre la prochaine case
+    int map_x, map_y;   // Coordonnées de la case actuelle
+    int step_dir_x, step_dir_y; // Direction du pas (+1 ou -1)
+    float side_dist_x, side_dist_y; // Distance avant la prochaine case
+    float delta_dist_x, delta_dist_y; // Distance entre deux intersections
+
+    modulo_angle(&angle);
+    
+    // Position initiale du rayon (position du joueur)
+    rx = params->player->x;
+    ry = params->player->y;
+
+    // Direction du rayon
+    dx = cos(angle);
+    dy = sin(angle);
+
+    // Case actuelle
+    map_x = (int)rx;
+    map_y = (int)ry;
+
+    // Calcul des pas et des distances delta
+    delta_dist_x = fabs(1 / dx);
+    delta_dist_y = fabs(1 / dy);
+
+    // Détermination des directions et des distances initiales
+    if (dx < 0) {
+        step_dir_x = -1;
+        side_dist_x = (rx - map_x) * delta_dist_x;
+    } else {
+        step_dir_x = 1;
+        side_dist_x = (map_x + 1.0 - rx) * delta_dist_x;
+    }
+    if (dy < 0) {
+        step_dir_y = -1;
+        side_dist_y = (ry - map_y) * delta_dist_y;
+    } else {
+        step_dir_y = 1;
+        side_dist_y = (map_y + 1.0 - ry) * delta_dist_y;
+    }
+
+    // Lancer le DDA
+    while (1) {
+        // Choisir la direction avec la plus petite distance
+        if (side_dist_x < side_dist_y) {
+            side_dist_x += delta_dist_x;
+            map_x += step_dir_x;
+        } else {
+            side_dist_y += delta_dist_y;
+            map_y += step_dir_y;
+        }
+
+        // Vérifier si on a touché un mur
+        if (put_map_value(params, map_x, map_y) == '1')
+            break;
+    }
+
+    // Retourner la distance au mur
+    return sqrt((map_x - rx) * (map_x - rx) + (map_y - ry) * (map_y - ry));
 }
 
-/*float get_distance(t_params *params, float angle, char *wall_dir, float *wall_x)
-{
-    float x = params->player->x;
-    float y = params->player->y;
-    float delta_x = cos(angle);
-    float delta_y = sin(angle);
-    int map_x = (int)(x / 64);
-    int map_y = (int)(y / 64);
-
-    float side_dist_x, side_dist_y;
-    float delta_dist_x = fabs(1 / delta_x);
-    float delta_dist_y = fabs(1 / delta_y);
-    int step_x, step_y;
-    int hit = 0;
-    int side;
-
-    // Déterminer la direction du pas
-    if (delta_x < 0)
-    {
-        step_x = -1;
-        side_dist_x = (x - map_x * 64) * delta_dist_x;
-    }
-    else
-    {
-        step_x = 1;
-        side_dist_x = ((map_x + 1) * 64 - x) * delta_dist_x;
-    }
-
-    if (delta_y < 0)
-    {
-        step_y = -1;
-        side_dist_y = (y - map_y * 64) * delta_dist_y;
-    }
-    else
-    {
-        step_y = 1;
-        side_dist_y = ((map_y + 1) * 64 - y) * delta_dist_y;
-    }
-
-    // Lancer le rayon
-    while (!hit)
-    {
-        if (side_dist_x < side_dist_y)
-        {
-            side_dist_x += delta_dist_x;
-            map_x += step_x;
-            side = 0; // Mur vertical
-        }
-        else
-        {
-            side_dist_y += delta_dist_y;
-            map_y += step_y;
-            side = 1; // Mur horizontal
-        }
-
-        if (put_map_value(params, map_x, map_y) == '1')
-            hit = 1;
-    }
-
-    // Calculer la distance
-    float distance;
-    if (side == 0)
-    {
-        distance = (map_x - x + (1 - step_x) / 2) / delta_x;
-        *wall_dir = (step_x == 1) ? 'E' : 'W';
-        *wall_x = fmod(y, 64) / 64.0;
-    }
-    else
-    {
-        distance = (map_y - y + (1 - step_y) / 2) / delta_y;
-        *wall_dir = (step_y == 1) ? 'S' : 'N';
-        *wall_x = fmod(x, 64) / 64.0;
-    }
-
-    return distance;
-}*/
 
 
 
