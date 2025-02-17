@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/17 19:14:52 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/17 20:26:09 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void draw_vertical_line(t_params *params, int x, int y_start, int y_end, int col
     }
 }*/
 
-t_img	*get_wall_texture(t_params *params, char wall_dir)
+/*t_img	*get_wall_texture(t_params *params, char wall_dir)
 {
     if (wall_dir == 'N')
         return (params->NO);
@@ -76,7 +76,7 @@ t_img	*get_wall_texture(t_params *params, char wall_dir)
     if (wall_dir == 'W')
         return (params->WE);
     return (NULL);
-}
+}*/
 
 
 void put_wall_pexel(t_params *params, int column, float distance, char wall)

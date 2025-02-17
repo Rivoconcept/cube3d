@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/17 19:02:03 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/17 19:23:08 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,7 +269,7 @@ void					free_list_map(t_map *head_map);
 t_params				*create_list_param(void);
 
 // r_render_1.c
-float	get_distance(t_params *params, float angle, char *wall);
+float	get_distance(t_params *params, float angle, t_img **img);
 // float get_distance(t_params *params, float angle, char *wall_dir, float *wall_x);
 void					ray_trace(t_params *params, float angle,
 							float distance);

@@ -6,29 +6,26 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/17 18:47:05 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/17 20:48:03 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-char get_type_wall(t_params *params, int x, int y)
+t_img *get_wall_texture(t_params *params, int x, int y)
 {
-	char	wall;
-
-	wall = ' ';
     if (putval(params, x - 1, y) == '1')
-		wall = 'N';
+		return (params->NO);
     if (putval(params, x + 1, y) == '1')
-		wall = 'S';
+		return (params->SO);
     if (putval(params, x, y - 1) == '1')
-		wall = 'E';
+		return (params->EA);
    	if (putval(params, x, y + 1) == '1')
-		wall = 'W';
-	return (wall);
+		return (params->WE);
+	return (NULL);
 }
 
-float	get_distance(t_params *params, float angle, char *wall)
+float	get_distance(t_params *params, float angle, t_img **img)
 {
 	float	rx;
 	float	ry;
@@ -50,7 +47,7 @@ float	get_distance(t_params *params, float angle, char *wall)
 		ry += dir_y;
 		distance += step;
 	}
-	*wall = get_type_wall(params, rx, ry);
+	*img = get_wall_texture(params, rx, ry);
 	return (distance);
 }
 
