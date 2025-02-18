@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:49:17 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/17 19:11:11 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/18 18:28:23 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,17 @@ t_params	*create_list_param(void)
 	new_params->map = NULL;
 	new_params->map_width = 0;
 	new_params->map_height = 0;
-	new_params->screen = init_list_img();
-	new_params->NO = init_list_img();
-	new_params->SO = init_list_img();
-	new_params->WE = init_list_img();
-	new_params->EA = init_list_img();
+	new_params->path = init_path();
+	new_params->screen = NULL;
+	new_params->NO = NULL;
+	new_params->SO = NULL;
+	new_params->WE = NULL;
+	new_params->EA = NULL;
 	new_params->pos = create_list_position();
 	new_params->f_color = init_ground_color();
 	new_params->c_color = init_ceiling_color();
 	new_params->rect = init_rectangle();
 	new_params->player = init_list_player();
-	new_params->path = init_path();
 	new_params->delta = 0;
 	new_params->win_width = 0;
 	new_params->win_height = 0;

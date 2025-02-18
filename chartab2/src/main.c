@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:00 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/17 19:08:35 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/18 18:58:10 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,15 @@ void	mlx_window_open(t_params *params)
 	}
 }
 
+void init_images(t_params *params)
+{
+	params->screen = init_img_screen(params);
+	params->NO = init_img_NO(params);
+	params->SO = init_img_SO(params);
+	params->EA = init_img_EA(params);
+	params->WE = init_img_WE(params);
+}
+
 void	game_initializer(t_params *params)
 {
 	mlx_initialization(params);
@@ -44,20 +53,7 @@ void	game_initializer(t_params *params)
 	// params->win_height = params->map_height * SLICE_SIZE;
 
 	mlx_window_open(params);
-	params->screen->img = mlx_new_image(params->mlx_connexion, params->win_width, params->win_height);
-	if (!params->screen->img)
-	{
-		perror_msg("Failed to create image", NULL);
-		cleanup(params);
-		exit(EXIT_FAILURE);
-	}
-	params->screen->data = mlx_get_data_addr(params->screen->img, &params->screen->bpp, &params->screen->line_len, &params->screen->endian);
-	if (!params->screen->data)
-	{
-		perror_msg("Failed to get image data", NULL);
-		cleanup(params);
-		exit(EXIT_FAILURE);
-	}
+	init_images(params);
 	mlx_put_image_to_window(params->mlx_connexion, params->win_open, params->screen->img, 0, 0);
 	
 	/*mlx_hook(params->win_open, 2, 1L << 0, handle_keypress, params);
