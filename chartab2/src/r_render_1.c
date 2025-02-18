@@ -6,26 +6,27 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/17 20:48:03 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/18 19:17:01 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-t_img *get_wall_texture(t_params *params, int x, int y)
+/*char get_type_texture(t_params *params, int x, int y)
 {
-    if (putval(params, x - 1, y) == '1')
-		return (params->NO);
+	if (putval(params, x - 1, y) == '1')
+		return ('N');
     if (putval(params, x + 1, y) == '1')
-		return (params->SO);
+		return ('S');
     if (putval(params, x, y - 1) == '1')
-		return (params->EA);
+		return ('E');
    	if (putval(params, x, y + 1) == '1')
-		return (params->WE);
-	return (NULL);
-}
+		return ('W');
+	return (' ');
+}*/
 
-float	get_distance(t_params *params, float angle, t_img **img)
+
+/*float	get_distance(t_params *params, t_img *texture, float angle, char *wall)
 {
 	float	rx;
 	float	ry;
@@ -47,9 +48,30 @@ float	get_distance(t_params *params, float angle, t_img **img)
 		ry += dir_y;
 		distance += step;
 	}
-	*img = get_wall_texture(params, rx, ry);
-	return (distance);
-}
+	if (put_map_value(params, (int)rx, (int)ry) == '1')
+	{
+		if (fabs(dir_x) > fabs(dir_y))
+		{
+			if (dir_x < 0)
+				*wall = 'W';
+			else
+				*wall = 'E';
+			texture->draw->wall_x = fmod(ry, 64) / 64.0;
+		}
+		else
+		{
+			if (dir_y < 0)
+				*wall = 'N';
+			else
+				*wall = 'S';
+			texture->draw->wall_x = fmod(rx, 64) / 64.0;
+		}
+		*wall = get_type_texture(params, rx, ry);
+		texture->draw->distance = distance;
+		return distance;
+	}
+	return (SCREEN_WIDTH);
+}*/
 
 void	ray_trace(t_params *params, float angle, float distance)
 {
@@ -85,9 +107,11 @@ void trace_fov(t_params *params)
     int i;*/
 	char wall;
     float distance;
+	t_img	*texture;
 
 	wall = ' ';
-	distance = get_distance(params, params->delta, &wall);
+	texture = NULL;
+	distance = get_distance(params, texture, params->delta, &wall);
     ray_trace(params, params->delta, distance);
 	printf("%c", wall);
     /*step = FOV / SCREEN_WIDTH;

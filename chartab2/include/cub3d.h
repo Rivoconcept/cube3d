@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/17 19:23:08 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/18 19:07:36 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,15 @@ typedef struct s_path
 	char				*c;
 }						t_path;
 
+typedef struct s_draw
+{
+	int 			y_start;
+	int				y_end;
+	float			wall_x;
+	int				wall_height;
+	float			distance;
+}						t_draw;
+
 typedef struct s_img
 {
 	void				*img;
@@ -156,6 +165,7 @@ typedef struct s_img
 	int					bpp;
 	int					line_len;
 	int					endian;
+	t_draw				*draw;
 }						t_img;
 
 typedef struct s_params
@@ -269,18 +279,17 @@ void					free_list_map(t_map *head_map);
 t_params				*create_list_param(void);
 
 // r_render_1.c
-float	get_distance(t_params *params, float angle, t_img **img);
-// float get_distance(t_params *params, float angle, char *wall_dir, float *wall_x);
+
+float	get_distance(t_params *params, t_img *texture, float angle, char *wall);
+
 void					ray_trace(t_params *params, float angle,
 							float distance);
 void					trace_fov(t_params *params);
 
 // r_render_2.c
 int						get_wall_height(float distance);
-void					draw_vertical_line(t_params *params, int x, int y_start,
-							int y_end, int color);
-void					put_wall_pexel(t_params *params, int column,
-							float distance, char wall);
+void draw_vertical_line(t_params *params, t_img *texture, int x);
+void put_wall_pexel(t_params *params, t_img *texture, int column, char wall_type);
 void					draw_wall(t_params *params);
 
 // r_render_3.c
@@ -318,7 +327,14 @@ void					init_player_direction(t_params *params);
 void					rotate_player(int keycode, t_params *params);
 
 
+//r_init_img.c
+t_img	*init_img_screen(t_params *params);
+t_img	*init_img_NO(t_params *params);
+t_img	*init_img_SO(t_params *params);
+t_img	*init_img_WE(t_params *params);
+t_img	*init_img_EA(t_params *params);
 
+t_draw	*init_draw(void);
 
 void print_config(t_params *params);
 void print_map(char **map);

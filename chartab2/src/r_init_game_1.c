@@ -6,31 +6,11 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:49:57 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/17 18:22:20 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/18 18:53:17 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
-
-/*void	initialize_map(t_map **head, t_line *line)
-{
-	t_map	*current;
-	t_map	*new_element;
-
-	new_element = create_list_map(line);
-	if (!new_element)
-		return ;
-	if (*head == NULL)
-		*head = new_element;
-	else
-	{
-		current = *head;
-		while (current->next != NULL)
-			current = current->next;
-		current->next = new_element;
-	}
-}*/
 
 char	*copy_config(char *gnl, int *i)
 {

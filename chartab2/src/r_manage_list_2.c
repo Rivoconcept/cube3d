@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:49:10 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/16 20:48:22 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/18 19:09:51 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,19 @@ t_player	*init_list_player(void)
 	return (player);
 }
 
+t_draw	*init_draw(void)
+{
+	t_draw		*draw;
+	draw = (t_draw *)malloc(sizeof(t_draw));
+	if (!draw)
+		return (NULL);
+	draw->y_start = 0;
+	draw->y_end = 0;
+	draw->wall_x = 0;
+	draw->wall_height = 0;
+	return (draw);
+}
+
 t_img	*init_list_img(void)
 {
 	t_img		*img;
@@ -39,6 +52,7 @@ t_img	*init_list_img(void)
 	img->bpp = 0;
 	img->line_len = 0;
 	img->endian = 0;
+	img->draw = NULL;
 	return (img);
 }
 

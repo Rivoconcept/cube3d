@@ -6,7 +6,7 @@
 #    By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/22 08:39:35 by rhanitra          #+#    #+#              #
-#    Updated: 2025/02/16 21:02:45 by rhanitra         ###   ########.fr        #
+#    Updated: 2025/02/18 18:02:08 by rhanitra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ CUB3D = main.c r_cleanup.c r_init_params.c r_put_pixel.c r_window.c \
 		r_handle_game_1.c r_handle_game_2.c r_handle_game_3.c r_search.c \
 		r_init_game_1.c r_init_game_2.c r_render_1.c r_render_2.c\
 		r_error_1.c r_error_2.c r_error_3.c r_error_4.c r_error_5.c \
+		r_init_img.c \
 		t_player.c \
 		x_debug.c
 

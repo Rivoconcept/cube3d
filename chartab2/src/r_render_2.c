@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/17 20:26:09 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/18 19:17:47 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,44 +28,31 @@ int get_wall_height(float distance)
     return (wall_height);
 }
 
-void draw_vertical_line(t_params *params, int x, int y_start, int y_end, int color)
+void draw_vertical_line(t_params *params, t_img *texture, int x)
 {
     int y;
+    int tex_x;
+    int tex_y;
+    int pixel_index;
+    int color;
     
-    y = y_start;
-    if (y_end > y_start)
+    color = 0x000000;
+    y = texture->draw->y_start;
+    tex_x = (int)(texture->draw->wall_x * texture->line_len) % texture->line_len;
+    if (texture->draw->y_end > texture->draw->y_start)
     {
-        while (y < y_end)
+        while (y < texture->draw->y_end)
         {
+            tex_y = ((y - texture->draw->y_start) * texture->line_len) / texture->draw->wall_height;
+            pixel_index = (tex_y * texture->line_len) + (tex_x * (texture->bpp / 8));
+            color = *(int *)(texture->data + pixel_index);
             my_mlx_pixel_put(x, y, color, params);
             y++;
         }
     }
 }
 
-
-/*void draw_vertical_line(t_params *params, int x, int y_start, int y_end, t_img *texture, float wall_x, int wall_height)
-{
-    int y;
-    int tex_x;
-    int tex_y;
-    int color;
-
-    tex_x = (int)(wall_x * texture->line_len) % texture->line_len;
-
-    y = y_start;
-    while (y < y_end)
-    {
-        tex_y = ((y - y_start) * texture->line_len) / wall_height;
-        int pixel_index = (tex_y * texture->line_len) + (tex_x * (texture->bpp / 8));
-        color = *(int *)(texture->data + pixel_index);
-
-        my_mlx_pixel_put(x, y, color, params);
-        y++;
-    }
-}*/
-
-/*t_img	*get_wall_texture(t_params *params, char wall_dir)
+t_img	*get_wall_texture(t_params *params, char wall_dir)
 {
     if (wall_dir == 'N')
         return (params->NO);
@@ -76,31 +63,28 @@ void draw_vertical_line(t_params *params, int x, int y_start, int y_end, int col
     if (wall_dir == 'W')
         return (params->WE);
     return (NULL);
-}*/
+}
 
 
-void put_wall_pexel(t_params *params, int column, float distance, char wall)
+/*void put_wall_pexel(t_params *params, t_img *texture, int column, char wall_type)
 {
-    int wall_height;
     int top;
     int bottom;
-    int color;
+    int wall_height;
 
-    if (wall == 'N')
-        color = 0x00ff00;
-    else
-        color = 0xffffff;
-    wall_height = get_wall_height(distance);
+    texture = get_wall_texture(params, wall_type);
+    wall_height = get_wall_height(texture->draw->distance);
     top = (SCREEN_HEIGHT / 2) - (wall_height / 2);
-    bottom = (SCREEN_HEIGHT / 2) + (wall_height / 2);
-    // top = (SCREEN_HEIGHT / 2) - (wall_height / 2);
-    // bottom = top + wall_height;
+    bottom = top + wall_height;
     if (top < 0)
         top = 0;
     if (bottom > SCREEN_HEIGHT)
         bottom = SCREEN_HEIGHT;
-    draw_vertical_line(params, column, top, bottom, color);
-}
+    texture->draw->y_start = top;
+    texture->draw->y_end = bottom;
+    texture->draw->wall_height = wall_height;
+    draw_vertical_line(params, texture, column);
+}*/
 
 /*void draw_wall(t_params *params)
 {
@@ -108,44 +92,143 @@ void put_wall_pexel(t_params *params, int column, float distance, char wall)
     float angle;
     float distance;
     int col;
+    char wall;
+    t_img   *texture;
 
+    wall = ' ';
+    texture = NULL;
     step = FOV / SCREEN_WIDTH;
     angle = params->delta - (FOV / 2);
     col = 0;
     while (col < SCREEN_WIDTH)
     {
-        distance = get_distance(params, angle);
-
-
+        distance = get_distance(params, texture, angle, &wall);
+        distance *= cos(angle - params->delta);
         if (distance > 0.1)
-           put_wall_pexel(params, col, distance * 2);
+            put_wall_pexel(params, texture, col, wall);
         angle += step;
         col++;
     }
 }*/
 
+char get_type_texture(t_params *params, int x, int y)
+{
+    if (!params)
+        return (' ');
+    if (putval(params, x - 1, y) == '1')
+        return ('N');
+    if (putval(params, x + 1, y) == '1')
+        return ('S');
+    if (putval(params, x, y - 1) == '1')
+        return ('E');
+    if (putval(params, x, y + 1) == '1')
+        return ('W');
+    return (' ');
+}
+
+float get_distance(t_params *params, t_img *texture, float angle, char *wall)
+{
+    float rx, ry, dir_x, dir_y, step, distance;
+
+    if (!params || !params->player || !wall || !texture || !texture->draw)
+        return SCREEN_WIDTH;
+
+    step = 1.0;
+    distance = 0.0;
+    rx = params->player->x;
+    ry = params->player->y;
+    modulo_angle(&angle);
+    dir_x = sin(angle) * step;
+    dir_y = -cos(angle) * step;
+
+    while (distance < SCREEN_WIDTH && put_map_value(params, (int)rx, (int)ry) != '1')
+    {
+        rx += dir_x;
+        ry += dir_y;
+        distance += step;
+    }
+
+    if (put_map_value(params, (int)rx, (int)ry) == '1')
+    {
+        if (fabs(dir_x) > fabs(dir_y))
+        {
+            *wall = (dir_x < 0) ? 'W' : 'E';
+            texture->draw->wall_x = fmod(ry, 64) / 64.0;
+        }
+        else
+        {
+            *wall = (dir_y < 0) ? 'N' : 'S';
+            texture->draw->wall_x = fmod(rx, 64) / 64.0;
+        }
+        *wall = get_type_texture(params, (int)rx, (int)ry);
+        texture->draw->distance = distance;
+        return distance;
+    }
+    return SCREEN_WIDTH;
+}
+
+void put_wall_pexel(t_params *params, t_img *texture, int column, char wall_type)
+{
+    int top, bottom, wall_height;
+
+    if (!params || !texture || !texture->draw)
+        return;
+
+    texture = get_wall_texture(params, wall_type);
+    if (!texture)
+        return;
+
+    wall_height = get_wall_height(texture->draw->distance);
+    top = (SCREEN_HEIGHT / 2) - (wall_height / 2);
+    bottom = top + wall_height;
+    if (top < 0)
+        top = 0;
+    if (bottom > SCREEN_HEIGHT)
+        bottom = SCREEN_HEIGHT;
+
+    texture->draw->y_start = top;
+    texture->draw->y_end = bottom;
+    texture->draw->wall_height = wall_height;
+
+    draw_vertical_line(params, texture, column);
+}
+
 void draw_wall(t_params *params)
 {
-    float step;
-    float angle;
-    float distance;
+    float step, angle, distance;
     int col;
     char wall;
+    t_img *texture;
+
+    if (!params)
+        return;
 
     wall = ' ';
+    texture = NULL;
     step = FOV / SCREEN_WIDTH;
     angle = params->delta - (FOV / 2);
     col = 0;
+
     while (col < SCREEN_WIDTH)
     {
-        distance = get_distance(params, angle, &wall);
+        texture = get_wall_texture(params, wall);
+        if (!texture)
+        {
+            col++;
+            continue;
+        }
+
+        distance = get_distance(params, texture, angle, &wall);
         distance *= cos(angle - params->delta);
+
         if (distance > 0.1)
-            put_wall_pexel(params, col, distance, wall);
+            put_wall_pexel(params, texture, col, wall);
+
         angle += step;
         col++;
     }
 }
+
 
 
 

@@ -6,42 +6,11 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:48:59 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/02 13:13:22 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:52:28 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
-t_line	*create_list_line(char data)
-{
-	t_line	*new_element;
-
-	new_element = (t_line *)malloc(sizeof(t_line));
-	if (new_element == NULL)
-		exit(EXIT_FAILURE);
-	new_element->cell_value.value = data;
-	new_element->cell_value.index = 0;
-	new_element->next = NULL;
-	return (new_element);
-}
-
-t_map	*create_list_map(t_line *line)
-{
-	t_map	*new_element;
-
-	if (line == NULL)
-	{
-		printf("Error\nThe list line is null.\n");
-		exit(EXIT_FAILURE);
-	}
-	new_element = (t_map *)malloc(sizeof(t_map));
-	if (new_element == NULL)
-		exit(EXIT_FAILURE);
-	new_element->line_value.line = line;
-	new_element->line_value.index = 0;
-	new_element->next = NULL;
-	return (new_element);
-}
 
 t_position	*create_list_position(void)
 {
