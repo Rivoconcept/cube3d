@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 08:00:58 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/16 20:30:02 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:34:54 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,15 @@ int draw_rectangle(t_params *params)
 	j = rect->x;
 	while (j < rect->x + rect->width)
 	{
-        my_mlx_pixel_put(j, rect->y, rect->color, params);
-        my_mlx_pixel_put(j, rect->y + rect->height - 1, rect->color, params);
+        my_mlx_pixel_put(j, rect->y, rect->color, params->screen);
+        my_mlx_pixel_put(j, rect->y + rect->height - 1, rect->color, params->screen);
 		j++;
 	}
 	i = rect->y;
 	while (i < rect->y + rect->height)
 	{
-        my_mlx_pixel_put(rect->x, i, rect->color, params);
-        my_mlx_pixel_put(rect->x + rect->width - 1, i, rect->color, params); 
+        my_mlx_pixel_put(rect->x, i, rect->color, params->screen);
+        my_mlx_pixel_put(rect->x + rect->width - 1, i, rect->color, params->screen); 
 		i++;
 	}
     return (0);

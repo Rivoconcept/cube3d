@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/16 20:56:34 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:36:19 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void rotate_and_draw(int x, int y, int pivot_x, int pivot_y, float angle, t_para
     new_x = pivot_x + (x - pivot_x) * cos(angle) - (y - pivot_y) * sin(angle);
     new_y = pivot_y + (x - pivot_x) * sin(angle) + (y - pivot_y) * cos(angle);
 
-    my_mlx_pixel_put(new_x, new_y, params->player->color, params);
+    my_mlx_pixel_put(new_x, new_y, params->player->color, params->screen);
 }
 
 int draw_player(t_params *params, int x, int y)
