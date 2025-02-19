@@ -6,24 +6,11 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/19 16:37:31 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:35:11 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
-/*char get_type_texture(t_params *params, int x, int y)
-{
-	if (putval(params, x - 1, y) == '1')
-		return ('N');
-    if (putval(params, x + 1, y) == '1')
-		return ('S');
-    if (putval(params, x, y - 1) == '1')
-		return ('E');
-   	if (putval(params, x, y + 1) == '1')
-		return ('W');
-	return (' ');
-}*/
 
 
 /*float	get_distance(t_params *params, t_img *texture, float angle, char *wall)
@@ -95,7 +82,7 @@ void	ray_trace(t_params *params, float angle, float distance)
 	{
 		px = (int)(ray_x + dir_x * i);
 		py = (int)(ray_y + dir_y * i);
-		my_mlx_pixel_put(px, py, 0x00FF00, params);
+		my_mlx_pixel_put(px, py, 0x00FF00, params->screen);
 		i += 0.1;
 	}
 }

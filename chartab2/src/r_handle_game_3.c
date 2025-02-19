@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 08:00:52 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/17 19:07:48 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:37:32 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int direction_calc(float *x, float *y, int keycode, t_params *params)
 
 int draw_loop(t_params *params)
 {
-    clear_img(params);
+    clear_img(params, params->screen);
     // put_wall(params);
     // put_player(params);
     // trace_fov(params);
