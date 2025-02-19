@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/18 19:07:36 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/19 19:00:14 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,14 +149,14 @@ typedef struct s_path
 	char				*c;
 }						t_path;
 
-typedef struct s_draw
+/*typedef struct s_draw
 {
 	int 			y_start;
 	int				y_end;
 	float			wall_x;
 	int				wall_height;
 	float			distance;
-}						t_draw;
+}						t_draw;*/
 
 typedef struct s_img
 {
@@ -165,7 +165,11 @@ typedef struct s_img
 	int					bpp;
 	int					line_len;
 	int					endian;
-	t_draw				*draw;
+	int 				y_start;
+	int					y_end;
+	float				wall_x;
+	int					wall_height;
+	float				distance;
 }						t_img;
 
 typedef struct s_params
@@ -328,13 +332,13 @@ void					rotate_player(int keycode, t_params *params);
 
 
 //r_init_img.c
-t_img	*init_img_screen(t_params *params);
+t_img *init_img_screen(t_params *params);
 t_img	*init_img_NO(t_params *params);
 t_img	*init_img_SO(t_params *params);
 t_img	*init_img_WE(t_params *params);
 t_img	*init_img_EA(t_params *params);
 
-t_draw	*init_draw(void);
+// t_draw	*init_draw(void);
 
 void print_config(t_params *params);
 void print_map(char **map);

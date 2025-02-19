@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:00 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/18 18:58:10 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/19 19:01:59 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	mlx_window_open(t_params *params)
 
 void init_images(t_params *params)
 {
-	params->screen = init_img_screen(params);
+	params->screen =  init_img_screen(params);
 	params->NO = init_img_NO(params);
 	params->SO = init_img_SO(params);
 	params->EA = init_img_EA(params);
