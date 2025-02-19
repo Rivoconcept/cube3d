@@ -6,17 +6,36 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:49:17 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/18 19:09:42 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:56:19 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
+t_img	*init_list_img(void)
+{
+	t_img		*img;
+	img = (t_img *)malloc(sizeof(t_img));
+	if (!img)
+		return (NULL);
+	img->img = NULL;
+	img->data = NULL;
+	img->bpp = 0;
+	img->line_len = 0;
+	img->endian = 0;
+	img->y_start = 0;
+	img->y_end = 0;
+	img->wall_x = 0.0;
+	img->wall_height = 0;
+	img->distance = 0;
+	return (img);
+}
+
 t_img	*init_img_screen(t_params *params)
 {
 	t_img	*screen;
 
-	screen = (t_img *)malloc(sizeof(t_img));
+	screen = init_list_img();
 	if (!screen)
 		return (NULL);
 	screen->img = mlx_new_image(params->mlx_connexion, params->win_width,
@@ -35,7 +54,6 @@ t_img	*init_img_screen(t_params *params)
 		cleanup(params);
 		exit(EXIT_FAILURE);
 	}
-	screen->draw = NULL;
 	return (screen);
 }
 
@@ -43,7 +61,7 @@ t_img	*init_img_NO(t_params *params)
 {
 	t_img	*no;
 
-	no = (t_img *)malloc(sizeof(t_img));
+	no = init_list_img();
 	if (!no)
 		return (NULL);
 	no->img = mlx_xpm_file_to_image(params->mlx_connexion, params->path->no,
@@ -61,13 +79,6 @@ t_img	*init_img_NO(t_params *params)
 		cleanup(params);
 		exit(EXIT_FAILURE);
 	}
-	no->draw = init_draw();
-	if (!no->draw)
-	{
-		perror_msg("Failed to allocate draw structure", NULL);
-		cleanup(params);
-		exit(EXIT_FAILURE);
-	}
 	return (no);
 }
 
@@ -75,7 +86,7 @@ t_img	*init_img_SO(t_params *params)
 {
 	t_img	*so;
 
-	so = (t_img *)malloc(sizeof(t_img));
+	so = init_list_img();
 	if (!so)
 		return (NULL);
 	so->img = mlx_xpm_file_to_image(params->mlx_connexion, params->path->so,
@@ -93,13 +104,6 @@ t_img	*init_img_SO(t_params *params)
 		cleanup(params);
 		exit(EXIT_FAILURE);
 	}
-	so->draw = init_draw();
-	if (!so->draw)
-	{
-		perror_msg("Failed to allocate draw structure", NULL);
-		cleanup(params);
-		exit(EXIT_FAILURE);
-	}
 	return (so);
 }
 
@@ -107,7 +111,7 @@ t_img	*init_img_EA(t_params *params)
 {
 	t_img	*ea;
 
-	ea = (t_img *)malloc(sizeof(t_img));
+	ea = init_list_img();
 	if (!ea)
 		return (NULL);
 	ea->img = mlx_xpm_file_to_image(params->mlx_connexion, params->path->ea,
@@ -125,13 +129,6 @@ t_img	*init_img_EA(t_params *params)
 		cleanup(params);
 		exit(EXIT_FAILURE);
 	}
-	ea->draw = init_draw();
-	if (!ea->draw)
-	{
-		perror_msg("Failed to allocate draw structure", NULL);
-		cleanup(params);
-		exit(EXIT_FAILURE);
-	}
 	return (ea);
 }
 
@@ -139,7 +136,7 @@ t_img	*init_img_WE(t_params *params)
 {
 	t_img	*we;
 
-	we = (t_img *)malloc(sizeof(t_img));
+	we = init_list_img();
 	if (!we)
 		return (NULL);
 	we->img = mlx_xpm_file_to_image(params->mlx_connexion, params->path->we,
@@ -154,13 +151,6 @@ t_img	*init_img_WE(t_params *params)
 	if (!we->data)
 	{
 		perror_msg("Failed to get image data", NULL);
-		cleanup(params);
-		exit(EXIT_FAILURE);
-	}
-	we->draw = init_draw();
-	if (!we->draw)
-	{
-		perror_msg("Failed to allocate draw structure", NULL);
 		cleanup(params);
 		exit(EXIT_FAILURE);
 	}

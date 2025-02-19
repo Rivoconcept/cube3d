@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:50:08 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/17 19:13:26 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:58:42 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,27 @@ void clear_img(t_params *params)
     }
 }
 
+void	free_array(char **arr)
+{
+	int	i;
+
+	i = 0;
+	if (!arr || arr == NULL)
+		return ;
+	while (arr[i] != NULL)
+	{
+		if (arr[i])
+		{
+			free(arr[i]);
+			arr[i] = NULL;
+		}
+		i++;
+	}
+	if (arr)
+		free(arr);
+	arr = NULL;
+}
+
 void handle_free(char *str)
 {
 	if (str)
@@ -63,16 +84,6 @@ void free_other_list(t_params *params)
 		free_array(params->map);
 	if (params->pos)
 		free(params->pos);
-	if (params->screen)
-		free(params->screen);
-	if (params->NO)
-		free(params->NO);
-	if (params->SO)
-		free(params->SO);
-	if (params->WE)
-		free(params->WE);
-	if (params->EA)
-		free(params->EA);
 	if (params->f_color)
 		free(params->f_color);
 	if (params->c_color)
@@ -85,6 +96,29 @@ void free_other_list(t_params *params)
 		free_path(params->path);
 }
 
+void free_img(t_params *params, t_img *image)
+{
+	if (image != NULL)
+	{
+		if (image->img != NULL)
+		{
+			mlx_destroy_image(params->mlx_connexion, image->img);
+			image->img = NULL;
+		}
+		free(image);
+		image = NULL;
+	}
+}
+
+void handle_free_img(t_params *params)
+{
+	free_img(params, params->screen);
+	free_img(params, params->NO);
+	free_img(params, params->SO);
+	free_img(params, params->EA);
+	free_img(params, params->WE);
+}
+
 void	cleanup(t_params *params)
 {
 	if (params->win_open)
@@ -94,7 +128,7 @@ void	cleanup(t_params *params)
 	}
 	if (params->mlx_connexion)
 	{
-		mlx_destroy_image(params->mlx_connexion, params->screen->img);
+		handle_free_img(params);
 		mlx_destroy_display(params->mlx_connexion);
 		free(params->mlx_connexion);
 		params->mlx_connexion = NULL;

@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/18 19:17:01 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:37:31 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@
 				*wall = 'W';
 			else
 				*wall = 'E';
-			texture->draw->wall_x = fmod(ry, 64) / 64.0;
+			texture->wall_x = fmod(ry, 64) / 64.0;
 		}
 		else
 		{
@@ -64,10 +64,10 @@
 				*wall = 'N';
 			else
 				*wall = 'S';
-			texture->draw->wall_x = fmod(rx, 64) / 64.0;
+			texture->wall_x = fmod(rx, 64) / 64.0;
 		}
 		*wall = get_type_texture(params, rx, ry);
-		texture->draw->distance = distance;
+		texture->distance = distance;
 		return distance;
 	}
 	return (SCREEN_WIDTH);
