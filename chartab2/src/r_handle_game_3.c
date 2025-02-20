@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_handle_game_3.c                                  :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 08:00:52 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/19 18:37:32 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/20 09:34:30 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../include/cub3d.h"
 
@@ -53,7 +53,7 @@ int direction_calc(float *x, float *y, int keycode, t_params *params)
 
 int draw_loop(t_params *params)
 {
-    clear_img(params, params->screen);
+    clear_img(params);
     // put_wall(params);
     // put_player(params);
     // trace_fov(params);

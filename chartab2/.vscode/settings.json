@@ -5,6 +5,8 @@
         "tuple": "c",
         "type_traits": "c",
         "utility": "c",
-        "random": "c"
+        "random": "c",
+        "string": "c",
+        "string_view": "c"
     }
 }

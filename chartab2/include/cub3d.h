@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/19 18:37:04 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/20 11:39:53 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -31,8 +31,8 @@
 
 # define RED_PIXEL 0xFF0000
 
-# define SCREEN_WIDTH 1280
-# define SCREEN_HEIGHT 1024
+# define SCREEN_WIDTH 1024
+# define SCREEN_HEIGHT 720
 # define SLICE_SIZE 64
 
 # define PI 3.14159265359
@@ -165,11 +165,8 @@ typedef struct s_img
 	int					bpp;
 	int					line_len;
 	int					endian;
-	int 				y_start;
-	int					y_end;
-	float				wall_x;
-	int					wall_height;
-	float				distance;
+    int     			width;
+    int     			height;
 }						t_img;
 
 typedef struct s_params
@@ -221,7 +218,7 @@ int						check_intrus_data(t_params *params);
 int						check_extension(char *str);
 
 // r_cleanup.c
-void clear_img(t_params *params, t_img *img);
+void clear_img(t_params *params);
 void					cleanup(t_params *params);
 
 // r_handle_game_1.c
@@ -242,7 +239,7 @@ void					put_player(t_params *params);
 int						handle_mouse_click(t_params *params);
 void					escape_window(int keycode, t_params *params);
 int						encode_color(uint8_t r, uint8_t g, uint8_t b);
-void    my_mlx_pixel_put(int x, int y, int color, t_img *image);
+void    my_mlx_pixel_put(int x, int y, int color, t_params *params);
 
 // r_handle_game_4.c
 // void	rotate_palyer(int keycode, t_params *params);
@@ -283,7 +280,8 @@ t_params				*create_list_param(void);
 
 // r_render_1.c
 
-float	get_distance(t_params *params, t_img *texture, float angle, char *wall);
+// float	get_distance(t_params *params, t_img *texture, float angle, char *wall);
+float	get_distance(t_params *params, float angle, char *wall_dir);
 
 void					ray_trace(t_params *params, float angle,
 							float distance);
@@ -331,12 +329,9 @@ void					rotate_player(int keycode, t_params *params);
 
 
 //r_init_img.c
-t_img *init_img_screen(t_params *params);
-t_img	*init_img_NO(t_params *params);
-t_img	*init_img_SO(t_params *params);
-t_img	*init_img_WE(t_params *params);
-t_img	*init_img_EA(t_params *params);
-
+void	load_all_textures(t_params *params);
+t_img	*init_img_screen(t_params *params);
+int get_texture_pixel(t_img *texture, int x, int y);
 // t_draw	*init_draw(void);
 
 void print_config(t_params *params);
