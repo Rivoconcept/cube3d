@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_cleanup.c                                        :+:      :+:    :+:   */
@@ -6,13 +6,13 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:50:08 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/19 18:34:06 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/20 09:30:31 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../include/cub3d.h"
 
-void clear_img(t_params *params, t_img *img)
+void clear_img(t_params *params)
 {
     int x;
     int y;
@@ -28,9 +28,9 @@ void clear_img(t_params *params, t_img *img)
         while (x < params->win_width)
         {
             if (y < params->win_height / 2)
-                my_mlx_pixel_put(x, y, ceiling_color, img);
+                my_mlx_pixel_put(x, y, ceiling_color, params);
             else
-                my_mlx_pixel_put(x, y, floor_color, img);
+                my_mlx_pixel_put(x, y, floor_color, params);
             x++;
         }
         y++;

@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_render_1.c                                       :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/19 18:35:11 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/20 11:34:07 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "../include/cub3d.h"
 
@@ -82,7 +82,7 @@ void	ray_trace(t_params *params, float angle, float distance)
 	{
 		px = (int)(ray_x + dir_x * i);
 		py = (int)(ray_y + dir_y * i);
-		my_mlx_pixel_put(px, py, 0x00FF00, params->screen);
+		my_mlx_pixel_put(px, py, 0x00FF00, params);
 		i += 0.1;
 	}
 }
@@ -94,11 +94,12 @@ void trace_fov(t_params *params)
     int i;*/
 	char wall;
     float distance;
-	t_img	*texture;
+	// t_img	*texture;
 
 	wall = ' ';
-	texture = NULL;
-	distance = get_distance(params, texture, params->delta, &wall);
+	// texture = NULL;
+	distance = get_distance(params, params->delta, &wall);
+	// distance = get_distance(params, texture, params->delta, &wall);
     ray_trace(params, params->delta, distance);
 	printf("%c", wall);
     /*step = FOV / SCREEN_WIDTH;
