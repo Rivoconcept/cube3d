@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_put_pixel.c                                      :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 18:40:10 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/20 08:19:59 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:51:33 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
@@ -30,10 +30,11 @@ void    my_mlx_pixel_put(int x, int y, int color, t_params *params)
 
 int get_texture_pixel(t_img *texture, int x, int y)
 {
-	char	*dst;
+    char    *dst;
 
-	if (!texture || x < 0 || y < 0 || x >= texture->line_len / (texture->bpp / 8) || y >= texture->bpp)
-		return (0x000000);
-	dst = texture->data + (y * texture->line_len + x * (texture->bpp / 8));
-	return (*(unsigned int*)dst);
+    if (!texture || x < 0 || y < 0 || x >= texture->width || y >= texture->height)
+        return (0x000000);
+    dst = texture->data + (y * texture->line_len + x * (texture->bpp / 8));
+    return (*(unsigned int *)dst);
 }
+

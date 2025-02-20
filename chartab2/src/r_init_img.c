@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_init_img.c                                       :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:49:17 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/20 15:43:12 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/20 19:57:31 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
@@ -25,6 +25,9 @@ t_img	*init_list_img(void)
 	img->endian = 0;
 	img->width = 0;
 	img->height = 0;
+	// img->rx = 0.0;
+	// img->ry = 0.0;
+	// img->distance = 0.0;
 	return (img);
 }
 
@@ -84,6 +87,5 @@ void	load_all_textures(t_params *params)
 	params->SO = load_texture(params, params->mlx_connexion, params->path->so);
 	params->WE = load_texture(params, params->mlx_connexion, params->path->we);
 	params->EA = load_texture(params, params->mlx_connexion, params->path->ea);
-	printf("Textures loaded: NO=%p, SO=%p, WE=%p, EA=%p\n", params->NO, params->SO, params->WE, params->EA);
 }
 
