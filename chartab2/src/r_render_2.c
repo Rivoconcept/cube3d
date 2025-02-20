@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_render_2.c                                       :+:      :+:    :+:   */
@@ -6,30 +6,23 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/20 15:46:07 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/20 19:57:41 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-
 char get_type_texture(t_params *params, int x, int y)
 {
-    if (!params)
-        return (' ');
-    printf("Checking wall type at %d, %d\n", x, y);
-    if (putval(params, x, y) == '1')
-    {
-        if (putval(params, x - 1, y) != '1')
-            return ('W');
-        if (putval(params, x + 1, y) != '1')
-            return ('E');
-        if (putval(params, x, y - 1) != '1')
-            return ('N');
-        if (putval(params, x, y + 1) != '1')
-            return ('S');
-    }
-    return (' ');
+	if (putval(params, x - 1, y) == '1')
+		return ('N');
+    if (putval(params, x + 1, y) == '1')
+		return ('S');
+    if (putval(params, x, y - 1) == '1')
+		return ('E');
+   	if (putval(params, x, y + 1) == '1')
+		return ('W');
+	return (' ');
 }
 
 t_img	*get_wall_texture(t_params *params, char wall_dir)
@@ -62,7 +55,6 @@ int get_wall_height(float distance)
     return (wall_height);
 }
 
-
 float	get_distance(t_params *params, float angle, char *wall_dir)
 {
 	float	rx;
@@ -86,57 +78,59 @@ float	get_distance(t_params *params, float angle, char *wall_dir)
 		distance += step;
 	}
     *wall_dir = get_type_texture(params, rx, ry);
-    printf("Raycasting: angle=%f, distance=%f, wall_dir=%c\n", angle, distance, *wall_dir); // Debug
 	return (distance);
 }
 
-void draw_textured_wall(t_params *params, int x, int y_start, int y_end, float distance, char wall_dir)
+void draw_wall_slice(t_params *params, int x, float distance, char wall_dir)
 {
-    t_img   *texture;
+    t_img  *texture;
     int     y;
-    int     texture_x;
-    int     texture_y;
+    int     wall_height;
+    int     tex_x;
+    int     tex_y;
     int     color;
-    float   scale_factor;
 
+    wall_height = get_wall_height(distance);
     texture = get_wall_texture(params, wall_dir);
     if (!texture)
-    {
-        printf("No texture found for wall_dir=%c\n", wall_dir);
         return ;
-    }
-    scale_factor = 1.0 / (distance + 0.01);
-    texture_x = (x % texture->width);
-    y = y_start;
-    while (y < y_end)
+    y = 0;
+    tex_x = (x % texture->width);
+    while (y < wall_height)
     {
-        texture_y = (int)((y - y_start) * texture->height * scale_factor / (y_end - y_start));
-        color = get_texture_pixel(texture, texture_x, texture_y);
-        my_mlx_pixel_put(x, y, color, params);
+        tex_y = (y * texture->height) / wall_height;
+        color = get_texture_pixel(texture, tex_x, tex_y);
+        my_mlx_pixel_put(x, (SCREEN_HEIGHT / 2 - wall_height / 2) + y, color, params);
         y++;
     }
 }
 
-
-void draw_wall(t_params *params)
+void render_scene(t_params *params)
 {
-	int x;
-	float angle;
-	float distance;
-	int wall_height;
-	char wall_dir;
+    int     x;
+    float   angle;
+    float   distance;
+    char    wall_dir;
 
-	x = 0;
-	while (x < SCREEN_WIDTH)
-	{
-		angle = (params->delta - (FOV / 2.0)) + ((float)x / SCREEN_WIDTH) * FOV;
-		distance = get_distance(params, angle, &wall_dir);
-		wall_height = get_wall_height(distance);
-		draw_textured_wall(params, x, (SCREEN_HEIGHT / 2) - (wall_height / 2), 
-                               (SCREEN_HEIGHT / 2) + (wall_height / 2), distance, wall_dir);
-		x++;
-	}
+    x = 0;
+    angle = params->delta - (FOV / 2);
+    while (x < SCREEN_WIDTH)
+    {
+        distance = get_distance(params, angle, &wall_dir);
+        distance *= cos(angle - params->delta);
+        draw_wall_slice(params, x, distance, wall_dir);
+        angle += FOV / SCREEN_WIDTH; 
+        x++;
+    }
 }
+
+
+
+
+
+
+
+
 
 
 

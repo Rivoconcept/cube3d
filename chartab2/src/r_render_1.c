@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_render_1.c                                       :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/20 11:34:07 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:24:43 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
@@ -87,21 +87,22 @@ void	ray_trace(t_params *params, float angle, float distance)
 	}
 }
 
-void trace_fov(t_params *params)
-{
+// void trace_fov(t_params *params)
+// {
     /*float angle;
     float step;
     int i;*/
-	char wall;
-    float distance;
+	// char wall;
+    // float distance;
 	// t_img	*texture;
 
-	wall = ' ';
+
+	// wall = ' ';
 	// texture = NULL;
-	distance = get_distance(params, params->delta, &wall);
+	// distance = get_distance(params, params->delta, &wall);
 	// distance = get_distance(params, texture, params->delta, &wall);
-    ray_trace(params, params->delta, distance);
-	printf("%c", wall);
+    // ray_trace(params, params->delta, distance);
+	// printf("%c", wall);
     /*step = FOV / SCREEN_WIDTH;
     i = 0;
     while (i < SCREEN_WIDTH)
@@ -111,7 +112,7 @@ void trace_fov(t_params *params)
         ray_trace(params, angle, distance);
         i++;
     }*/
-}
+// }
 
 
 

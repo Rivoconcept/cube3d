@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/20 11:39:53 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/20 19:58:24 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -167,6 +167,9 @@ typedef struct s_img
 	int					endian;
     int     			width;
     int     			height;
+	// float				rx;
+	// float				ry;
+	// float				distance;
 }						t_img;
 
 typedef struct s_params
@@ -282,6 +285,7 @@ t_params				*create_list_param(void);
 
 // float	get_distance(t_params *params, t_img *texture, float angle, char *wall);
 float	get_distance(t_params *params, float angle, char *wall_dir);
+// float	get_distance(t_params *params, float angle, char *wall_dir, float *hit_x);
 
 void					ray_trace(t_params *params, float angle,
 							float distance);
@@ -291,7 +295,7 @@ void					trace_fov(t_params *params);
 int						get_wall_height(float distance);
 void draw_vertical_line(t_params *params, t_img *texture, int x);
 void put_wall_pexel(t_params *params, t_img *texture, int column, char wall_type);
-void					draw_wall(t_params *params);
+void					render_scene(t_params *params);
 
 // r_render_3.c
 int						draw_loop(t_params *params);
