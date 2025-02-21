@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:49:17 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/20 19:57:31 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/21 18:07:54 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,12 @@ t_img	*init_list_img(void)
 	img->endian = 0;
 	img->width = 0;
 	img->height = 0;
-	// img->rx = 0.0;
-	// img->ry = 0.0;
-	// img->distance = 0.0;
+	img->wall_path = ' ';
+	img->y_start = 0;
+	img->y_end = 0;
+	img->wx = 0.0;
+	img->wy = 0.0;
+	img->distance = 0.0;
 	return (img);
 }
 

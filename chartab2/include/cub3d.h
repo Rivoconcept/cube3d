@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/20 19:58:24 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/21 18:07:31 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@
 
 # define PI 3.14159265359
 # define FOV (PI / 3)
-# define STEP 3.0
+# define STEP_ROT 3.0
+# define STEP_CAST 1.0
 
 # define ESC 53
 # define X_EVENT_KEY_PRESS 0
@@ -167,9 +168,12 @@ typedef struct s_img
 	int					endian;
     int     			width;
     int     			height;
-	// float				rx;
-	// float				ry;
-	// float				distance;
+	char				wall_path;
+	int					y_start;
+	int					y_end;
+	float				wx;
+	float				wy;
+	float				distance;
 }						t_img;
 
 typedef struct s_params
@@ -282,10 +286,8 @@ void					free_list_map(t_map *head_map);
 t_params				*create_list_param(void);
 
 // r_render_1.c
-
-// float	get_distance(t_params *params, t_img *texture, float angle, char *wall);
-float	get_distance(t_params *params, float angle, char *wall_dir);
-// float	get_distance(t_params *params, float angle, char *wall_dir, float *hit_x);
+// float	get_distance(t_params *params, float angle, char *wall_dir);
+void	get_distance(t_params *params, t_img **wall, float angle);
 
 void					ray_trace(t_params *params, float angle,
 							float distance);
@@ -293,7 +295,7 @@ void					trace_fov(t_params *params);
 
 // r_render_2.c
 int						get_wall_height(float distance);
-void draw_vertical_line(t_params *params, t_img *texture, int x);
+// void draw_vertical_line(t_params *params, t_img *texture, int x);
 void put_wall_pexel(t_params *params, t_img *texture, int column, char wall_type);
 void					render_scene(t_params *params);
 
