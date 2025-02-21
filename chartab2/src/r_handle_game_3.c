@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 08:00:52 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/20 18:47:52 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:07:23 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,26 @@ int direction_calc(float *x, float *y, int keycode, t_params *params)
 {
 	if (keycode == Z)
 	{
-		*x = params->player->x + sin(params->delta) * STEP;
-		*y = params->player->y - cos(params->delta) * STEP;
+		*x = params->player->x + sin(params->delta) * STEP_ROT;
+		*y = params->player->y - cos(params->delta) * STEP_ROT;
 		return (1);
 	}
 	else if (keycode == S)
 	{
-		*x = params->player->x - sin(params->delta) * STEP;
-		*y = params->player->y + cos(params->delta) * STEP;
+		*x = params->player->x - sin(params->delta) * STEP_ROT;
+		*y = params->player->y + cos(params->delta) * STEP_ROT;
 		return (1);
 	}
 	else if (keycode == A)
 	{
-		*x = params->player->x - cos(params->delta) * STEP;
-		*y = params->player->y - sin(params->delta) * STEP;
+		*x = params->player->x - cos(params->delta) * STEP_ROT;
+		*y = params->player->y - sin(params->delta) * STEP_ROT;
 		return (1);
 	}
 	else if (keycode == D)
 	{
-		*x = params->player->x + cos(params->delta) * STEP;
-		*y = params->player->y + sin(params->delta) * STEP;
+		*x = params->player->x + cos(params->delta) * STEP_ROT;
+		*y = params->player->y + sin(params->delta) * STEP_ROT;
 		return (1);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/20 19:57:04 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:00:23 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,84 @@ void render_scene(t_params *params)
         angle += FOV / SCREEN_WIDTH; 
         x++;
     }
+}
+
+/************************************************************************************ */
+
+void	get_distance(t_params *params, t_img **wall, float angle)
+{
+	float	rx;
+	float	ry;
+	float	dir_x;
+	float	dir_y;
+	float	distance;
+    char    wall_path;
+
+	distance = 0.0;
+	rx = params->player->x;
+	ry = params->player->y;
+	modulo_angle(&angle);
+	dir_x = sin(angle) * STEP_CAST;
+	dir_y = -cos(angle) * STEP_CAST;
+	while (distance < SCREEN_WIDTH && put_map_value(params, (int)rx, (int)ry) != '1')
+	{
+		rx += dir_x;
+		ry += dir_y;
+		distance += STEP_CAST;
+	}
+    wall_path = get_type_texture(params, rx, ry);
+    (*wall) =  get_wall_texture(params, wall_path);
+    (*wall)->wx = rx;
+    (*wall)->wy = ry;
+    (*wall)->distance = distance;
+}
+
+void draw_wall_slice(t_params *params, t_img *wall, int x)
+{
+    t_img  *texture;
+    int     y;
+    int     wall_height;
+    int     tex_x;
+    int     tex_y;
+    int     color;
+
+    wall_height = get_wall_height(wall->distance);
+    texture = get_wall_texture(params, wall->wall_path);
+    if (!texture)
+        return ;
+    y = 0;
+    if (wall->wall_path == 'N' || wall->wall_path == 'S')
+        tex_x = (int)((texture->wx - floor(texture->wx)) * texture->width);
+    else if (wall->wall_path == 'E' || wall->wall_path == 'W')
+        tex_x = (int)((texture->wy - floor(texture->wy)) * texture->width);
+    //tex_x = (x % texture->width);
+    while (y < wall_height)
+    {
+        tex_y = (y * texture->height) / wall_height;
+        color = get_texture_pixel(texture, tex_x, tex_y);
+        my_mlx_pixel_put(x, (SCREEN_HEIGHT / 2 - wall_height / 2) + y, color, params);
+        y++;
+    }
+}
+
+void render_scene(t_params *params)
+{
+    int     x;
+    float   angle;
+    t_img   *wall;
+
+    x = 0;
+    wall = init_list_img();
+    angle = params->delta - (FOV / 2);
+    while (x < SCREEN_WIDTH)
+    {
+        get_distance(params, &wall, angle);
+        wall->distance *= cos(angle - params->delta);
+        draw_wall_slice(params, wall, x);
+        angle += FOV / SCREEN_WIDTH; 
+        x++;
+    }
+    free(wall);
 }
 
 
