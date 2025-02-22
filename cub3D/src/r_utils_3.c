@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_utils_3.c                                        :+:      :+:    :+:   */
@@ -6,50 +6,54 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:48:23 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/07 15:14:44 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:18:06 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-int get_pos_x(int x)
+int is_only_space(char *str)
 {
-	int	i;
-	int	size;
-	int	min;
-	int	max;
+	int		i;
 
 	i = 0;
-	size = SCREEN_WIDTH / 64;
-	while (i < size)
-	{
-		min = i * 64;
-		max = (i + 1) * 64;
-
-		if (x >= min && x < max)
-			return (i);
+	if (!str)
+		return (0);
+	if (str[0] == '\n' || str[0] == '\0')
+		return (1);
+	while(ft_is_space(str[i]))
 		i++;
-	}
-	return (-1);
+	if (str[i] == '\n' || str[i] == '\0')
+		return (1);
+	return (0);
 }
 
-int get_pos_y(int y)
+int is_all_config_set(t_params *params)
 {
-	int	i;
-	int	size;
-	int	min;
-	int	max;
+	return (params->no != NULL && params->so != NULL && params->we != NULL \
+		&& params->ea != NULL && params->f != NULL && params->c != NULL);
+}
 
-	i = 0;
-	size = SCREEN_HEIGHT / 64;
-	while (i < size)
+int get_pos_x(int x, t_params *params)
+{
+	int	map_width;
+
+	map_width = params->win_width;
+	if (x < 0 || x >= map_width * 64)
 	{
-		min = i * 64; 
-		max = (i + 1) * 64;
-
-		if (y >= min && y < max)
-			return (i);
-		i++;
+		return (-1);
 	}
-	return (-1);
+	return x / 64;
+}
+
+int get_pos_y(int y, t_params *params)
+{
+	int	map_height;
+
+	map_height = params->map_height;
+    if (y < 0 || y >= map_height * 64)
+	{
+        return (-1);
+	}
+	return y / 64;
 }

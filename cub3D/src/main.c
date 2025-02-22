@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
+/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:00 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/12 12:13:33 by ttelolah         ###   ########.fr       */
+/*   Updated: 2025/02/16 21:06:19 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,26 +38,27 @@ void	game_initializer(t_params *params)
 {
 	mlx_initialization(params);
 	init_player_direction(params);
-	// params->win_width = SCREEN_WIDTH;
-	// params->win_height = SCREEN_HEIGHT;
-	params->win_width = count_element_list_mapcol(params->map) * COL_SIZE;
-	params->win_height = count_element_list_mapline(params->map) * COL_SIZE;
+	params->win_width = SCREEN_WIDTH;
+	params->win_height = SCREEN_HEIGHT;
+	// params->win_width = params->map_width * SLICE_SIZE;
+	// params->win_height = params->map_height * SLICE_SIZE;
+
 	mlx_window_open(params);
-	params->image->img = mlx_new_image(params->mlx_connexion, params->win_width, params->win_height);
-	if (!params->image->img)
+	params->clear->img = mlx_new_image(params->mlx_connexion, params->win_width, params->win_height);
+	if (!params->clear->img)
 	{
 		perror_msg("Failed to create image", NULL);
 		cleanup(params);
 		exit(EXIT_FAILURE);
 	}
-	params->image->data = mlx_get_data_addr(params->image->img, &params->image->bpp, &params->image->line_len, &params->image->endian);
-	if (!params->image->data)
+	params->clear->data = mlx_get_data_addr(params->clear->img, &params->clear->bpp, &params->clear->line_len, &params->clear->endian);
+	if (!params->clear->data)
 	{
 		perror_msg("Failed to get image data", NULL);
 		cleanup(params);
 		exit(EXIT_FAILURE);
 	}
-	mlx_put_image_to_window(params->mlx_connexion, params->win_open, params->image->img, 0, 0);
+	mlx_put_image_to_window(params->mlx_connexion, params->win_open, params->clear->img, 0, 0);
 	
 	/*mlx_hook(params->win_open, 2, 1L << 0, handle_keypress, params);
 	mlx_hook(params->win_open, 3, 1L << 1, handle_keyrelease, params);*/
@@ -88,14 +89,11 @@ int	main(int argc, char **argv)
 			in the map configuration", NULL);
 	if (check_error(fd, params))
 		exit(EXIT_FAILURE);
-	// print_config(params);
-	// printf("\n\n******************************************************\n\n");
-	// printf("Ground color: R=%d, G=%d, B=%d\n", params->f_color->r, params->f_color->g, params->f_color->b);
-	// printf("Ground color: R=%d, G=%d, B=%d\n", params->c_color->r, params->c_color->g, params->c_color->b);
-	// print_map(params);
-
+	init_map_size(params);
+	init_player(params);
 	game_initializer(params);
 	cleanup(params);
 	close(fd);
 	return (0);
 }
+
