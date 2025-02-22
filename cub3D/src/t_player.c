@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_player.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
+/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 09:35:39 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/12 12:09:14 by ttelolah         ###   ########.fr       */
+/*   Updated: 2025/02/16 20:19:14 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ void	init_player_direction(t_params *params)
 		params->delta = 3 * PI / 2;
 }
 
-void	modulo_angle(double *angle)
+void	modulo_angle(float *angle)
 {
 	while (*angle < 0)
 		*angle += 2 * PI;
 	while (*angle >= 2 * PI)
 		*angle -= 2 * PI;
 }
+

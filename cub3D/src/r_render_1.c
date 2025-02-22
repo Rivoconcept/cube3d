@@ -3,62 +3,199 @@
 /*                                                        :::      ::::::::   */
 /*   r_render_1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
+/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/12 22:35:26 by ttelolah         ###   ########.fr       */
+/*   Updated: 2025/02/16 21:04:00 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-int	encode_color(uint8_t r, uint8_t g, uint8_t b)
+/*float	get_distance(t_params *params, float angle)
 {
-    return (r << 16 | g << 8 | b);
+	float	rx;
+	float	ry;
+	float	dir_x;
+	float	dir_y;
+	float	step;
+	float	distance;
+
+	step = 1.0;
+	distance = 0.0;
+	rx = params->player->x;
+	ry = params->player->y;
+	modulo_angle(&angle);
+	dir_x = sin(angle) * step;
+	dir_y = -cos(angle) * step;
+	while (put_map_value(params, (int)rx, (int)ry) != '1')
+	{
+		rx += dir_x;
+		ry += dir_y;
+		distance += step;
+	}
+	return (distance);
+}*/
+
+float	get_distance(t_params *params, float angle)
+{
+	float	rx;
+	float	ry;
+	float	dir_x;
+	float	dir_y;
+	float	step;
+	float	distance;
+
+	step = 1.0;
+	distance = 0.0;
+	rx = params->player->x;
+	ry = params->player->y;
+	modulo_angle(&angle);
+	dir_x = sin(angle) * step;
+	dir_y = -cos(angle) * step;
+	while (distance < SCREEN_WIDTH && put_map_value(params, (int)rx, (int)ry) != '1')
+	{
+		rx += dir_x;
+		ry += dir_y;
+		distance += step;
+	}
+	return (distance);
 }
 
-void    my_mlx_pixel_put(int x, int y, int color, t_params *params)
+
+/*float get_distance(t_params *params, float angle)
 {
-    char    *dst;
+    float rx, ry;       // Position du rayon
+    float dx, dy;       // Direction du rayon
+   // float step_x, step_y; // Incréments pour atteindre la prochaine case
+    int map_x, map_y;   // Coordonnées de la case actuelle
+    int step_dir_x, step_dir_y; // Direction du pas (+1 ou -1)
+    float side_dist_x, side_dist_y; // Distance avant la prochaine case
+    float delta_dist_x, delta_dist_y; // Distance entre deux intersections
 
-    if (x < 0 || y < 0 || x >= params->win_width || y >= params->win_height)
-        return ;
-    dst = params->image->data + (y * params->image->line_len + x * \
-        (params->image->bpp / 8));
-    *(unsigned int*)dst = color;
-}
+    modulo_angle(&angle);
+    
+    // Position initiale du rayon (position du joueur)
+    rx = params->player->x;
+    ry = params->player->y;
 
-void clear_img(t_params *params)
-{
-    int x;
-    int y;
-    int ceiling_color;
-    int floor_color;
+    // Direction du rayon
+    dx = cos(angle);
+    dy = sin(angle);
 
-    ceiling_color = encode_color(params->c_color->r, params->c_color->g, params->c_color->b);
-    floor_color = encode_color(params->f_color->r, params->f_color->g, params->f_color->b);
-    y = 0;
-    while (y < params->win_height)
-    {
-        x = 0;
-        while (x < params->win_width)
-        {
-            if (y < params->win_height / 2)
-                my_mlx_pixel_put(x, y, ceiling_color, params);
-            else
-                my_mlx_pixel_put(x, y, floor_color, params);
-            x++;
+    // Case actuelle
+    map_x = (int)rx;
+    map_y = (int)ry;
+
+    // Calcul des pas et des distances delta
+    delta_dist_x = fabs(1 / dx);
+    delta_dist_y = fabs(1 / dy);
+
+    // Détermination des directions et des distances initiales
+    if (dx < 0) {
+        step_dir_x = -1;
+        side_dist_x = (rx - map_x) * delta_dist_x;
+    } else {
+        step_dir_x = 1;
+        side_dist_x = (map_x + 1.0 - rx) * delta_dist_x;
+    }
+    if (dy < 0) {
+        step_dir_y = -1;
+        side_dist_y = (ry - map_y) * delta_dist_y;
+    } else {
+        step_dir_y = 1;
+        side_dist_y = (map_y + 1.0 - ry) * delta_dist_y;
+    }
+
+    // Lancer le DDA
+    while (1) {
+        // Choisir la direction avec la plus petite distance
+        if (side_dist_x < side_dist_y) {
+            side_dist_x += delta_dist_x;
+            map_x += step_dir_x;
+        } else {
+            side_dist_y += delta_dist_y;
+            map_y += step_dir_y;
         }
-        y++;
+
+        // Vérifier si on a touché un mur
+        if (put_map_value(params, map_x, map_y) == '1')
+            break;
+    }
+
+    // Retourner la distance au mur
+    return sqrt((map_x - rx) * (map_x - rx) + (map_y - ry) * (map_y - ry));
+}*/
+
+
+
+
+
+void	ray_trace(t_params *params, float angle, float distance)
+{
+	float	i;
+	int		px;
+	int		py;
+	float	ray_x;
+	float	ray_y;
+	float	dir_x;
+	float	dir_y;
+
+	i = 0.0;
+    px = 0;
+    py = 0;
+	modulo_angle(&angle);
+	dir_x = sin(angle);
+	dir_y = -cos(angle);
+	ray_x = params->player->x;
+	ray_y = params->player->y;
+	while (i < distance)
+	{
+		px = (int)(ray_x + dir_x * i);
+		py = (int)(ray_y + dir_y * i);
+		my_mlx_pixel_put(px, py, 0x00FF00, params);
+		i += 0.1;
+	}
+}
+
+
+/*float	get_distance(t_params *params, float angle)
+{
+	// float	rx;
+	float	ry;
+	float	dir_x;
+	float	dir_y;
+	float	distance;
+
+	(void)angle;
+	distance = 0.0;
+	// rx = params->player->x;
+	//modulo_angle(&angle);
+	ry = params->player->y;
+	dir_x = cos(angle);
+	dir_y = -sin(angle);
+ 	// 
+	distance = sqrt(pow((dir_x  * (((int)ry % SLICE_SIZE)) / dir_y), 2) + pow(((int)ry % SLICE_SIZE), 2));
+	return (distance);
+}*/
+
+void trace_fov(t_params *params)
+{
+    float angle;
+    float step;
+    float distance;
+    int i;
+
+    step = FOV / SCREEN_WIDTH;
+    i = 0;
+    while (i < SCREEN_WIDTH)
+    {
+        angle = params->delta - (FOV / 2) + (step * i);
+        distance = get_distance(params, angle);
+        ray_trace(params, angle, distance);
+        i++;
     }
 }
 
-int draw_loop(t_params *params)
-{
-    clear_img(params);
-    put_wall(params);
-    put_player(params);
-    trace_fov(params);
-    mlx_put_image_to_window(params->mlx_connexion, params->win_open, params->image->img, 0, 0);
-    return (0);
-}
+
+

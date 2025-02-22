@@ -1,33 +1,20 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_handle_game_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/07 08:00:52 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/07 08:00:53 by rhanitra         ###   ########.fr       */
+/*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
+/*   Updated: 2025/02/16 20:56:34 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-t_player	*init_player(void)
-{
-	t_player	*player;
 
-	player = (t_player *)malloc(sizeof(t_player));
-	if (player == NULL)
-		return (NULL);
-	player->init = '\0';
-	player->x = 0;
-	player->y = 0;
-	player->width = 0;
-	player->height = 0;
-	player->color = 0;
-	return (player);
-}
-void rotate_and_draw(int x, int y, int pivot_x, int pivot_y, double angle, t_params *params)
+
+void rotate_and_draw(int x, int y, int pivot_x, int pivot_y, float angle, t_params *params)
 {
     int new_x;
     int new_y;
@@ -44,7 +31,7 @@ int draw_player(t_params *params, int x, int y)
 	int		j;
     int		pivot_x;
 	int		pivot_y;
-    double	angle;
+    float	angle;
 	
 	i = 0;
 	angle = params->delta;
@@ -64,37 +51,59 @@ int draw_player(t_params *params, int x, int y)
     return (0);
 }
 
-void	put_triangle(t_params *params, t_map *map, t_line *line)
-{
-	if (line->cell_value.value == params->player->init)
-	{
-		if (params->player->x == 0 && params->player->y == 0)
-		{
-			params->player->x = (line->cell_value.index * COL_SIZE) + (COL_SIZE / 2);
-			params->player->y = (map->line_value.index * COL_SIZE) + (COL_SIZE / 2);
-		}
-		params->player->width = COL_SIZE;
-		params->player->height = COL_SIZE;
-		params->player->color = 0xffff3f;
-		draw_player(params, params->player->x, params->player->y);
-	}
-}
-
 
 void	put_player(t_params *params)
 {
+	int			i;
+	int			j;
+
+	i = 0;
+	while (params->map[i] != NULL)
+	{
+		j = 0;
+		while (params->map[i][j] != '\0')
+		{
+			if (params->map[i][j] == params->player->init)
+			{
+				if (params->player->x == 0 && params->player->y == 0)
+				{
+					params->player->x = (j * SLICE_SIZE) + (SLICE_SIZE / 2);
+					params->player->y = (i * SLICE_SIZE) + (SLICE_SIZE / 2);
+				}
+				params->player->width = SLICE_SIZE;
+				params->player->height = SLICE_SIZE;
+				params->player->color = 0xffff3f;
+				draw_player(params, params->player->x, params->player->y);
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+/*void	put_player(t_params *params)
+{
 	t_map	*current_map;
 	t_line	*current_line;
+	int		view_distance;
+	int		player_x;
+	int		player_y;
 
+	view_distance = 10;
+	player_x = (int)params->player->x;
+	player_y = (int)params->player->y;
 	current_map = params->map;
-	while (current_map != NULL)
+	while (current_map != NULL
+		&& abs(current_map->line_value.index - player_y) <= view_distance)
 	{
 		current_line = current_map->line_value.line;
 		while (current_line != NULL)
 		{
-			put_triangle(params, current_map, current_line);
+			if (abs(current_line->cell_value.index - player_x)
+				<= view_distance)
+				put_triangle(params, current_map, current_line);
 			current_line = current_line->next;
 		}
 		current_map = current_map->next;
 	}
-}
+}*/

@@ -6,15 +6,15 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:49:57 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/01 18:27:30 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/16 20:20:14 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-int	init_config(int *flag, char *gnl, t_params *params)
+int	init_config(int *flag, char *gnl, char *str, t_params *params)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	if (!*flag && !is_only_space(gnl))
@@ -23,6 +23,7 @@ int	init_config(int *flag, char *gnl, t_params *params)
 			i++;
 		if (put_data_config(params, gnl, &i))
 		{
+			free(str);
 			free(gnl);
 			cleanup(params);
 			return (1);
@@ -31,31 +32,71 @@ int	init_config(int *flag, char *gnl, t_params *params)
 	return (0);
 }
 
-t_map *load_map(int fd, t_params *params)
+void copy_line(char *gnl, char **str, int fd, t_params *params)
 {
-	t_map	*map;
-	t_line	*line;
-	char	*gnl;
-	int 	flag;
+    char *tmp;
 
-	line = NULL;
-	map = NULL;
-	flag = 0;
-	gnl = get_next_line(fd);
-	while (gnl != NULL)
+    tmp = ft_strjoin(*str, gnl);
+    if (!tmp)
+    {
+        free(gnl);
+        free(*str);
+        ft_exit_faillure(params, fd, "Allocation failed on malloc str", NULL);
+    }
+    free(*str);
+    *str = tmp;
+}
+
+char **load_map(int fd, t_params *params)
+{
+    char	**map;
+	char    *str;
+    char    *gnl;
+    int     flag;
+
+    str = ft_strdup("");
+    if (!str)
+        return (NULL);
+    flag = 0;
+    while ((gnl = get_next_line(fd)) != NULL)
+    {
+        if (is_all_config_set(params))
+            flag = 1;
+        if (init_config(&flag, gnl, str, params))
+            exit(EXIT_FAILURE);
+        if (flag && !is_only_space(gnl))
+            copy_line(gnl, &str, fd, params);
+        free(gnl);
+    }
+	map = ft_split(str, '\n');
+	if (!map || !map[0])
+		return (free(str), NULL);
+	free(str);
+    return (map);
+}
+
+void	init_player(t_params *params)
+{
+	int			i;
+	int			j;
+
+	i = 0;
+	while (params->map[i] != NULL)
 	{
-		line = NULL;
-		if (is_all_config_set(params))
-			flag = 1;
-		if (init_config(&flag, gnl, params))
-			exit(EXIT_FAILURE);
-		if (flag && !is_only_space(gnl))
+		j = 0;
+		while (params->map[i][j] != '\0')
 		{
-			initialize_line(&line, gnl);
-			initialize_map(&map, line);
+			if (params->map[i][j] == params->player->init)
+			{
+				if (params->player->x == 0 && params->player->y == 0)
+				{
+					params->player->x = (j * SLICE_SIZE)
+						+ (SLICE_SIZE / 2);
+					params->player->y = (i * SLICE_SIZE) + (SLICE_SIZE / 2);
+				}
+			}
+			j++;
 		}
-		free(gnl);
-		gnl = get_next_line(fd);
+		i++;
 	}
-	return (map);
 }

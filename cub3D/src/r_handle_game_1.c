@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_handle_game_1.c                                  :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 08:00:58 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/07 08:00:59 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/16 20:30:02 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
@@ -31,8 +31,9 @@ int draw_rectangle(t_params *params)
 {
     int		i;
 	int		j;
-    t_rect *rect = params->rect;
+    t_rect *rect;
 
+	rect = params->rect;
     if (params->win_open == NULL)
 	{
         return (1);
@@ -54,41 +55,55 @@ int draw_rectangle(t_params *params)
     return (0);
 }
 
-
-void	put_rectangle(t_params *params, t_map *map, t_line *line)
-{
-	int	height;
-	int	width;
-
-	height = count_element_list_mapline(params->map);
-	width = count_element_list_mapcol(params->map);
-	if (line->cell_value.value == '1' \
-		 && map->line_value.index <= height \
-		 && line->cell_value.index < width )
-	{
-		params->rect->x = line->cell_value.index * 64;
-		params->rect->y = map->line_value.index * 64;
-		params->rect->width = 64;
-		params->rect->height = 64;
-		params->rect->color = 0xff00b4d8;
-		draw_rectangle(params);
-	}
-}
-
 void	put_wall(t_params *params)
 {
-	t_map	*current_map;
-	t_line	*current_line;
+	int			i;
+	int			j;
 
-	current_map = params->map;
-	while (current_map != NULL)
+	i = 0;
+	while (params->map[i] != NULL)
 	{
-		current_line = current_map->line_value.line;
-		while (current_line != NULL)
+		j = 0;
+		while (params->map[i][j] != '\0')
 		{
-			put_rectangle(params, current_map, current_line);
-			current_line = current_line->next;
+			if (params->map[i][j] == '1' && i <= params->map_height \
+				&& j < params->map_width)
+			{
+				params->rect->x = j * 64;
+				params->rect->y = i * 64;
+				params->rect->width = 64;
+				params->rect->height = 64;
+				params->rect->color = 0xff00b4d8;
+				draw_rectangle(params);
+			}
+			j++;
 		}
-		current_map = current_map->next;
+		i++;
 	}
 }
+
+/*void put_wall(t_params *params)
+{
+    t_map *current_map;
+    t_line *current_line;
+    int view_distance = 10;
+    int player_x = (int)params->player->x;
+    int player_y = (int)params->player->y;
+    
+    current_map = params->map;
+    while (current_map != NULL && abs(current_map->line_value.index - player_y) <= view_distance)
+    {
+        if (abs(current_map->line_value.index - player_y) <= view_distance)
+        {
+            current_line = current_map->line_value.line;
+            while (current_line != NULL)
+            {
+                if (abs(current_line->cell_value.index - player_x) <= view_distance)
+                    put_rectangle(params, current_map, current_line);
+                current_line = current_line->next;
+            }
+        }
+        current_map = current_map->next;
+    }
+}*/
+

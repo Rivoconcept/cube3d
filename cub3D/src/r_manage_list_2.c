@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_manage_list_2.c                                  :+:      :+:    :+:   */
@@ -6,11 +6,27 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:49:10 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/04 10:26:47 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/16 20:48:22 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+t_player	*init_list_player(void)
+{
+	t_player	*player;
+
+	player = (t_player *)malloc(sizeof(t_player));
+	if (player == NULL)
+		return (NULL);
+	player->init = '\0';
+	player->x = 0;
+	player->y = 0;
+	player->width = 0;
+	player->height = 0;
+	player->color = 0;
+	return (player);
+}
 
 t_img	*init_list_img(void)
 {
@@ -26,98 +42,23 @@ t_img	*init_list_img(void)
 	return (img);
 }
 
-
-
-int	count_element_list(t_line *head)
+void	init_map_size(t_params *params)
 {
-	int		count;
-	t_line	*current;
+	int	i;
+	int	j;
+	int	col;
 
-	count = 0;
-	current = head;
-	while (current != NULL)
-	{
-		if (current->cell_value.value == '\n' \
-			|| current->cell_value.value == '\0')
-			break ;
-		count++;
-		current = current->next;
-	}
-	return (count);
-}
-
-int	count_element_list_mapcol(t_map *head)
-{
-	int		col;
-	int		count;
-	t_map	*current_map;
-	t_line	*current_line;
-
+	i = 0;
 	col = 0;
-	count = 0;
-	current_line = NULL;
-	current_map = head;
-	while (current_map != NULL)
+	while (params->map[i] != NULL)
 	{
-		count = 0;
-		current_line = current_map->line_value.line;
-		while (current_line != NULL)
-		{
-			if (current_line->cell_value.value == '\n')
-				break ;
-			count++;
-			current_line = current_line->next;
-		}
-		if (col < count)
-			col = count;
-		current_map = current_map->next;
+		j = 0;
+		while (params->map[i][j] != '\0')
+			j++;
+		if (col < j)
+			col = j;
+		i++;
 	}
-	return (col);
-}
-
-int	count_element_list_mapline(t_map *head)
-{
-	int		count;
-	t_map	*current;
-
-	count = 0;
-	current = head;
-	while (current != NULL)
-	{
-		if (current->line_value.line->cell_value.value == '\n')
-			break ;
-		count++;
-		current = current->next;
-	}
-	return (count);
-}
-
-void	put_ranks_line(t_line **head)
-{
-	int		index;
-	t_line	*current;
-
-	index = 0;
-	current = *head;
-	while (current != NULL)
-	{
-		current->cell_value.index = index;
-		index++;
-		current = current->next;
-	}
-}
-
-void	put_ranks_map(t_map **head)
-{
-	int		index;
-	t_map	*current;
-
-	index = 0;
-	current = *head;
-	while (current != NULL)
-	{
-		current->line_value.index = index;
-		index++;
-		current = current->next;
-	}
+	params->map_width = col;
+	params->map_height = i;
 }
