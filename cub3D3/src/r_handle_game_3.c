@@ -6,19 +6,30 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 08:00:52 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/22 18:34:32 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/23 15:18:19 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-void	rotate_player(int keycode, t_params *params)
+/*void	rotate_player(int keycode, t_params *params)
 {
 	if (keycode == 65361)
 		params->delta -= 0.09;
 	if (keycode == 65363)
 		params->delta += 0.09;
 	modulo_angle(&params->delta);
+}*/
+
+void rotate_player(int keycode, t_params *params)
+{
+    float rotation_speed;
+    rotation_speed = 0.05;
+    if (keycode == 65361)
+        params->delta -= rotation_speed;
+    if (keycode == 65363)
+        params->delta += rotation_speed;
+    modulo_angle(&params->delta);
 }
 
 int direction_calc(float *x, float *y, int keycode, t_params *params)
