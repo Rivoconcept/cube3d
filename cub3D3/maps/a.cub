@@ -1,14 +1,14 @@
-NO ./image/720/no.xpm
-WE ./image/720/we.xpm
-SO ./image/720/so.xpm
-EA ./image/720/ea.xpm
+NO ./image/384/no.xpm
+WE ./image/384/we.xpm
+SO ./image/384/so.xpm
+EA ./image/384/ea.xpm
 
 F  100,   205,  150
 C 155,200,42
 
 111111          
 100101          
-1000011111111111
+1100011111111111
 100N100000000001
-1000000000011111
+1010000000011111
 111111111111
