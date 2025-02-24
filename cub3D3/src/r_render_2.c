@@ -6,13 +6,13 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/24 19:14:26 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/24 21:17:22 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-char get_type_texture(t_params *params, int x, int y)
+/*char get_type_texture(t_params *params, int x, int y)
 {
     if (putval(params, x - 1, y) == '1')
         return ('W');
@@ -23,9 +23,9 @@ char get_type_texture(t_params *params, int x, int y)
     if (putval(params, x, y + 1) == '1')
         return ('S');
     return (params->player->init);
-}
+}*/
 
-/*char get_type_texture(t_params *params, int x, int y)
+char get_type_texture(t_params *params, int x, int y)
 {
     t_moov moov;
 
@@ -33,29 +33,25 @@ char get_type_texture(t_params *params, int x, int y)
     moov.right = putval(params, x + 1, y);
     moov.up = putval(params, x, y - 1);
     moov.down = putval(params, x, y + 1);
-
-    if (((moov.right == '0' || moov.right == params->player->init) && moov.up == '0') \
-        || ((moov.right == '0' || moov.right == params->player->init) && moov.down == '0'))
+    //if (y % 4)
+    // if (x % SLICE_SIZE == 0 && y % SLICE_SIZE == 0 && moov.up == '1')
+    // {
+    //     return ('N');
+    // }
+    // if (x % SLICE_SIZE == 63 && y % SLICE_SIZE == 63 && moov.up == '1')
+    // {
+    //     return ('N');
+    // }
+    if (moov.left == '1')
         return ('W');
-    if ((moov.right == '0' || moov.right == params->player->init) && moov.up == '1' && moov.down == '1')
-        return ('W');
-    if (((moov.left == '0' || moov.left == params->player->init) && moov.up == '0') \
-        || ((moov.left == '0' || moov.left == params->player->init) && moov.down == '0'))
+    if (moov.right == '1')
         return ('E');
-    if ((moov.left == '0' || moov.left == params->player->init) && moov.up == '1' && moov.down == '1')
-        return ('E');
-    if (((moov.down == '0' || moov.down == params->player->init) && moov.left == '0') \
-        || ((moov.down == '0' || moov.down == params->player->init) && moov.right == '0'))
+    if (moov.up == '1')
         return ('N');
-    if ((moov.down == '0' || moov.down == params->player->init) && moov.right == '1' && moov.left == '1')
-        return ('N');
-    if (((moov.up == '0' || moov.up == params->player->init) && moov.left == '0') \
-        || ((moov.up == '0' || moov.up == params->player->init) && moov.right == '1' && moov.right == '1'))
+    if (moov.down == '1')
         return ('S');
-    if ((moov.up == '0' || moov.up == params->player->init) && moov.left == '0')
-        return ('S');
-    return ('N');
-}*/
+    return (params->player->init);
+}
 
 
 t_img	*get_wall_texture(t_params *params, char wall_dir)
@@ -89,12 +85,8 @@ int get_wall_height(float distance)
     float dpp;
     int wall_height;
 
-    dpp = (SCREEN_HEIGHT / 2.0) / tan(FOV / 2.0);
-    if (distance <= 0)
-        return (SCREEN_HEIGHT);
-    if (distance < 0.1)
-        distance = 0.1;
-    wall_height = (int)((SLICE_SIZE * dpp) / (distance + 0.01));
+    dpp = (SCREEN_WIDTH / 2.0) / tan(FOV / 2.0);
+    wall_height = (int)((SLICE_SIZE * dpp) / (distance));
     return (wall_height);
 }
 
