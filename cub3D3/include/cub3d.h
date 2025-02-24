@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/22 15:09:00 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:23:42 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@
 
 # define RED_PIXEL 0xFF0000
 
-# define SCREEN_WIDTH 1024
+# define SCREEN_WIDTH 720
 # define SCREEN_HEIGHT 720
 # define SLICE_SIZE 64
 
 # define PI 3.14159265359
 # define FOV (PI / 3)
-# define STEP_ROT 3.0
+# define SPEED 3.0
 # define STEP_CAST 1.0
 
 # define ESC 53
@@ -169,8 +169,6 @@ typedef struct s_img
     int     			width;
     int     			height;
 	char				wall_path;
-	int					y_start;
-	int					y_end;
 	float				wx;
 	float				wy;
 	float				distance;
