@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:48:23 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/22 17:56:18 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:52:15 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,42 @@ void parse_color(t_params *params, char *color, int i, int value)
 	}
 }
 
+int count_comma(char *color)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	if (!color)
+		return (0);
+	while (color[i] != '\0')
+	{
+		if (color[i] == ',')
+			count++;
+		i++;
+	}
+	if (count == 2)
+		return (1);
+	return (0);
+}
+
 int check_error_color(char *color, t_params *params)
 {
 	int		i;
 	char	**tab;
 	int		value;
-	// char	*temp;
 
 	i = 0;
 	value = 0;
-	// temp = NULL;
+	if (!count_comma(color))
+		return (1);
 	tab = ft_split(color, ',');
 	if (!tab || tab[3])
 		return (free_array(tab), 1);
 	while(tab[i] != NULL)
 	{
-		// temp = ft_strtrim(tab[i], " \t\r");
-		// printf("%s\n", temp);
 		value = ft_atoi(tab[i]);
-		// free(temp);
 		if (value < 0 || value > 255)
 			return (free_array(tab), 1);
 		parse_color(params, color, i, value);
