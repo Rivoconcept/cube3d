@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/24 21:17:22 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:46:08 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,17 @@ char get_type_texture(t_params *params, int x, int y)
     moov.right = putval(params, x + 1, y);
     moov.up = putval(params, x, y - 1);
     moov.down = putval(params, x, y + 1);
-    //if (y % 4)
-    // if (x % SLICE_SIZE == 0 && y % SLICE_SIZE == 0 && moov.up == '1')
-    // {
-    //     return ('N');
-    // }
-    // if (x % SLICE_SIZE == 63 && y % SLICE_SIZE == 63 && moov.up == '1')
-    // {
-    //     return ('N');
-    // }
+
+    if (x % SLICE_SIZE == 63 && y % SLICE_SIZE == 63 && moov.right == '1' && moov.up == '0')
+    {
+        return ('N');
+    }
+    if (moov.up == '1')
+        return ('N');
     if (moov.left == '1')
         return ('W');
     if (moov.right == '1')
         return ('E');
-    if (moov.up == '1')
-        return ('N');
     if (moov.down == '1')
         return ('S');
     return (params->player->init);
@@ -152,6 +148,15 @@ void draw_wall_slice(t_params *params, t_img *wall, int x)
     {
         tex_y = ((y - start) * wall->height) / wall_height;
         color = get_texture_pixel(wall, val * wall->width, tex_y);
+        if (wall->wall_path == 'N')
+            color = 0x00FF00;
+        if (wall->wall_path == 'S')
+            color = 0xFF0000;
+        if (wall->wall_path == 'W')
+            color = 0x0000FF;
+        if (wall->wall_path == 'E')
+            color = 0x00FFFF;
+
         my_mlx_pixel_put(x, y, color, params);
         y++;
     }
