@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/26 18:46:08 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/27 19:02:48 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,12 @@ char get_type_texture(t_params *params, int x, int y)
     moov.right = putval(params, x + 1, y);
     moov.up = putval(params, x, y - 1);
     moov.down = putval(params, x, y + 1);
-
-    if (x % SLICE_SIZE == 63 && y % SLICE_SIZE == 63 && moov.right == '1' && moov.up == '0')
+    /*if (x % SLICE_SIZE == 63 && y % SLICE_SIZE == 63 && moov.right == '1')
     {
+        // if ((x + 1) % SLICE_SIZE == 0 && ((y + 1) % SLICE_SIZE == 0))
+        //     printf("oui\n");
         return ('N');
-    }
+    }*/
     if (moov.up == '1')
         return ('N');
     if (moov.left == '1')
@@ -148,14 +149,14 @@ void draw_wall_slice(t_params *params, t_img *wall, int x)
     {
         tex_y = ((y - start) * wall->height) / wall_height;
         color = get_texture_pixel(wall, val * wall->width, tex_y);
-        if (wall->wall_path == 'N')
+        /*if (wall->wall_path == 'N')
             color = 0x00FF00;
         if (wall->wall_path == 'S')
             color = 0xFF0000;
         if (wall->wall_path == 'W')
             color = 0x0000FF;
         if (wall->wall_path == 'E')
-            color = 0x00FFFF;
+            color = 0x00FFFF;*/
 
         my_mlx_pixel_put(x, y, color, params);
         y++;
@@ -181,4 +182,159 @@ void render_scene(t_params *params)
         angle += step; 
         x++;
     }
+   // 0349949936
 }
+
+
+/*void render_scene(t_params *params)
+{
+    int     x;
+    float   step;
+    float   angle;
+    float   normalized_angle;
+    t_img   *wall;
+
+    x = 0;
+    step = FOV / SCREEN_WIDTH;
+    wall = params->texture;
+    angle = params->delta - (FOV / 2);
+
+    while (x < SCREEN_WIDTH)
+    {
+        get_distance(params, &wall, angle);
+        wall->distance *= cos(angle - params->delta);
+
+        normalized_angle = fmod(angle, 2 * PI);
+        if (normalized_angle < 0)
+            normalized_angle += 2 * PI;
+
+        if (normalized_angle >= PI / 4 && normalized_angle < 3 * PI / 4)
+            wall = get_wall_texture(params, 'N');
+        else if (normalized_angle >= 3 * PI / 4 && normalized_angle < 5 * PI / 4)
+            wall = get_wall_texture(params, 'W');
+        else if (normalized_angle >= 5 * PI / 4 && normalized_angle < 7 * PI / 4)
+            wall = get_wall_texture(params, 'S');
+        else
+            wall = get_wall_texture(params, 'E'); 
+
+        draw_wall_slice(params, wall, x);
+        angle += step;
+        x++;
+    }
+}*/
+
+
+
+/*void render_scene(t_params *params)
+{
+    int     x;
+    float   step;
+    float   angle;
+    t_img   *wall;
+    char    w;
+    char    last_wall[9] = {0};
+    int     token = 0;
+    int     trigger = 0;
+    int     i = 0;
+    int col = 0;
+    // int     j = 0;
+
+    x = 0;
+    step = FOV / SCREEN_WIDTH;
+    wall = params->texture;
+    angle = params->delta - (FOV / 2);
+
+    while (x < SCREEN_WIDTH)
+    {
+        get_distance(params, &wall, angle);
+        wall->distance *= cos(angle - params->delta);
+        if (!token && !trigger)
+        {
+            w = wall->wall_path;
+            token = 1;
+        }
+        // printf("w:%c lw:%c\n", w, wall->wall_path);
+        if (token && w != wall->wall_path)
+        {
+            trigger = 1;
+            col = x;
+        }
+        if (trigger)
+            last_wall[i++] = wall->wall_path;
+        if (trigger && i == 9 && last_wall[7] != last_wall[8])
+        {
+            wall = get_wall_texture(params, w);
+            while (col++ <= x)
+                draw_wall_slice(params, wall, col);
+            token = 0;
+            trigger = 0;
+        }
+        else if (trigger && i == 9 && last_wall[7] == last_wall[8])
+        {
+            token = 0;
+            trigger = 0;
+            i = 0;
+        }
+        // printf("1:%c 2:%c 3:%c\n", test[0], test[1], test[2]);
+        draw_wall_slice(params, wall, x);
+        angle += step; 
+        x++;
+    }
+}*/
+
+/*void render_scene(t_params *params)
+{
+    int     x;
+    float   step;
+    float   angle;
+    t_img   *wall;
+    char    w;
+    char    last_wall[9] = {0};
+    int     token = 0;
+    int     trigger = 0;
+    int     i = 0;
+    int     col = 0;
+
+    x = 0;
+    step = FOV / SCREEN_WIDTH;
+    wall = params->texture;
+    angle = params->delta - (FOV / 2);
+
+    while (x < SCREEN_WIDTH)
+    {
+        get_distance(params, &wall, angle);
+        wall->distance *= cos(angle - params->delta);
+        if (!token && !trigger)
+        {
+            w = wall->wall_path;
+            token = 1;
+        }
+        if (token && w != wall->wall_path)
+        {
+            trigger = 1;
+            col = x;
+        }
+        if (trigger)
+        {
+            last_wall[i++] = wall->wall_path;
+            if (i == 9)
+            {
+                if (last_wall[7] != last_wall[8]) 
+                {
+                    wall = get_wall_texture(params, w);
+                    while (col <= x)
+                    {
+                        draw_wall_slice(params, wall, col);
+                        col++;
+                    }
+                }
+                token = 0;
+                trigger = 0;
+                i = 0;
+            }
+        }
+        draw_wall_slice(params, wall, x);
+        angle += step; 
+        x++;
+    }
+}*/
