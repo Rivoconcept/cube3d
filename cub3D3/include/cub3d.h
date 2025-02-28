@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/25 08:43:42 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/28 19:16:43 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -29,7 +29,6 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-# define RED_PIXEL 0xFF0000
 
 # define SCREEN_WIDTH 1024
 # define SCREEN_HEIGHT 720
@@ -169,8 +168,8 @@ typedef struct s_img
     int     			width;
     int     			height;
 	char				wall_path;
-	float				wx;
-	float				wy;
+	int					wx;
+	int					wy;
 	float				distance;
 }						t_img;
 
