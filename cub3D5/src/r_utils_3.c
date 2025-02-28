@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_utils_3.c                                        :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:48:23 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/24 14:40:21 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/22 13:58:18 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
@@ -41,12 +41,12 @@ int get_pos_x(int x, t_params *params)
 {
 	int	map_width;
 
-	map_width = params->map_width;
+	map_width = params->win_width;
 	if (x < 0 || x >= map_width * 64)
 	{
 		return (-1);
 	}
-	return (x / 64);
+	return x / 64;
 }
 
 int get_pos_y(int y, t_params *params)
@@ -58,5 +58,5 @@ int get_pos_y(int y, t_params *params)
 	{
         return (-1);
 	}
-	return (y / 64);
+	return y / 64;
 }
