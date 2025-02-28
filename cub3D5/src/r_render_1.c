@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/23 14:59:19 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/28 21:08:48 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void trace_fov(t_params *params)
 	texture = params->texture;
 	get_distance(params, &texture, params->delta);
     ray_trace(params, params->delta, texture->distance);
-	printf("%c", texture->wall_path);
+	printf("wx:%d - wy:%d $$$$ x:%d - y%d\n", texture->wx, texture->wy, texture->wx % 64, texture->wy % 64);
+	// printf("%c", texture->wall_path);
    /*step = FOV / SCREEN_WIDTH;
     i = 0;
     while (i < SCREEN_WIDTH)

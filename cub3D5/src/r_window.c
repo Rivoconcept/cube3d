@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   r_window.c                                         :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 18:40:10 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/24 14:48:10 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/28 21:10:20 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
@@ -37,7 +37,7 @@ int	handle_keypress(int keycode, t_params *params)
 	rotate_player(keycode, params);
 	if (!direction_calc(&x, &y, keycode, params))
 		return (0);
-	if (putval(params, (int)x, (int)y) != '1')
+	if (putval(params, x, y) != '1')
 	{
 		params->player->x = x;
 		params->player->y = y;

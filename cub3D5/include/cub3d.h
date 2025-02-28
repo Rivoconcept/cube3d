@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/02/24 15:54:04 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/28 21:41:12 by rhanitra         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -36,8 +36,8 @@
 # define SLICE_SIZE 64
 
 # define PI 3.14159265359
-# define FOV (PI / 3)
-# define STEP_ROT 3.0
+# define FOV (PI / 4)
+# define SPEED 3.0
 # define STEP_CAST 1.0
 
 # define ESC 53
@@ -49,6 +49,12 @@
 # define A 113
 # define S 115
 # define D 100
+
+/*typedef struct s_point
+{
+	float			x;
+	float			y;
+}			t_point;*/
 
 typedef struct s_moov
 {
@@ -118,6 +124,7 @@ typedef struct s_c
 typedef struct s_player
 {
 	char				init;
+	char				dir;
 	int					x;
 	int					y;
 	int					width;
@@ -163,15 +170,16 @@ typedef struct s_img
     int     			width;
     int     			height;
 	char				wall_path;
-	int					y_start;
-	int					y_end;
-	float				wx;
-	float				wy;
+	int					wx;
+	int					wy;
 	float				distance;
 }						t_img;
 
 typedef struct s_params
 {
+	void				*mlx_connexion;
+	void				*win_open;
+	char				**map;
 	t_img				*screen;
 	t_img				*texture;
 	t_img				*NO;
@@ -184,9 +192,6 @@ typedef struct s_params
 	t_rect				*rect;
 	t_player			*player;
 	t_path				*path;
-	void				*mlx_connexion;
-	void				*win_open;
-	char				**map;
 	int					map_width;
 	int					map_height;
 	float				delta;
