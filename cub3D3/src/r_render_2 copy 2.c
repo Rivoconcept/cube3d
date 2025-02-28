@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/28 19:29:23 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:03:48 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,16 +102,16 @@ void	get_distance(t_params *params, t_img **wall, float angle)
 	modulo_angle(&angle);
 	dir_x = sin(angle) * STEP_CAST;
 	dir_y = -cos(angle) * STEP_CAST;
-	while (put_map_value(params, ceil(rx), ceil(ry)) != '1')
+	while (put_map_value(params, (int)rx, (int)ry) != '1')
 	{
 		rx += dir_x;
 		ry += dir_y;
 		distance += STEP_CAST;
 	}
-    wall_path = get_type_texture(params, ceil(rx), ceil(ry));
+    wall_path = get_type_texture(params, rx, ry);
     (*wall) =  get_wall_texture(params, wall_path);
-    (*wall)->wx = ceil(rx) + 1;
-    (*wall)->wy = ceil(ry) + 1;
+    (*wall)->wx = rx;
+    (*wall)->wy = ry;
     (*wall)->distance = distance;
 }
 
@@ -141,9 +141,9 @@ void draw_wall_slice(t_params *params, t_img *wall, int x)
     end = start + wall_height;      
     y = start;
     if (wall->wall_path == 'N' || wall->wall_path == 'S')
-        tex_x = (wall->wx % SLICE_SIZE);
+        tex_x = ((int)wall->wx % SLICE_SIZE);
     else if (wall->wall_path == 'E' || wall->wall_path == 'W')
-        tex_x = (wall->wy % SLICE_SIZE);
+        tex_x = ((int)wall->wy % SLICE_SIZE);
     val = tex_x / SLICE_SIZE;
     while (y < end)
     {

@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/27 18:42:01 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:34:32 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ray_trace(t_params *params, float angle, float distance)
 	float	dir_x;
 	float	dir_y;
 
-	i = 0.0;
+	i = -1.0;
     px = 0;
     py = 0;
 	modulo_angle(&angle);
@@ -49,7 +49,8 @@ void trace_fov(t_params *params)
 	texture = params->texture;
 	get_distance(params, &texture, params->delta);
     ray_trace(params, params->delta, texture->distance);
-	printf("x:%d - y:%d\n", (int)texture->wx % 64, (int)texture->wy % 64);
+
+	printf("wx:%d - wy:%d - x:%d - y:%d\n", texture->wx, texture->wy, texture->wx % SLICE_SIZE, texture->wy  % SLICE_SIZE);
    /*step = FOV / SCREEN_WIDTH;
     i = 0;
     while (i < SCREEN_WIDTH)
