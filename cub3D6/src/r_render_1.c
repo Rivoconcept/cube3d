@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:50:38 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/03/01 08:28:50 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/03/08 13:01:28 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void trace_fov(t_params *params)
 	update_player_dir(params);
 	get_distance(params, &texture, params->delta);
     ray_trace(params, params->delta, texture->distance);
-	printf("wall: %d - wx:%d - wy:%d $$$$ x:%d - y%d\n", (char)putval(params, texture->wx, texture->wy),  texture->wx, texture->wy, texture->wx % 64, texture->wy % 64);
+	printf("%c\n", put_map_value(params, texture->wx + 1, texture->wy + 1));
+	//printf("wall: %d - wx:%d - wy:%d $$$$ x:%d - y%d\n", (char)putval(params, texture->wx, texture->wy),  texture->wx, texture->wy, texture->wx % 64, texture->wy % 64);
 	// printf("%c", texture->wall_path);
    /*step = FOV / SCREEN_WIDTH;
     i = 0;

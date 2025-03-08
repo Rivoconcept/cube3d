@@ -1,10 +1,10 @@
-NO ./image/no.xpm
-WE ./image/we.xpm
-SO ./image/so.xpm
-EA ./image/ea.xpm
+NO ./image/64/no.xpm
+WE ./image/64/we.xpm
+SO ./image/64/so.xpm
+EA ./image/64/ea.xpm
 F 100,205,150
 C 155,200,42
 
-1111
+ 11
 1N01
-1111
+ 11

@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/03/01 08:28:27 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/03/08 12:43:42 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,14 @@
 typedef struct s_moov
 {
 	char				real;
-	char				left;
-	char				right;
 	char				up;
+	char				right;
 	char				down;
+	char				left;
+	char				ul;
+	char				ur;
+	char				dr;
+	char				dl;
 }						t_moov;
 
 /*************************************************************** */

@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:00 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/03/01 09:37:14 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/03/08 12:51:12 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ void	game_initializer(t_params *params)
 {
 	mlx_initialization(params);
 	params->texture = init_player_direction(params);
-	params->win_width = SCREEN_WIDTH;
-	params->win_height = SCREEN_HEIGHT;
-	// params->win_width = params->map_width * SLICE_SIZE;
-	// params->win_height = params->map_height * SLICE_SIZE;
+	// params->win_width = SCREEN_WIDTH;
+	// params->win_height = SCREEN_HEIGHT;
+	params->win_width = params->map_width * SLICE_SIZE;
+	params->win_height = params->map_height * SLICE_SIZE;
 
 	mlx_window_open(params);
 	params->screen =  init_img_screen(params);
