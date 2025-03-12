@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 11:08:07 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/16 19:21:30 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/03/09 10:47:24 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,9 @@ int	is_ground_down(t_params *params)
 
 int	is_not_playable(char c, t_params *params)
 {
-	if (c == 'N' || c == 'W' || c == 'E' || c == 'S')
+	if (c == params->player->init)
 	{
-		if (!is_ground_up(params) \
-			&& !is_ground_down(params) \
-			&& !is_ground_left(params) \
-			&& !is_ground_right(params))
+		if (is_ground_up(params) && is_ground_down(params) && is_ground_left(params) && is_ground_right(params))
 			return (1);
 	}
 	return (0);

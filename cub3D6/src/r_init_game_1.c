@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:49:57 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/22 14:07:43 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/03/11 18:26:31 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,47 @@ int put_data_config(t_params *params, char *gnl, int *i)
 {
 	if (!in_base(gnl))
 		return (perror_msg("Error on data config: ", NULL));
-	if (gnl[*i] == 'N' && gnl[*i + 1] == 'O')
+	if (gnl[*i] == 'N' && gnl[*i + 1] == 'O' && params->path->no == NULL)
+	{
 		if (!(params->path->no = copy_config(gnl, i)))
 			return (perror_msg("Allocation Failed on ", params->path->no));
-	if (gnl[*i] == 'S' && gnl[*i + 1] == 'O')
+	}
+	else if (gnl[*i] == 'N' && gnl[*i + 1] == 'O' && params->path->no != NULL)
+		return (perror_msg("Double key", NULL));
+	if (gnl[*i] == 'S' && gnl[*i + 1] == 'O' && params->path->so == NULL)
+	{
 		if (!(params->path->so = copy_config(gnl, i)))
 			return (perror_msg("Allocation Failed on ", params->path->so));		
-	if (gnl[*i] == 'W' && gnl[*i + 1] == 'E')
+	}
+	else if (gnl[*i] == 'S' && gnl[*i + 1] == 'O' && params->path->so != NULL)
+		return (perror_msg("Double key", NULL));
+	if (gnl[*i] == 'W' && gnl[*i + 1] == 'E' && params->path->we == NULL)
+	{
 		if (!(params->path->we = copy_config(gnl, i)))
 			return (perror_msg("Allocation Failed on ", params->path->we));
-	if (gnl[*i] == 'E' && gnl[*i + 1] == 'A')
+	}
+	else if (gnl[*i] == 'W' && gnl[*i + 1] == 'E' && params->path->we != NULL)
+		return (perror_msg("Double key", NULL));
+	if (gnl[*i] == 'E' && gnl[*i + 1] == 'A' && params->path->ea == NULL)
+	{
 		if (!(params->path->ea = copy_config(gnl, i)))
 			return (perror_msg("Allocation Failed on ", params->path->ea));
-	if (gnl[*i] == 'F')
+	}
+	else if (gnl[*i] == 'E' && gnl[*i + 1] == 'A' && params->path->ea != NULL)
+		return (perror_msg("Double key", NULL));
+	if (gnl[*i] == 'F' && params->path->f == NULL)
+	{
 		if (!(params->path->f = copy_config(gnl, i)))
 			return (perror_msg("Allocation Failed on ", params->path->f));
-	if (gnl[*i] == 'C')
+	}
+	else if (gnl[*i] == 'F' && params->path->f != NULL)
+		return (perror_msg("Double key", NULL));
+	if (gnl[*i] == 'C' && params->path->c == NULL)
+	{
 		if (!(params->path->c  = copy_config(gnl, i)))
 			return (perror_msg("Allocation Failed on ", params->path->c));
+	}
+	else if (gnl[*i] == 'C' && params->path->c != NULL)
+		return (perror_msg("Double key", NULL));
 	return (0);
 }

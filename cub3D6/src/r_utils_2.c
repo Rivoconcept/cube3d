@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:48:23 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/24 17:52:15 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/03/09 11:21:12 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,47 @@ void parse_color(t_params *params, char *color, int i, int value)
 	}
 }
 
-int count_comma(char *color)
+void escape_space(char *color, int *i)
+{
+	while(ft_is_space(color[*i]))
+		(*i)++;
+}
+
+void escape_digit(char *color, int *i)
+{
+	while(ft_isdigit(color[*i]))
+		(*i)++;
+}
+
+void escape(char *color, int *i)
+{
+	escape_space(color, i);
+	escape_digit(color, i);
+	escape_space(color, i);
+}
+
+int is_foramt_color(char *color)
 {
 	int	i;
-	int	count;
 
 	i = 0;
-	count = 0;
 	if (!color)
 		return (0);
-	while (color[i] != '\0')
-	{
-		if (color[i] == ',')
-			count++;
+	escape_space(color, &i);
+	if (color[i] == 'F' || color[i] == 'C')
 		i++;
-	}
-	if (count == 2)
+	escape(color, &i);
+	if (color[i] == ',')
+		i++;
+	escape(color, &i);
+	if (color[i] == ',')
+		i++;
+	escape_space(color, &i);
+	if (!ft_isdigit(color[i]))
+		return (0);
+	escape_digit(color, &i);
+	escape_space(color, &i);
+	if (color[i] == '\0')
 		return (1);
 	return (0);
 }
@@ -62,7 +87,7 @@ int check_error_color(char *color, t_params *params)
 
 	i = 0;
 	value = 0;
-	if (!count_comma(color))
+	if (!is_foramt_color(color))
 		return (1);
 	tab = ft_split(color, ',');
 	if (!tab || tab[3])

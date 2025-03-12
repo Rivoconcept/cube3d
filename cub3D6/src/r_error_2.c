@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 11:08:07 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/02/22 13:49:05 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/03/11 18:53:24 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int is_map_line(char *str)
 {
 	int i;
 
-	if (!str || str[0] == '\n' || is_only_space(str))
+	if (!str || str[0] == '\n')
 		return (0);
 	i = 0;
 	while (str[i] == 'N' || str[i] == 'S' || str[i] == 'E' || str[i] == 'W' 
