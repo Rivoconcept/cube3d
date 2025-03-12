@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game_1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttelolah <ttelolah@student.42antananavo    +#+  +:+       +#+        */
+/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:16:31 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/03/04 18:34:29 by ttelolah         ###   ########.fr       */
+/*   Updated: 2025/03/12 18:33:53 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,46 +41,53 @@ char	*copy_config(char *gnl, int *i)
 	return (config);
 }
 
-int	in_base(char *gnl)
-{
-	int	i;
-
-	i = 0;
-	while (ft_is_space(gnl[i]))
-		i++;
-	return ((gnl[i] == 'N' && gnl[i + 1] == 'O' && gnl[i + 2] == ' ')
-		|| (gnl[i] == 'S' && gnl[i + 1] == 'O' && gnl[i + 2] == ' ')
-		|| (gnl[i] == 'W' && gnl[i + 1] == 'E' && gnl[i + 2] == ' ')
-		|| (gnl[i] == 'E' && gnl[i + 1] == 'A' && gnl[i + 2] == ' ')
-		|| (gnl[i] == 'F' && gnl[i + 1] == ' ' && gnl[i + 1] == ' ')
-		|| (gnl[i] == 'C' && gnl[i + 1] == ' ' && gnl[i + 1] == ' '));
-}
-
-static int	handle_cardinal_config(t_params *params, char *gnl, int *i)
+static int	handle_first_path(t_params *params, char *gnl, int *i)
 {
 	char	*tmp;
 
-	if (gnl[*i] == 'N' && gnl[*i + 1] == 'O')
+	if (gnl[*i] == 'N' && gnl[*i + 1] == 'O' && params->path->no == NULL)
 	{
 		tmp = copy_config(gnl, i);
 		if (!tmp)
-			return (perror_msg("Allocation Failed on ", NULL));
+			return (perror_msg("Allocation Failed on ", params->path->no));
 		params->path->no = tmp;
 	}
-	if (gnl[*i] == 'S' && gnl[*i + 1] == 'O')
+	else if (gnl[*i] == 'N' && gnl[*i + 1] == 'O' && params->path->no != NULL)
+		return (perror_msg("Double key", NULL));
+	if (gnl[*i] == 'S' && gnl[*i + 1] == 'O' && params->path->so == NULL)
 	{
 		tmp = copy_config(gnl, i);
 		if (!tmp)
-			return (perror_msg("Allocation Failed on ", NULL));
+			return (perror_msg("Allocation Failed on ", params->path->so));
 		params->path->so = tmp;
 	}
-	if (gnl[*i] == 'W' && gnl[*i + 1] == 'E')
+	else if (gnl[*i] == 'S' && gnl[*i + 1] == 'O' && params->path->so != NULL)
+		return (perror_msg("Double key", NULL));
+	return (0);
+}
+
+static int	handle_second_path(t_params *params, char *gnl, int *i)
+{
+	char	*tmp;
+
+	if (gnl[*i] == 'W' && gnl[*i + 1] == 'E' && params->path->we == NULL)
 	{
 		tmp = copy_config(gnl, i);
 		if (!tmp)
-			return (perror_msg("Allocation Failed on ", NULL));
+			return (perror_msg("Allocation Failed on ", params->path->we));
 		params->path->we = tmp;
 	}
+	else if (gnl[*i] == 'W' && gnl[*i + 1] == 'E' && params->path->we != NULL)
+		return (perror_msg("Double key", NULL));
+	if (gnl[*i] == 'E' && gnl[*i + 1] == 'A' && params->path->ea == NULL)
+	{
+		tmp = copy_config(gnl, i);
+		if (!tmp)
+			return (perror_msg("Allocation Failed on ", params->path->ea));
+		params->path->ea = tmp;
+	}
+	else if (gnl[*i] == 'E' && gnl[*i + 1] == 'A' && params->path->ea != NULL)
+		return (perror_msg("Double key", NULL));
 	return (0);
 }
 
@@ -88,27 +95,24 @@ static int	handle_color_config(t_params *params, char *gnl, int *i)
 {
 	char	*tmp;
 
-	if (gnl[*i] == 'E' && gnl[*i + 1] == 'A')
+	if (gnl[*i] == 'F' && params->path->f == NULL)
 	{
 		tmp = copy_config(gnl, i);
 		if (!tmp)
-			return (perror_msg("Allocation Failed on ", NULL));
-		params->path->ea = tmp;
-	}
-	if (gnl[*i] == 'F')
-	{
-		tmp = copy_config(gnl, i);
-		if (!tmp)
-			return (perror_msg("Allocation Failed on ", NULL));
+			return (perror_msg("Allocation Failed on ", params->path->f));
 		params->path->f = tmp;
 	}
-	if (gnl[*i] == 'C')
+	else if (gnl[*i] == 'F' && params->path->f != NULL)
+		return (perror_msg("Double key", NULL));
+	if (gnl[*i] == 'C' && params->path->c == NULL)
 	{
 		tmp = copy_config(gnl, i);
 		if (!tmp)
-			return (perror_msg("Allocation Failed on ", NULL));
+			return (perror_msg("Allocation Failed on ", params->path->c));
 		params->path->c = tmp;
 	}
+	else if (gnl[*i] == 'C' && params->path->c != NULL)
+		return (perror_msg("Double key", NULL));
 	return (0);
 }
 
@@ -116,7 +120,9 @@ int	put_data_config(t_params *params, char *gnl, int *i)
 {
 	if (!in_base(gnl))
 		return (perror_msg("Error on data config: ", NULL));
-	if (handle_cardinal_config(params, gnl, i) != 0)
+	if (handle_first_path(params, gnl, i) != 0)
+		return (1);
+	if (handle_second_path(params, gnl, i) != 0)
 		return (1);
 	if (handle_color_config(params, gnl, i) != 0)
 		return (1);

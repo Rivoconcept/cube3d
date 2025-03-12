@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_4.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
+/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 12:20:42 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/03/09 12:22:07 by ttelolah         ###   ########.fr       */
+/*   Updated: 2025/03/12 18:19:07 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,19 @@ int	is_format_color(char *color)
 	if (color[i] == '\0')
 		return (1);
 	return (0);
+}
+
+int	in_base(char *gnl)
+{
+	int	i;
+
+	i = 0;
+	while (ft_is_space(gnl[i]))
+		i++;
+	return ((gnl[i] == 'N' && gnl[i + 1] == 'O' && gnl[i + 2] == ' ')
+		|| (gnl[i] == 'S' && gnl[i + 1] == 'O' && gnl[i + 2] == ' ')
+		|| (gnl[i] == 'W' && gnl[i + 1] == 'E' && gnl[i + 2] == ' ')
+		|| (gnl[i] == 'E' && gnl[i + 1] == 'A' && gnl[i + 2] == ' ')
+		|| (gnl[i] == 'F' && gnl[i + 1] == ' ' && gnl[i + 1] == ' ')
+		|| (gnl[i] == 'C' && gnl[i + 1] == ' ' && gnl[i + 1] == ' '));
 }

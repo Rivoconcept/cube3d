@@ -2,6 +2,7 @@ NO ./image/big/no.xpm
 WE ./image/big/we.xpm
 SO ./image/big/so.xpm
 EA ./image/big/ea.xpm
+EA ./image/big/ea.xpm
 
 F  111,  205,150
 C  000,0, 255
