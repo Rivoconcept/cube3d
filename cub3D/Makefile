@@ -6,7 +6,7 @@
 #    By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/22 08:39:35 by rhanitra          #+#    #+#              #
-#    Updated: 2025/04/06 11:48:13 by rhanitra         ###   ########.fr        #
+#    Updated: 2025/04/06 13:55:26 by rhanitra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ OBJ_CUB3D = $(SRC_CUB3D:.c=.o)
 
 EXEC = cub3D
 
-CFLAGS = -Wall -Wextra -Werror -I $(DIR_GNL) \
+CFLAGS = -Wall -Wextra -Werror -g -I $(DIR_GNL) \
 	-I $(DIR_MINILIBX) -I $(DIR_LIBFT) -I/usr/include -I/usr/include/X11
 CC = gcc
 RM = rm -rf

@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:16:31 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/04/06 12:19:43 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/04/06 14:16:03 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ char	*copy_config(char *gnl, int *i)
 		(*i)++;
 	config = (char *)malloc(sizeof(char) * (*i - start + 1));
 	if (!config)
-	{
-		perror("Failed to allocate memory for config");
-		exit(EXIT_FAILURE);
-	}
+		return (NULL);
 	while (start < *i)
 	{
 		config[j++] = gnl[start++];
@@ -37,7 +34,6 @@ char	*copy_config(char *gnl, int *i)
 	config[j] = '\0';
 	return (config);
 }
-
 
 static int	handle_first_path(t_params *params, char *gnl, int *i)
 {
@@ -97,7 +93,7 @@ static int	handle_color_config(t_params *params, char *gnl, int *i)
 	{
 		tmp = copy_config(gnl, i);
 		if (!tmp || ft_is_space(tmp[ft_strlen(tmp) - 1]))
-			return (perror_msg("Error on data config", NULL));
+			return (free(tmp), perror_msg("Error on data config", NULL));
 		params->path->f = tmp;
 	}
 	else if (gnl[*i] == 'F' && params->path->f != NULL)
@@ -106,7 +102,7 @@ static int	handle_color_config(t_params *params, char *gnl, int *i)
 	{
 		tmp = copy_config(gnl, i);
 		if (!tmp || ft_is_space(tmp[ft_strlen(tmp) - 1]))
-			return (perror_msg("Error on data config", NULL));
+			return (free(tmp), perror_msg("Error on data config", NULL));
 		params->path->c = tmp;
 	}
 	else if (gnl[*i] == 'C' && params->path->c != NULL)

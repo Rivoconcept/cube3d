@@ -1,7 +1,8 @@
-NO ./image/big/no.xpm
-WE		./image/big/we.xpm
-SO./image/big/so.xpm
-EA ./image/big/ea.xpm
+NO ./image/small/no.xpm
+WE ./image/small/we.xpm
+SO./image/smalxl/so.xpm
+
+EA ./image/small/ea.xpm
 
 F  110, 44, 0
 C  247, 220, 111
