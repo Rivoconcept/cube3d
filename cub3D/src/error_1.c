@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
+/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:14:35 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/03/03 13:42:25 by ttelolah         ###   ########.fr       */
+/*   Updated: 2025/04/06 09:53:46 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ int	check_extension(char *str)
 	i = 0;
 	temp[0] = '\0';
 	size = ft_strlen(str) - 1;
+	if (size + 1 == 4)
+	{
+		return (0);
+	}
 	while (str[size] && i < 5)
 	{
 		temp[i] = str[size];

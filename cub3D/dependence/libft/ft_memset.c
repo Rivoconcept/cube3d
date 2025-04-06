@@ -6,7 +6,7 @@
 /*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 18:41:35 by rhanitra          #+#    #+#             */
-/*   Updated: 2024/12/31 18:41:36 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:01:32 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,14 @@ void	*ft_memset(void *s, int c, size_t n)
 		n--;
 	}
 	return (s);
+}
+int	main(void)
+{
+	char str[20] = "Hello, World!";
+	
+	printf("Avant memset : %s\n", str);
+	ft_memset(str + 7, '*', 5);
+	printf("Après memset  : %s\n", str);
+
+	return (0);
 }

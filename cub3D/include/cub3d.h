@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
+/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:12 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/03/09 12:26:13 by ttelolah         ###   ########.fr       */
+/*   Updated: 2025/04/06 12:31:10 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,7 @@ int						check_map(t_params *params);
 int						out_of_play(t_params *params);
 int						check_error(int fd, t_params *params);
 int						count_data_game(t_params *params, char c);
+void					check_first_line_is_valid(int fd, char *gnl, char *str, t_params *params);
 int						check_intrus_data(t_params *params);
 int						check_extension(char *str);
 void					clear_img(t_params *params);
@@ -246,7 +247,6 @@ t_player				*init_list_player(void);
 t_img					*init_list_img(void);
 void					init_map_size(t_params *params);
 void					free_list_position(t_position *head);
-void					free_list_map(t_map *head_map);
 t_params				*create_list_param(void);
 void					get_distance(t_params *params, t_img **wall,
 							float angle);
@@ -271,8 +271,8 @@ int						check_error_color(char *color, t_params *params);
 int						invalid_color_config(char *color);
 int						check_error_config(t_params *params);
 int						is_only_space(char *str);
-void					is_all_config_set(t_params *params, int *flag,
-							char *gnl);
+int					is_all_config_set(t_params *params, int *flag,
+							char *gnl, char *str);
 int						get_pos_x(int x, t_params *params);
 int						get_pos_y(int y, t_params *params);
 void					modulo_angle(float *angle);

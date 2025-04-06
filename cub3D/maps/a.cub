@@ -1,11 +1,10 @@
 NO ./image/big/no.xpm
-WE ./image/big/we.xpm
-SO ./image/big/so.xpm
-EA ./image/big/ea.xpm
+WE		./image/big/we.xpm
+SO./image/big/so.xpm
 EA ./image/big/ea.xpm
 
-F  111,  205,150
-C  000,0, 255
+F  110, 44, 0
+C  247, 220, 111
 
 111111111111
 100000000001

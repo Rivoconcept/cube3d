@@ -3,107 +3,126 @@
 /*                                                        :::      ::::::::   */
 /*   init_game_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
+/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/03 13:16:43 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/03/03 15:37:41 by ttelolah         ###   ########.fr       */
+/*   Created: 2025/03/03 13:16:31 by ttelolah          #+#    #+#             */
+/*   Updated: 2025/04/06 12:19:43 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-int	init_config(int *flag, char *gnl, char *str, t_params *params)
+char	*copy_config(char *gnl, int *i)
 {
-	int	i;
+	int		j;
+	int		start;
+	char	*config;
 
-	i = 0;
-	if (!*flag && !is_only_space(gnl))
+	j = 0;
+	while (gnl[*i] && gnl[*i] != '.' && !ft_isdigit(gnl[*i]))
+		(*i)++;
+	start = *i;
+	while (gnl[*i] && gnl[*i] != '\n')
+		(*i)++;
+	config = (char *)malloc(sizeof(char) * (*i - start + 1));
+	if (!config)
 	{
-		while (ft_is_space(gnl[i]))
-			i++;
-		if (put_data_config(params, gnl, &i))
-		{
-			free(str);
-			free(gnl);
-			cleanup(params);
-			return (1);
-		}
+		perror("Failed to allocate memory for config");
+		exit(EXIT_FAILURE);
 	}
-	return (0);
+	while (start < *i)
+	{
+		config[j++] = gnl[start++];
+	}
+	config[j] = '\0';
+	return (config);
 }
 
-void	copy_line(char *gnl, char **str, int fd, t_params *params)
+
+static int	handle_first_path(t_params *params, char *gnl, int *i)
 {
 	char	*tmp;
 
-	tmp = ft_strjoin(*str, gnl);
-	if (!tmp)
+	if (gnl[*i] == 'N' && gnl[*i + 1] == 'O' && params->path->no == NULL)
 	{
-		free(gnl);
-		free(*str);
-		ft_exit_faillure(params, fd, "Allocation failed on malloc str", NULL);
+		tmp = copy_config(gnl, i);
+		if (!tmp)
+			return (perror_msg("Error on data config", NULL));
+		params->path->no = tmp;
 	}
-	free(*str);
-	*str = tmp;
-	if (!is_map_line(gnl))
+	else if (gnl[*i] == 'N' && gnl[*i + 1] == 'O' && params->path->no != NULL)
+		return (perror_msg("Double key", NULL));
+	if (gnl[*i] == 'S' && gnl[*i + 1] == 'O' && params->path->so == NULL)
 	{
-		free(gnl);
-		free(*str);
-		ft_exit_faillure(params, fd, "Error on map data", NULL);
+		tmp = copy_config(gnl, i);
+		if (!tmp)
+			return (perror_msg("Error on data config", NULL));
+		params->path->so = tmp;
 	}
+	else if (gnl[*i] == 'S' && gnl[*i + 1] == 'O' && params->path->so != NULL)
+		return (perror_msg("Double key", NULL));
+	return (0);
 }
 
-char	**load_map(int fd, t_params *params)
+static int	handle_second_path(t_params *params, char *gnl, int *i)
 {
-	char	**map;
-	char	*str;
-	char	*gnl;
-	int		flag;
+	char	*tmp;
 
-	str = ft_strdup("");
-	if (!str)
-		return (NULL);
-	flag = 0;
-	gnl = get_next_line(fd);
-	while (gnl != NULL)
+	if (gnl[*i] == 'W' && gnl[*i + 1] == 'E' && params->path->we == NULL)
 	{
-		is_all_config_set(params, &flag, gnl);
-		if (init_config(&flag, gnl, str, params))
-			exit(EXIT_FAILURE);
-		if (flag)
-			copy_line(gnl, &str, fd, params);
-		free(gnl);
-		gnl = get_next_line(fd);
+		tmp = copy_config(gnl, i);
+		if (!tmp)
+			return (perror_msg("Error on data config", NULL));
+		params->path->we = tmp;
 	}
-	map = ft_split(str, '\n');
-	if (!map || !map[0])
-		return (free(str), free_array(map), NULL);
-	free(str);
-	return (map);
+	else if (gnl[*i] == 'W' && gnl[*i + 1] == 'E' && params->path->we != NULL)
+		return (perror_msg("Double key", NULL));
+	if (gnl[*i] == 'E' && gnl[*i + 1] == 'A' && params->path->ea == NULL)
+	{
+		tmp = copy_config(gnl, i);
+		if (!tmp)
+			return (perror_msg("Error on data config", NULL));
+		params->path->ea = tmp;
+	}
+	else if (gnl[*i] == 'E' && gnl[*i + 1] == 'A' && params->path->ea != NULL)
+		return (perror_msg("Double key", NULL));
+	return (0);
 }
 
-void	init_player(t_params *params)
+static int	handle_color_config(t_params *params, char *gnl, int *i)
 {
-	int			i;
-	int			j;
+	char	*tmp;
 
-	i = 0;
-	while (params->map[i] != NULL)
+	if (gnl[*i] == 'F' && params->path->f == NULL)
 	{
-		j = 0;
-		while (params->map[i][j] != '\0')
-		{
-			if (params->map[i][j] == params->player->init)
-			{
-				if (params->player->x == 0 && params->player->y == 0)
-				{
-					params->player->x = (j * SLICE_SIZE)
-						+ (SLICE_SIZE / 2);
-					params->player->y = (i * SLICE_SIZE) + (SLICE_SIZE / 2);
-				}
-			}
-			j++;
-		}
-		i++;
+		tmp = copy_config(gnl, i);
+		if (!tmp || ft_is_space(tmp[ft_strlen(tmp) - 1]))
+			return (perror_msg("Error on data config", NULL));
+		params->path->f = tmp;
 	}
+	else if (gnl[*i] == 'F' && params->path->f != NULL)
+		return (perror_msg("Double key", NULL));
+	if (gnl[*i] == 'C' && params->path->c == NULL)
+	{
+		tmp = copy_config(gnl, i);
+		if (!tmp || ft_is_space(tmp[ft_strlen(tmp) - 1]))
+			return (perror_msg("Error on data config", NULL));
+		params->path->c = tmp;
+	}
+	else if (gnl[*i] == 'C' && params->path->c != NULL)
+		return (perror_msg("Double key", NULL));
+	return (0);
+}
+
+int	put_data_config(t_params *params, char *gnl, int *i)
+{
+	if (!in_base(gnl))
+		return (perror_msg("Error on data config", NULL));
+	if (handle_first_path(params, gnl, i) != 0)
+		return (1);
+	if (handle_second_path(params, gnl, i) != 0)
+		return (1);
+	if (handle_color_config(params, gnl, i) != 0)
+		return (1);
+	return (0);
 }

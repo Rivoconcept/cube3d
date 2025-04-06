@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
+/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:48:23 by rhanitra          #+#    #+#             */
-/*   Updated: 2025/03/09 12:02:33 by ttelolah         ###   ########.fr       */
+/*   Updated: 2025/04/06 10:48:00 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,30 @@ int	is_only_space(char *str)
 	return (0);
 }
 
-void	is_all_config_set(t_params *params, int *flag, char *gnl)
+int	is_all_config_set(t_params *params, int *flag, char *gnl, char *str)
 {
+	if (params->path->no != NULL 
+		&& params->path->no[ft_strlen(params->path->no) - 6] != 'n')
+		return (free(str), free(gnl), cleanup(params), \
+		perror_msg("Error on data config", NULL));
+	if (params->path->so != NULL 
+		&& params->path->so[ft_strlen(params->path->so) - 6] != 's')
+		return (free(str), free(gnl), cleanup(params), \
+		perror_msg("Error on data config", NULL));
+	if (params->path->ea != NULL 
+		&& params->path->ea[ft_strlen(params->path->ea) - 6] != 'e')
+		return (free(str), free(gnl), cleanup(params), \
+		perror_msg("Error on data config", NULL));
+	if (params->path->we != NULL 
+		&& params->path->we[ft_strlen(params->path->we) - 6] != 'w')
+		return (free(str), free(gnl), cleanup(params), \
+		perror_msg("Error on data config", NULL));
 	if ((params->path->no != NULL && params->path->so != NULL \
 		&& params->path->we != NULL && params->path->ea != NULL \
 		&& params->path->f != NULL && params->path->c != NULL) \
 		&& is_map_line(gnl))
 		*flag = 1;
+	return (0);
 }
 
 int	get_pos_x(int x, t_params *params)

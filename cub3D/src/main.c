@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
+/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 22:13:00 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/03/03 15:55:19 by ttelolah         ###   ########.fr       */
+/*   Updated: 2025/04/06 11:08:14 by rhanitra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,7 @@ int	main(int argc, char **argv)
 			on create_list_param", NULL);
 	params->map = load_map(fd, params);
 	if (!params->map)
-		ft_exit_faillure(params, fd, "one or more errors were detected \
-			in the map configuration", NULL);
+		ft_exit_faillure(params, fd, "one or more errors were detected", NULL);
 	if (check_error(fd, params))
 		exit(EXIT_FAILURE);
 	init_map_size(params);
