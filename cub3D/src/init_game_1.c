@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game_1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rhanitra <rhanitra@student.42antananari    +#+  +:+       +#+        */
+/*   By: ttelolah <ttelolah@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:16:31 by ttelolah          #+#    #+#             */
-/*   Updated: 2025/04/06 12:35:21 by rhanitra         ###   ########.fr       */
+/*   Updated: 2025/04/06 17:08:59 by ttelolah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ void	init_player(t_params *params)
 
 void check_first_line_is_valid(int fd, char *gnl, char *str, t_params *params)
 {
+	if (gnl == NULL)
+	{
+		free(str);
+		ft_exit_faillure(params, fd, "Error on map data", NULL);
+	}
 	if (ft_is_space(gnl[0]))
 	{
 		free(gnl);
